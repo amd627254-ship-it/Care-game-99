@@ -112,7 +112,7 @@ border-radius:24px;
 background:#041523ee;
 border:1px solid #1ebcff66;
 box-shadow:0 0 35px #00aaff33}.roomTitle{text-align:center;
-font-size:23px;font-weight:900}.roomCode{margin:14px 0;padding:15px;text-align:center;border-radius:15px;background:#00101d;border:1px solid #1abaff55}.roomCode small{display:block;color:#82cbea;margin-bottom:5px}.roomCode strong{font-size:24px;color:#57e7ff;letter-spacing:2px}.count{text-align:right;color:#55eaff;margin-bottom:8px}.players{display:grid;grid-template-columns:1fr 1fr;gap:7px}.playerRow{display:flex;align-items:center;gap:7px;padding:8px;border-radius:10px;background:#071d2c;border:1px solid #ffffff10;min-width:0}.playerNum{width:25px;height:25px;display:flex;align-items:center;justify-content:center;border-radius:7px;font-weight:bold;background:#087ddd}.playerName{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}.roomActions{display:flex;gap:8px;margin-top:15px;flex-wrap:wrap}.roomActions button{flex:1 1 28%;min-width:92px;height:50px;border-radius:13px;color:white;font-weight:900}.startBtn{background:linear-gradient(#1fee65,#009b38)}.leaveBtn{background:#10283a;border:1px solid #2680aa}.status{text-align:center;color:#65dfff;margin-top:12px;font-size:13px}
+font-size:23px;font-weight:900}.roomCode{margin:14px 0;padding:15px;text-align:center;border-radius:15px;background:#00101d;border:1px solid #1abaff55}.roomCode small{display:block;color:#82cbea;margin-bottom:5px}.roomCode strong{font-size:24px;color:#57e7ff;letter-spacing:2px}.count{text-align:right;color:#55eaff;margin-bottom:8px}.players{display:grid;grid-template-columns:1fr 1fr;gap:7px}.playerRow{display:flex;align-items:center;gap:7px;padding:8px;border-radius:10px;background:#071d2c;border:1px solid #ffffff10;min-width:0}.playerNum{width:25px;height:25px;display:flex;align-items:center;justify-content:center;border-radius:7px;font-weight:bold;background:#087ddd}.playerName{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}.roomActions{display:flex;gap:8px;margin-top:15px;flex-wrap:wrap}.roomActions button{flex:1 1 28%;min-width:92px;height:50px;border-radius:13px;color:white;font-weight:900}.startBtn{background:linear-gradient(#1fee65,#009b38);display:none!important}.leaveBtn{background:#10283a;border:1px solid #2680aa}.status{text-align:center;color:#65dfff;margin-top:12px;font-size:13px}
 
 
 #game{background:#102a16}#world{position:absolute;inset:0;width:100%;height:100%;display:block}
@@ -390,7 +390,7 @@ body.brightTheme #home{background:radial-gradient(circle at 50% 20%,#2b9de5 0,#1
 <body>
 <div id="app">
 <section id="home" class="screen active"><div class="homeBg"></div><div class="homeCard"><button class="themeBtn" type="button" aria-label="Theme">☀️</button><div class="logo">UZAR<span>BATTLE ROYALE</span></div><div class="subLogo">🚗 CAR COMBAT • PLAY TO SURVIVE</div><input id="playerName" class="nameInput" maxlength="14" placeholder="Player Name" value="Mijanur"><button id="createBtn" class="mainBtn">🌐 CREATE / FIND ONLINE ROOM</button><div style="display:flex;gap:7px;margin-top:9px"><input id="roomCodeInput" class="nameInput" maxlength="6" placeholder="ROOM CODE" style="min-width:0;flex:1;text-transform:uppercase;letter-spacing:2px"><button id="joinCodeBtn" class="mainBtn" style="width:42%;margin:0;padding:8px">JOIN ROOM</button></div><button id="offlineBtn" class="mainBtn offlineBtn" type="button">🎮 PLAY OFFLINE (5 BOTS)</button><div id="homeStatus" style="margin-top:18px;color:#70ddff;font-size:16px">Online: Supabase • Offline: available</div><div class="infoRow"><div class="infoBox"><b>👥 2+5</b>2 ONLINE + 5 BOTS</div><div class="infoBox"><b>⚔️</b>BATTLE</div><div class="infoBox"><b>🗺️</b>REAL MAP</div></div></div></section>
-<section id="room" class="screen"><div class="roomCard matchCard"><div class="roomTitle">⚡ MATCHMAKING</div><div class="roomCode" style="margin:8px 0;padding:8px"><small>ROOM CODE · বন্ধুকে দিন</small><strong id="liveRoomCode">------</strong> <button id="liveCopyCode" type="button" style="padding:6px 10px;border-radius:8px;background:#087ddd;color:#fff;border:0;font-weight:900">COPY</button></div><div class="matchTimer" id="matchTimer">00:00</div><div class="matchLabel">WAITING TIME · START চাপুন</div><div class="count">PLAYERS <b id="playerCount">0/2</b></div><div id="roomPlayers" class="players"></div><div class="roomActions"><button id="startBtn" class="startBtn">🚀 START MATCH</button><button id="inviteRoomBtn" class="leaveBtn">🔗 INVITE FRIEND</button><button id="leaveRoomBtn" class="leaveBtn">↩ CANCEL</button></div><div id="roomStatus" class="status">২ জন অনলাইন খেলোয়াড় লাগবে • বন্ধুকে INVITE LINK পাঠান</div></div></section>
+<section id="room" class="screen"><div class="roomCard matchCard"><div class="roomTitle">⚡ MATCHMAKING</div><div class="roomCode" style="margin:8px 0;padding:8px"><small>ROOM CODE · বন্ধুকে দিন</small><strong id="liveRoomCode">------</strong> <button id="liveCopyCode" type="button" style="padding:6px 10px;border-radius:8px;background:#087ddd;color:#fff;border:0;font-weight:900">COPY</button></div><div class="matchTimer" id="matchTimer">00:00</div><div class="matchLabel">WAITING TIME · ২ জন হলেই অটো START</div><div class="count">PLAYERS <b id="playerCount">0/2</b></div><div id="roomPlayers" class="players"></div><div class="roomActions"><button id="startBtn" class="startBtn">🚀 START MATCH</button><button id="inviteRoomBtn" class="leaveBtn">🔗 INVITE FRIEND</button><button id="leaveRoomBtn" class="leaveBtn">↩ CANCEL</button></div><div id="roomStatus" class="status">সার্ভারে অটো ম্যাচমেকিং চলছে • ২ জন হলেই ম্যাচ অটো START হবে</div></div></section>
 <section id="game" class="screen"><canvas id="world"></canvas><div class="topHud"><div class="profile"><div class="avatar">🪖</div><div style="min-width:0"><div id="hudName" class="profileName">Mijanur 👑</div><div class="level">Lv. 5</div><div class="profileBar"><i></i></div></div></div><div class="stats"><div class="stat"><div class="statTop"><span>❤️ HP</span><span id="hpText">100/100</span></div><div class="bar hp"><i id="hpBar"></i></div></div><div class="stat"><div class="statTop"><span>🛡 ARMOR</span><span id="armorText">100/100</span></div><div class="bar armor"><i id="armorBar"></i></div></div><div class="stat"><div class="statTop"><span>⚡ NITRO</span><span id="nitroText">100/100</span></div><div class="bar nitro"><i id="nitroBar"></i></div></div><div class="stat"><div class="statTop"><span>🔫 AMMO</span><span id="ammoText">30/30</span></div><div class="bar ammo"><i id="ammoBar"></i></div></div></div><div class="alive">👤 ALIVE <b id="aliveText">20/20</b><br>💀 KILLS <b id="killsText">0</b><br>🏆 SCORE <b id="scoreText">0</b></div></div>
 <div class="playerList"><div class="listTitle">PLAYERS</div><div id="gamePlayers"></div></div><div class="minimap"><canvas id="mini"></canvas><div class="safe"></div><div class="north">N</div></div><div class="safeTimer">🛡 SAFE ZONE<b id="safeTime">00:42</b></div><button id="exitGameBtn" class="exitBtn"><span>🚗</span>EXIT</button><button id="voiceBtn"><span>🎙️</span>VOICE</button><button id="inviteGameBtn" class="inviteMini" type="button"><span>👥</span>INVITE</button><div id="voiceStatus" class="voiceStatus">Voice off</div><div id="joystick" class="joystick"><div id="stick" class="stick"></div></div><div class="controlBtns"><button id="fireBtn" class="gameBtn fire"><span>🎯</span><small>FIRE</small></button><button id="reloadBtn" class="gameBtn reload"><span>↻</span><small>RELOAD</small></button><button id="nitroBtn" class="gameBtn nitroBtn"><span>⚡</span><small>NITRO</small></button></div><div id="centerMsg" class="centerMsg"></div><div id="pauseOverlay" class="overlay"><div class="pauseCard"><h2>Ⅱ PAUSE</h2><button id="resumeBtn" class="pauseBtn resume">▶ RESUME</button><button class="pauseBtn settings">⚙ SETTINGS</button><button id="pauseLeaveBtn" class="pauseBtn leave">🚪 LEAVE GAME</button></div></div></section>
 <div id="inviteOverlay" class="inviteOverlay"><div class="inviteCard"><h2>👥 INVITE FRIENDS</h2><div>রুম কোড</div><div id="inviteCode" class="inviteCode">------</div><button id="shareInviteBtn" class="inviteAction">📤 SHARE INVITE</button><button id="copyInviteBtn" class="inviteAction">📋 COPY INVITE LINK</button><button id="copyRoomCodeBtn" class="inviteAction">🔑 COPY ROOM CODE</button><button id="closeInviteBtn" class="inviteAction inviteClose">✕ CLOSE</button><div class="inviteHint">বন্ধুকে লিংক পাঠালে একই রুমে সরাসরি ঢুকবে।</div></div></div><section id="winner" class="screen"><div class="winnerCard"><div class="crown">👑</div><div class="winnerTitle">#1 WINNER</div><div id="winnerName" class="winnerName">Mijanur</div><div style="color:#a9dfff">🏆 BATTLE ROYALE CHAMPION</div><button id="winnerHome" class="mainBtn" style="margin-top:20px">🏠 HOME</button></div></section>
@@ -409,50 +409,64 @@ function ref(_db,path=""){return {path:String(path||"").split("/").filter(Boolea
 function pathGet(root,parts){let v=root;for(const k of parts){if(v==null)return undefined;v=v[k]}return v}
 function pathSet(root,parts,value){if(!parts.length)return value;let o=root;for(let i=0;i<parts.length-1;i++){const k=parts[i];if(!o[k]||typeof o[k]!=="object")o[k]={};o=o[k]}if(value===undefined)delete o[parts[parts.length-1]];else o[parts[parts.length-1]]=cloneData(value);return root}
 function snap(value){return {val:()=>cloneData(value),exists:()=>value!==undefined&&value!==null,forEach:fn=>{if(value&&typeof value==="object")Object.entries(value).forEach(([key,v])=>fn({key,val:()=>cloneData(v)}))}}}
-// Supabase JSONB may contain a JSON-encoded string if an older build saved JSON.stringify(state).
-// Normalize it before any path access or mutation so properties like "players" are never set on a string.
-function normalizeRoomState(value){
- if(typeof value!=="string")return value&&typeof value==="object"?value:{};
- let parsed=value;
- for(let i=0;i<2&&typeof parsed==="string";i++){try{parsed=JSON.parse(parsed)}catch(_){return {}}}
- return parsed&&typeof parsed==="object"&&!Array.isArray(parsed)?parsed:{};
-}
 function localNotify(){for(const l of [...localListeners]){try{l.cb(snap(pathGet({rooms:localRooms},l.path)))}catch(e){}}}
 async function api(path,opts={}){const r=await fetch(SUPABASE_URL+"/rest/v1/"+path,{...opts,headers:{apikey:SUPABASE_PUBLISHABLE_KEY,"Content-Type":"application/json",...(opts.headers||{})}});if(!r.ok){const t=await r.text();throw new Error("Supabase "+r.status+": "+t.slice(0,220))}if(r.status===204)return null;const t=await r.text();return t?JSON.parse(t):null}
-async function readRooms(){const rows=await api("uzar_rooms?select=code,state");const out={};for(const row of rows||[])out[row.code]=normalizeRoomState(row.state);return out}
-async function readRoom(code){const rows=await api("uzar_rooms?select=state&code=eq."+encodeURIComponent(code)+"&limit=1");return rows&&rows.length?normalizeRoomState(rows[0].state):undefined}
+// Supabase schema compatibility: uzar_rooms.state is TEXT in this project,
+// while the game works with JavaScript objects. Parse/stringify at the API edge.
+function decodeRoomRow(row){
+ if(!row)return undefined;
+ let state=row.state;
+ if(typeof state==="string"){
+   try{state=JSON.parse(state)}catch(_){state={};}
+ }
+ if(!state||typeof state!=="object"||Array.isArray(state))state={};
+ state={...state};
+ if(row.status)state.status=row.status;
+ return state;
+}
+async function readRooms(){
+ const rows=await api("uzar_rooms?select=code,room_code,state,status");
+ const out={};
+ for(const row of rows||[]){const code=String(row.code||row.room_code||"").trim().toUpperCase();if(code)out[code]=decodeRoomRow(row)||{};}
+ return out;
+}
+async function readRoom(code){
+ const clean=String(code||"").trim().toUpperCase();
+ const rows=await api("uzar_rooms?select=code,room_code,state,status&code=eq."+encodeURIComponent(clean)+"&limit=1");
+ if(rows&&rows.length)return decodeRoomRow(rows[0]);
+ // Older table versions may store the room key in room_code instead.
+ const alt=await api("uzar_rooms?select=code,room_code,state,status&room_code=eq."+encodeURIComponent(clean)+"&limit=1");
+ return alt&&alt.length?decodeRoomRow(alt[0]):undefined;
+}
 async function writeRoom(code,state){
- // Match the table schema shown in Supabase: code + state (created_at is DB-default).
- // Do not send updated_at because the current table may not have that column.
- await api("uzar_rooms?on_conflict=code",{method:"POST",headers:{Prefer:"resolution=merge-duplicates,return=minimal"},body:JSON.stringify({code,state})});
+ const clean=String(code||"").trim().toUpperCase();
+ const safeState=(state&&typeof state==="object"&&!Array.isArray(state))?state:{};
+ const row={code:clean,room_code:clean,state:JSON.stringify(safeState),status:String(safeState.status||"waiting")};
+ const existing=await api("uzar_rooms?select=id&code=eq."+encodeURIComponent(clean)+"&limit=1");
+ if(existing&&existing.length){
+   await api("uzar_rooms?code=eq."+encodeURIComponent(clean),{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({state:row.state,status:row.status,room_code:clean})});
+ }else{
+   await api("uzar_rooms",{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify(row)});
+ }
 }
 async function mutatePath(parts,value,mode="set"){
  if(offlineMode){const current=pathGet({rooms:localRooms},parts);if(mode==="remove"){if(parts.length===2)delete localRooms[parts[1]];else pathSet({rooms:localRooms},parts,undefined)}else if(mode==="merge"){pathSet({rooms:localRooms},parts,{...(current||{}),...(value||{})})}else pathSet({rooms:localRooms},parts,value);localNotify();return}
  if(parts[0]!=="rooms")throw new Error("Unsupported database path");
  if(parts.length===1){if(mode==="remove")throw new Error("Cannot remove all rooms");for(const [code,state] of Object.entries(value||{}))await writeRoom(code,state);return}
- const code=parts[1];let state=normalizeRoomState(await readRoom(code));
- if(parts.length===2&&mode==="remove"){await api("uzar_rooms?code=eq."+encodeURIComponent(code),{method:"DELETE",headers:{Prefer:"return=minimal"}});return}
- if(state===undefined)state={};
- // Use a database-side JSONB patch for nested SET operations. This avoids
- // read/modify/write races when two phones add themselves to the same room.
- if(parts.length>2 && mode==="set"){
-   const patchPath=parts.slice(2).join("/");
-   await api("rpc/uzar_room_patch",{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify({p_code:code,p_path:patchPath,p_value:value===undefined?null:value})});
-   return;
- }
- if(parts.length===2&&mode==="set")state=cloneData(value||{});
- else if(parts.length===2&&mode==="merge")state={...state,...(value||{})};
- else if(mode==="remove")pathSet(state,parts.slice(2),undefined);
- else if(mode==="merge"){const cur=pathGet(state,parts.slice(2))||{};pathSet(state,parts.slice(2),{...cur,...(value||{})})}
- else pathSet(state,parts.slice(2),value);
- await writeRoom(code,state);
+ const code=String(parts[1]||"").trim().toUpperCase();
+ if(!code)throw new Error("Room code is required");
+ // Every online write is applied atomically by PostgreSQL to the JSON stored
+ // in the existing TEXT state column. This prevents two players overwriting
+ // each other's nested player records during simultaneous joins/updates.
+ const path=parts.slice(2).join("/");
+ await api("rpc/uzar_room_patch",{method:"POST",headers:{Prefer:"return=representation"},body:JSON.stringify({p_code:code,p_path:path,p_value:value===undefined?null:value,p_mode:mode})});
 }
 async function get(r){if(offlineMode)return snap(pathGet({rooms:localRooms},r.path));if(!r.path.length)return snap(await readRooms());if(r.path[0]!=="rooms")return snap(undefined);const state=await readRoom(r.path[1]);return snap(r.path.length===2?state:pathGet(state,r.path.slice(2)))}
 async function set(r,v){return mutatePath(r.path,v,"set")}
-async function update(r,v){if(!r.path.length&&v&&Object.keys(v).some(k=>k.startsWith("rooms/"))){const grouped={};for(const [p,val] of Object.entries(v)){const parts=p.split("/").filter(Boolean);if(parts[0]!=="rooms"||!parts[1])continue;(grouped[parts[1]]??=[]).push([parts.slice(2),val])}for(const [code,entries] of Object.entries(grouped)){let state=offlineMode?(localRooms[code]||{}):normalizeRoomState(await readRoom(code));for(const [parts,val] of entries)pathSet(state,parts,val);if(offlineMode){localRooms[code]=state;localNotify()}else await writeRoom(code,state)}return}return mutatePath(r.path,v,"merge")}
+async function update(r,v){if(!r.path.length&&v&&Object.keys(v).some(k=>k.startsWith("rooms/"))){for(const [p,val] of Object.entries(v)){const parts=p.split("/").filter(Boolean);if(parts[0]!=="rooms"||!parts[1])continue;await mutatePath(["rooms",parts[1],...parts.slice(2)],val,parts.length===2?"merge":"set")}return}return mutatePath(r.path,v,"merge")}
 async function remove(r){return mutatePath(r.path,undefined,"remove")}
 function onValue(r,cb){let stopped=false;const listener={path:r.path,cb};if(offlineMode){localListeners.add(listener);Promise.resolve().then(()=>{if(!stopped)cb(snap(pathGet({rooms:localRooms},r.path)))})}else{const tick=async()=>{if(stopped)return;try{const value=r.path.length===0?await readRooms():r.path[0]==="rooms"?(async()=>{const st=await readRoom(r.path[1]);return r.path.length===2?st:pathGet(st,r.path.slice(2))})():undefined;if(!stopped)cb(snap(value))}catch(e){console.warn(e)}};tick();listener.timer=setInterval(tick,650)}return()=>{stopped=true;localListeners.delete(listener);if(listener.timer)clearInterval(listener.timer)}}
-function onDisconnect(_r){return {remove:async()=>{},cancel:async()=>{}}}
+function onDisconnect(_r){return {remove:async()=>{},cancel:async()=>{}}} // Supabase REST has no Firebase-style onDisconnect; stale-player cleanup needs a server heartbeat/cleanup policy.
 function push(r,v){const key="k_"+Date.now().toString(36)+Math.random().toString(36).slice(2,8);const promise=set(ref(db,[...r.path,key].join("/")),v);return {key,then:promise.then.bind(promise),catch:promise.catch.bind(promise)}}
 // NOTE: This REST-backed transaction is read/modify/write, not server-atomic. Keep match authoritative actions host-owned.
 async function runTransaction(r,fn){const before=await get(r),current=before.val(),next=fn(cloneData(current));if(next===undefined)return{committed:false,snapshot:before};await set(r,next);return{committed:true,snapshot:await get(r)}}
@@ -549,13 +563,7 @@ function makeBotData(i){
  const pos=positions[(Math.max(1,Number(i)||1)-1)%positions.length];
  return makePlayerData("BOT "+i,pos[0],pos[1],{bot:true,botIndex:i});
 }
-function countHumans(data){
- let value=data;
- if(typeof value==="string"){try{value=JSON.parse(value)}catch(_){value={}}}
- const candidate=value?.players??value??{};
- const o=typeof candidate==="string"?(()=>{try{return JSON.parse(candidate)}catch(_){return {}}})():candidate;
- return Object.values(o&&typeof o==="object"&&!Array.isArray(o)?o:{}).filter(p=>p&&typeof p==="object"&&!p.bot).length;
-}
+function countHumans(data){let list=data?.players??data??{};if(typeof list==="string"){try{list=JSON.parse(list)}catch(_){list={}}}if(!list||typeof list!=="object"||Array.isArray(list))return 0;return Object.values(list).filter(p=>p&&typeof p==="object"&&!p.bot).length}
 
 async function createRoom(){
 myName=nameInput.value.trim()||"Mijanur";roomCode=makeRoomCode();isHost=true;matchStarted=false;matchCountdown=0;matchCountdownSeconds=0;window.matchStartAt=0;window.localReadyAt=0;window.currentRoomStatus="waiting";homeStatus.textContent="⏳ Matchmaking...";
@@ -565,10 +573,9 @@ playersData[myId]=makePlayerData(myName,1800,1250,{ready:false,invulnerableUntil
 player={...player,x:1800,y:1250,angle:0,speed:0,alive:true};
 for(let i=1;i<=MAX_BOTS;i++)playersData["bot"+i]=makeBotData(i);
 
-await set(ref(db,"rooms/"+roomCode),{host:myId,createdAt:Date.now(),status:"waiting",startRequestedAt:null,maxPlayers:MAX_PLAYERS,maxBots:MAX_BOTS,minPlayers:2,startedAt:null,matchDuration:MATCH_DURATION_MS});
-await set(ref(db,"rooms/"+roomCode+"/players"),playersData);
-await set(ref(db,"rooms/"+roomCode+"/pickups"),createPickupData());
-await set(ref(db,"rooms/"+roomCode+"/bullets"),{});
+// Publish the room and its initial player list atomically so another client
+// cannot discover an empty room and then have its join overwritten by a later players write.
+await set(ref(db,"rooms/"+roomCode),{host:myId,createdAt:Date.now(),status:"waiting",startRequestedAt:null,maxPlayers:MAX_PLAYERS,maxBots:MAX_BOTS,minPlayers:2,startedAt:null,matchDuration:MATCH_DURATION_MS,players:playersData,pickups:createPickupData(),bullets:{}});
 await onDisconnect(ref(db,"rooms/"+roomCode+"/players/"+myId)).remove();
 openRoom();
 }catch(err){console.error(err);homeStatus.textContent="❌ Supabase সমস্যা: "+err.message+" • SQL টেবিল ও RLS policy পরীক্ষা করুন"}
@@ -603,7 +610,13 @@ const p=await get(ref(db,"rooms/"+roomCode+"/pickups"));if(!p.exists())await set
 const b=await get(ref(db,"rooms/"+roomCode+"/bullets"));if(!b.exists())await set(ref(db,"rooms/"+roomCode+"/bullets"),{});
 }
 
-function openRoom(){screen("room");const codeEl=document.getElementById("liveRoomCode");if(codeEl)codeEl.textContent=roomCode||"------";listenRoom();listenPlayers();listenPickups();listenBullets();ensureBattleData();updateMatchUI()}
+function openRoom(){
+ screen("room");const codeEl=document.getElementById("liveRoomCode");if(codeEl)codeEl.textContent=roomCode||"------";
+ // Waiting timer begins automatically as soon as this client joins matchmaking.
+ if(!window.matchStartAt){window.matchStartAt=Date.now();window.localReadyAt=window.matchStartAt;}
+ if(!matchTimerId)startMatchCountdown();
+ listenRoom();listenPlayers();listenPickups();listenBullets();ensureBattleData();updateMatchUI();
+}
 function listenRoom(){if(roomUnsub)roomUnsub();roomUnsub=onValue(ref(db,"rooms/"+roomCode),snap=>{
 if(!snap.exists()){leaveLocal();return}
 const data=snap.val()||{};window.currentRoomStatus=data.status||"waiting";
@@ -612,16 +625,10 @@ if(data.status==="started"){
  if(matchTimerId)clearInterval(matchTimerId);matchTimerId=null;
  matchStarted=true;window.gameStartedAt=Number(data.startedAt||Date.now());startGame();
 }else{
- // Each player starts their own lobby timer only when that player presses START.
- // Do not start the other player's timer from the room-level event.
- const mine=players?.[myId];
- if(mine?.ready && Number(mine.readyAt||0)){
-   matchStarted=true;window.matchStartAt=Number(mine.readyAt);window.localReadyAt=window.matchStartAt;
-   if(!matchTimerId)startMatchCountdown();
- }else if(!window.localReadyAt){
-   matchStarted=false;window.matchStartAt=0;
-   if(matchTimerId){clearInterval(matchTimerId);matchTimerId=null}
- }
+ // Matchmaking timer runs automatically while waiting; no READY button is required.
+ matchStarted=false;
+ if(!window.matchStartAt){window.matchStartAt=Date.now();window.localReadyAt=window.matchStartAt;}
+ if(!matchTimerId)startMatchCountdown();
 }
 updateMatchUI();
 })}
@@ -649,15 +656,12 @@ if(mine){
  players[myId]={...mine,x:player.x,y:player.y,angle:player.angle,alive:player.alive,hp:player.hp,armor:player.armor,nitro:player.nitro,ammo:player.ammo};
 }
 renderRoomPlayers();renderGamePlayers();
-document.getElementById("playerCount").textContent=countHumans(players)+"/"+MAX_PLAYERS;
- // Start/continue this client's timer only after this specific player pressed START.
+document.getElementById("playerCount").textContent=countHumans({players})+"/"+MAX_PLAYERS;
+ // Automatic matchmaking: no per-player READY state is required.
  const roomSnapStatus=window.currentRoomStatus||"waiting";
- if(roomSnapStatus!=="started" && mine?.ready && Number(mine.readyAt||0)){
-   matchStarted=true;window.matchStartAt=Number(mine.readyAt);window.localReadyAt=window.matchStartAt;
+ if(roomSnapStatus!=="started"){
+   if(!window.matchStartAt){window.matchStartAt=Date.now();window.localReadyAt=window.matchStartAt;}
    if(!matchTimerId)startMatchCountdown();
- }else if(roomSnapStatus!=="started" && !mine?.ready && !window.localReadyAt){
-   matchStarted=false;window.matchStartAt=0;
-   if(matchTimerId){clearInterval(matchTimerId);matchTimerId=null}
  }
  updateMatchUI();tryLaunchMatch();
 document.getElementById("aliveText").textContent=Object.values(players).filter(p=>p&&p.alive!==false).length+"/"+(MAX_PLAYERS+MAX_BOTS);
@@ -690,44 +694,27 @@ row.innerHTML=`<div class="listNumber">${index+1}</div><div style="width:62px;ov
 }
 
 async function hostStart(){
+ // Legacy button handler: the room now auto-starts when two real players are present.
  if(!roomCode||gameStarted)return;
- const current=players?.[myId];
- if(current?.ready){showMessage("✅ আপনি START দিয়েছেন; অন্য খেলোয়াড়ের অপেক্ষা করুন");return;}
- try{
-   // First START starts an elapsed waiting timer. It does not auto-launch.
-   const roomRef=ref(db,"rooms/"+roomCode);
-   const roomSnap=await get(roomRef);
-   const roomData=roomSnap.val()||{};
-   if(roomData.status!=="waiting"){
-     showMessage("ম্যাচ ইতিমধ্যে শুরু হয়েছে");return;
-   }
-   // This player's own timer begins now. The other player has a separate readyAt.
-   const myReadyAt=Date.now();
-   window.localReadyAt=myReadyAt;window.matchStartAt=myReadyAt;matchStarted=true;
-   if(!matchTimerId)startMatchCountdown();
-   updateMatchUI();
-   await update(ref(db,"rooms/"+roomCode+"/players/"+myId),{ready:true,readyAt:myReadyAt});
-   const refreshed=await get(ref(db,"rooms/"+roomCode+"/players"));
-   players=refreshed.val()||players;
-   if(!matchTimerId)startMatchCountdown();
-   renderRoomPlayers();updateMatchUI();
-   await tryLaunchMatch();
- }catch(err){console.error(err);showMessage("❌ START sync failed");roomStatus.textContent="START sync failed — অনলাইন সংযোগ পরীক্ষা করুন"}
+ if(!window.matchStartAt){window.matchStartAt=Date.now();window.localReadyAt=window.matchStartAt;}
+ if(!matchTimerId)startMatchCountdown();
+ await tryLaunchMatch();
+ updateMatchUI();
 }
 async function tryLaunchMatch(){
- // The host alone publishes one shared start timestamp, so both clients enter on the same room event.
+ // Host publishes one shared start timestamp as soon as two real players have joined.
  if(!roomCode||gameStarted||!isHost||launchRequestInFlight)return;
  launchRequestInFlight=true;
  try{
    const [roomSnap,playersSnap]=await Promise.all([get(ref(db,"rooms/"+roomCode)),get(ref(db,"rooms/"+roomCode+"/players"))]);
    const data=roomSnap.val()||{},freshPlayers=playersSnap.val()||{};
-   const humans=Object.values(freshPlayers).filter(p=>p&&!p.bot);
-   const readyCount=humans.filter(p=>p.ready===true).length;
-   // Exactly two real players must be present and both must press START.
-   if(data.status==="started"||humans.length!==MAX_PLAYERS||readyCount!==MAX_PLAYERS)return;
+   const humans=Object.values(freshPlayers).filter(p=>p&&typeof p==="object"&&!p.bot);
+   // Exactly two real players present -> auto-start; no READY clicks.
+   if(data.status==="started"||humans.length<MAX_PLAYERS)return;
+   if(humans.length!==MAX_PLAYERS)return;
    const startedAt=Date.now();
    await update(ref(db,"rooms/"+roomCode),{status:"started",startedAt,matchDuration:MATCH_DURATION_MS});
- }catch(err){console.warn("launch sync failed",err)}
+ }catch(err){console.warn("automatic launch sync failed",err)}
  finally{launchRequestInFlight=false}
 }
 function startMatchCountdown(){
@@ -741,18 +728,17 @@ function startMatchCountdown(){
 }
 
 function updateMatchUI(){
- const humans=Object.entries(players||{}).filter(([,p])=>p&&!p.bot);
- const n=humans.length,ready=humans.filter(([,p])=>p.ready===true).length;
+ const humans=Object.entries(players||{}).filter(([,p])=>p&&typeof p==="object"&&!p.bot);
+ const n=humans.length;
  const timer=document.getElementById("matchTimer"),status=document.getElementById("roomStatus"),btn=document.getElementById("startBtn");
  if(!timer||!status)return;
  const timerStart=Number(window.matchStartAt||window.localReadyAt||0);const seconds=timerStart?Math.max(0,Math.floor((Date.now()-timerStart)/1000)):0;
  timer.textContent=String(Math.floor(seconds/60)).padStart(2,"0")+":"+String(seconds%60).padStart(2,"0");
- document.querySelectorAll(".playerReadyClock[data-ready-at]").forEach(el=>{const at=Number(el.getAttribute("data-ready-at")||0);el.textContent=at?formatElapsed(at):""});
- if(n>=MAX_PLAYERS&&ready>=MAX_PLAYERS){status.textContent="✅ দুজনের START সম্পন্ন — ম্যাচে ঢুকছে…";status.className="status matchReady"}
- else if(ready>0){status.textContent=`⏱ আপনার টাইমার চলছে (${ready}/2 জন START দিয়েছে) — অন্য খেলোয়াড় START দিলেই দুজন একসাথে ম্যাচে ঢুকবে`;status.className="status matchWaiting"}
- else if(n>=MAX_PLAYERS){status.textContent="🟢 ২ জন যুক্ত হয়েছে — দুজনকেই START চাপতে হবে";status.className="status matchReady"}
- else{status.textContent=`🔗 ${n}/2 জন যুক্ত হয়েছে — INVITE LINK বা ROOM CODE দিয়ে বন্ধুকে যোগ করুন`;status.className="status matchWaiting"}
- if(btn){const me=players?.[myId];btn.disabled=!!me?.ready;btn.textContent=me?.ready?"⏳ START দেওয়া হয়েছে":"🚀 START MATCH";}
+ document.querySelectorAll(".playerReadyClock[data-ready-at]").forEach(el=>{el.textContent=""});
+ if(window.currentRoomStatus==="started") {status.textContent="✅ ২ জন যোগ হয়েছে — ম্যাচ শুরু হচ্ছে…";status.className="status matchReady"}
+ else if(n>=MAX_PLAYERS){status.textContent="🚀 ২ জন সার্ভারে যোগ হয়েছে — অটো ম্যাচ শুরু হচ্ছে…";status.className="status matchReady"}
+ else {status.textContent=`🔎 সার্ভারে খেলোয়াড় খোঁজা হচ্ছে — ${n}/2 জন যুক্ত হয়েছে; দ্বিতীয় খেলোয়াড় এলেই অটো START হবে`;status.className="status matchWaiting"}
+ if(btn){btn.disabled=true;btn.textContent="⚡ AUTO START";}
 }
 
 function startGame(){
