@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>UZAR Battle Royale</title>
+<style>
+*{box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+  user-select:none}
+html,body{margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#06111b;
+  font-family:Arial,Helvetica,sans-serif;
+  color:white}
+button,input{font:inherit}button{border:0;
+  cursor:pointer}
+#app{width:100%;
+  height:100%;
+  position:relative;
+  overflow:hidden}
+  .screen{position:absolute;
+    inset:0;
+    display:none}
+  .screen.active{display:flex}
+  
+#home{align-items:center;
+  justify-content:center;
+  background:radial-gradient(circle at 50% 20%,#168bd9 0,#082a47 35%,#030912 80%)}
+  
+.homeBg{position:absolute;
+  inset:0;
+  opacity:.45;
+  background:linear-gradient(130deg,transparent 40%,rgba(0,220,255,.15)),radial-gradient(circle at 20% 80%,#00aaff33,transparent 30%),radial-gradient(circle at 80% 30%,#24ff5a22,transparent 35%)}
+  
+.homeCard{position:relative;
+  width:min(92%,630px);
+  min-height:0;max-height:calc(100dvh - 24px);overflow-y:auto;
+  padding:30px 46px 28px;
+  border:1px solid #21baff88;
+  border-radius:28px;
+  background:linear-gradient(145deg,#071c2ddd,#03101beF);
+  box-shadow:0 0 35px #00aaff35,inset 0 0 30px #008cff12;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start}
+  
+  
+.logo{font-size:74px;
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:4px;
+  color:#fff;
+  text-shadow:0 0 14px #00aaff,3px 3px 0 #082c51}
+.logo:before{content:"U Z A R";display:block;font-size:18px;letter-spacing:9px;color:#25d7ff;margin-bottom:4px}
+.logo span{display:block;font-size:43px;color:#ffd52e;letter-spacing:3px;margin-top:10px;text-shadow:0 0 14px #ffb300}
+  
+  
+  .subLogo{font-size:17px;
+    color:#55dfff;
+    margin:26px 0 28px;
+    letter-spacing:3px;
+    font-weight:900}
+  
+  
+.nameInput,.roomInput{width:100%;
+  height:68px;
+  border-radius:14px;
+  border:1px solid #28aaff66;
+  outline:none;
+  color:white;
+  background:#061523;
+  padding:0 20px;
+  margin-bottom:16px;
+  text-align:left;
+  font-size:18px}.nameInput:focus,.roomInput:focus{border-color:#20d9ff;box-shadow:0 0 15px #00c8ff44}
+  
+  
+.mainBtn{width:100%;
+  height:76px;
+  border-radius:20px;
+  margin-top:12px;
+  font-weight:900;
+  font-size:23px;
+  color:white;
+  background:linear-gradient(#24e866,#00a93d);
+  box-shadow:0 5px 0 #006e2a,0 0 18px #00ff7544}.mainBtn:active{transform:translateY(3px);
+    box-shadow:0 2px 0 #006e2a}.blueBtn{background:linear-gradient(#17baff,#0874e8);box-shadow:0 5px 0 #034b99,0 0 18px #00baff44}
+  
+  
+.infoRow{display:flex;
+  gap:8px;
+margin-top:18px}
+
+.infoBox{flex:1;min-height:105px;padding:15px 5px;border-radius:18px;background:#071a2a;border:1px solid #2688c955;font-size:16px;color:#bdeaff;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.infoBox b{display:block;color:#fff;font-size:27px;margin-bottom:8px}
+
+.themeBtn{position:absolute;right:14px;top:14px;width:62px;height:62px;border-radius:20px;background:#071a2a;border:2px solid #2477aa;color:#ffd52e;font-size:30px;z-index:2}
+.offlineBtn{background:linear-gradient(#8998aa,#4b5869);box-shadow:0 5px 0 #303947,0 0 18px #9aaabb33}
+@media(max-width:700px){.homeCard{width:92%;min-height:calc(100vh - 56px);padding:28px 28px 24px}.logo{font-size:64px}.logo span{font-size:34px}.subLogo{font-size:14px}.mainBtn{height:70px;font-size:20px}.infoBox{min-height:92px;font-size:14px}}
+@media(max-width:420px){.homeCard{padding:24px 20px}.logo{font-size:52px}.logo:before{font-size:14px}.logo span{font-size:28px}.subLogo{font-size:12px;letter-spacing:2px}.nameInput,.roomInput{height:58px}.mainBtn{height:62px;font-size:18px}.infoRow{gap:8px}.infoBox{font-size:12px}.infoBox b{font-size:22px}}
+#room{align-items:center; 
+justify-content:center;
+background:radial-gradient(circle,#10486b,#03111c 70%)}.roomCard{width:min(94%,520px);
+max-height:94%;
+overflow:auto;
+padding:20px;
+border-radius:24px;
+background:#041523ee;
+border:1px solid #1ebcff66;
+box-shadow:0 0 35px #00aaff33}.roomTitle{text-align:center;
+font-size:23px;font-weight:900}.roomCode{margin:14px 0;padding:15px;text-align:center;border-radius:15px;background:#00101d;border:1px solid #1abaff55}.roomCode small{display:block;color:#82cbea;margin-bottom:5px}.roomCode strong{font-size:24px;color:#57e7ff;letter-spacing:2px}.count{text-align:right;color:#55eaff;margin-bottom:8px}.players{display:grid;grid-template-columns:1fr 1fr;gap:7px}.playerRow{display:flex;align-items:center;gap:7px;padding:8px;border-radius:10px;background:#071d2c;border:1px solid #ffffff10;min-width:0}.playerNum{width:25px;height:25px;display:flex;align-items:center;justify-content:center;border-radius:7px;font-weight:bold;background:#087ddd}.playerName{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}.roomActions{display:flex;gap:8px;margin-top:15px;flex-wrap:wrap}.roomActions button{flex:1 1 28%;min-width:92px;height:50px;border-radius:13px;color:white;font-weight:900}.startBtn{background:linear-gradient(#1fee65,#009b38)}.leaveBtn{background:#10283a;border:1px solid #2680aa}.status{text-align:center;color:#65dfff;margin-top:12px;font-size:13px}
+
+
+#game{background:#102a16}#world{position:absolute;inset:0;width:100%;height:100%;display:block}
+.topHud{position:absolute;top:10px;left:10px;right:10px;display:flex;gap:8px;align-items:flex-start;pointer-events:none}.profile{width:190px;min-width:145px;height:62px;border-radius:17px;padding:8px;background:#031525e8;border:1px solid #24baff77;box-shadow:0 0 15px #00aaff22;display:flex;align-items:center;gap:9px}.avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(145deg,#148cff,#032c68);display:flex;align-items:center;justify-content:center;font-size:28px;border:2px solid #60dfff}.profileName{font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.level{font-size:11px;color:#b9dff1}.profileBar{width:90px;height:8px;background:#123244;border-radius:8px;overflow:hidden;margin-top:5px}.profileBar i{display:block;height:100%;width:90%;background:#18ef68}.stats{display:flex;gap:7px;flex:1}.stat{min-width:92px;flex:1;padding:9px 11px;border-radius:15px;background:#031525e8;border:1px solid #ffffff18}.statTop{display:flex;justify-content:space-between;font-size:13px;font-weight:900}.statIcon{font-size:20px}.bar{height:9px;margin-top:6px;background:#132c39;border-radius:8px;overflow:hidden}.bar i{display:block;height:100%;border-radius:8px}.hp i{background:#19e96a}.armor i{background:#16baff}.nitro i{background:#ffc51c}.ammo i{background:#ffb916}.alive{min-width:92px;padding:9px 11px;border-radius:15px;background:#031525e8;border:1px solid #ffffff18;font-size:13px;line-height:22px}
+.playerList{position:absolute;left:10px;top:94px;width:205px;padding:8px;border-radius:15px;background:#031525d9;border:1px solid #25baff44}.listTitle{color:#82ddff;font-size:11px;font-weight:bold;margin:3px 5px 7px}.listPlayer{height:28px;display:flex;align-items:center;gap:6px;padding:3px 5px;margin-bottom:3px;border-radius:7px;background:#071f2d;font-size:12px}.listPlayer.me{background:#164d37}.listNumber{width:20px;height:20px;border-radius:5px;display:flex;justify-content:center;align-items:center;background:#087fdd;font-size:11px}.listHealth{flex:1;height:5px;border-radius:5px;background:#0e2935;overflow:hidden}.listHealth i{display:block;height:100%;background:#18ed6c}
+
+.minimap{position:absolute;
+top:80px;
+right:5px;
+width:155px;
+height:155px;
+border-radius:20px;
+overflow:hidden;
+background:#0d5a39;
+border:4px solid white;
+box-shadow:0 0 20px #0008}
+
+
+.minimap #mini{width:100%;height:100%}
+
+.safe{position:absolute;
+inset:24px;
+border:2px solid white;
+border-radius:50%;
+pointer-events:none}
+
+
+.north{position:absolute;
+top:5px;
+left:50%;
+transform:translateX(-50%);
+font-weight:900}
+
+
+.safeTimer{position:absolute;
+top:258px;
+right:10px;
+padding:8px 14px;
+border-radius:12px;
+background:#05243ae8;
+border:1px solid #4edcff;
+font-size:12px;
+text-align:center}
+
+.safeTimer b{display:block;
+color:#57e7ff;
+font-size:16px}
+
+
+.joystick{position:absolute;
+left:25px;
+bottom:25px;
+width:145px;
+height:145px;
+border-radius:50%;
+border:3px solid #38cfffaa;
+background:#0067a844;
+box-shadow:inset 0 0 20px #00aaff33,0 0 15px #00aaff33;
+touch-action:none}
+.stick{position:absolute;
+width:68px;
+height:68px;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+border-radius:50%;
+background:linear-gradient(#16c5ff,#087de7);
+border:3px solid #a8efff;
+box-shadow:0 0 15px #00baff99}
+
+
+.controlBtns{position:absolute;
+right:25px;
+bottom:23px;
+width:185px;
+height:190px}
+
+.gameBtn{position:absolute;border-radius:50%;color:white;font-weight:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;text-shadow:0 2px 3px #000;border:4px solid #ffffff55;box-shadow:0 8px 18px #0008}.gameBtn span{font-size:27px}
+
+.gameBtn small{font-size:13px;
+margin-top:2px}
+.fire{width:88px;
+height:88px;
+right:82px;
+top:0;
+background:radial-gradient(circle,#ff4a4a,#d40000)}
+.reload{width:74px;
+height:74px;
+left:0;
+bottom:0;
+background:radial-gradient(circle,#20c8ff,#006ee8)}
+
+.nitroBtn{width:82px;
+height:82px;
+right:0;
+bottom:0;
+background:radial-gradient(circle,#ffd72e,#ed8700)}
+.exitBtn{position:absolute;right:16px;
+top:340px;
+width:58px;
+height:58px;
+border-radius:15px;
+background:#061a2ae8;
+border:1px solid #4cbcff;
+color:white;
+font-size:11px}
+
+.exitBtn span{display:block;
+font-size:20px}
+#voiceBtn{position:absolute;right:16px;top:410px;width:58px;height:58px;border-radius:15px;background:#0a3047e8;border:1px solid #4cbcff;color:white;font-size:11px;font-weight:900;z-index:5}#voiceBtn span{display:block;font-size:20px}#voiceBtn.active{background:linear-gradient(#18d96a,#07943c);border-color:#75ffae}#voiceBtn.muted{background:#3b1720;border-color:#ff6375}.voiceStatus{position:absolute;right:16px;top:474px;color:#8fe8ff;font-size:10px;background:#031525d9;padding:5px 8px;border-radius:8px;display:none;z-index:5}.centerMsg{position:absolute;
+left:50%;top:48%;
+transform:translate(-50%,-50%);
+padding:10px 20px;
+border-radius:15px;
+background:#00101dcc;
+border:1px solid #1cbcff;
+font-weight:900;
+opacity:0;pointer-events:none;
+transition:.2s}.centerMsg.show{opacity:1}
+
+.overlay{position:absolute;
+inset:0;
+display:none;
+align-items:center;
+justify-content:center;
+background:#0009;
+backdrop-filter:blur(6px);
+z-index:50}.overlay.show{display:flex}.pauseCard{width:min(90%,350px);
+padding:25px;
+border-radius:22px;
+background:#041727f5;
+border:1px solid #28c4ff;
+text-align:center}.pauseCard h2{margin-top:0}.pauseBtn{width:100%;height:52px;border-radius:13px;margin:7px 0;color:white;font-weight:900}.resume{background:#13c94f}.settings{background:#087fe8}.leave{background:#e52936}
+
+
+
+
+
+#winner{align-items:center;justify-content:center;background:radial-gradient(circle,#174f7c,#020812 75%);z-index:100}.winnerCard{width:min(90%,420px);text-align:center;padding:30px;border-radius:25px;background:#041827ee;border:2px solid #ffd32b;box-shadow:0 0 40px #ffc40044}.crown{font-size:60px}.winnerTitle{color:#ffd42c;font-size:43px;font-weight:1000}.winnerName{font-size:25px;margin:10px}
+@media(max-width:800px){.topHud{gap:4px;top:5px;left:5px;right:5px}.profile{width:145px;min-width:145px;height:58px;padding:5px}.avatar{width:42px;height:42px;font-size:20px}.profileBar{width:70px}.stats{gap:3px}.stat{min-width:70px;padding:5px}.statTop{font-size:9px}.statIcon{font-size:13px}.bar{height:6px;margin-top:3px}.alive{min-width:74px;padding:5px;font-size:9px;line-height:14px}.playerList{top:70px;left:5px;width:150px}.listPlayer{height:22px;font-size:9px}.listNumber{width:16px;height:16px}.minimap{top:70px;right:5px;width:112px;height:112px;border-width:3px}.safeTimer{top:187px;right:5px;font-size:9px;padding:5px 8px}.safeTimer b{font-size:12px}.joystick{width:125px;height:125px;left:12px;bottom:12px}.stick{width:57px;height:57px}.controlBtns{right:10px;bottom:10px;transform:scale(.82);transform-origin:bottom right}.exitBtn{right:8px;top:310px;transform:scale(.85)}#voiceBtn{right:8px;top:370px;transform:scale(.85)}.voiceStatus{right:8px;top:425px}}
+@media(max-width:520px){.logo{font-size:36px}.homeCard{padding:18px}.players{grid-template-columns:1fr}.roomActions{flex-direction:column}.roomActions button{width:100%;flex-basis:auto}}
+
+
+
+/* compact mobile controls */
+.exitBtn{position:absolute!important;right:10px!important;top:300px!important;width:52px!important;height:52px!important;min-width:52px!important;min-height:52px!important;padding:3px!important;border-radius:12px!important;background:#061a2ae8!important;border:1px solid #4cbcff!important;color:#fff!important;font-size:10px!important;line-height:1!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;z-index:8!important;transform:none!important}
+.exitBtn span{display:block!important;font-size:18px!important;line-height:18px!important;margin:0!important}
+#voiceBtn{right:10px!important;top:360px!important;width:52px!important;height:52px!important;min-width:52px!important;min-height:52px!important;padding:3px!important;border-radius:12px!important;font-size:10px!important;line-height:1!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important}
+#voiceBtn span{font-size:18px!important;line-height:18px!important}
+.voiceStatus{right:10px!important;top:420px!important;font-size:9px!important;padding:4px 6px!important}
+.controlBtns{right:10px!important;bottom:10px!important;width:160px!important;height:160px!important;transform:none!important}
+.gameBtn{border-width:3px!important}
+.gameBtn span{font-size:22px!important}
+.gameBtn small{font-size:10px!important;margin-top:1px!important}
+.fire{width:66px!important;height:66px!important;right:70px!important;top:0!important}
+.reload{width:54px!important;height:54px!important;left:0!important;bottom:0!important}
+.nitroBtn{width:58px!important;height:58px!important;right:0!important;bottom:0!important}
+@media(max-width:800px){.joystick{width:112px!important;height:112px!important;left:10px!important;bottom:10px!important}.stick{width:52px!important;height:52px!important}.exitBtn{right:8px!important;top:285px!important}.controlBtns{right:8px!important;bottom:8px!important;width:155px!important;height:155px!important}.fire{width:64px!important;height:64px!important;right:68px!important}.reload{width:52px!important;height:52px!important}.nitroBtn{width:56px!important;height:56px!important}}
+
+/* final compact HUD sizing */
+.topHud{gap:4px;top:5px;left:5px;right:5px;align-items:flex-start;overflow:visible}
+.profile{width:108px!important;min-width:108px!important;height:48px!important;padding:4px!important;border-radius:12px!important;gap:5px!important}
+.avatar{width:30px!important;height:30px!important;font-size:17px!important;border-width:1px!important}
+.profileName{font-size:11px!important;max-width:66px}
+.level{font-size:8px!important}
+.profileBar{width:55px!important;height:5px!important;margin-top:3px!important}
+.stats{gap:3px!important;min-width:0}
+.stat{min-width:43px!important;padding:4px 4px!important;border-radius:10px!important}
+.statTop{font-size:7px!important;line-height:10px!important;gap:1px}
+.statTop span{white-space:nowrap}
+.bar{height:4px!important;margin-top:3px!important}
+.alive{min-width:48px!important;padding:4px!important;border-radius:10px!important;font-size:7px!important;line-height:10px!important}
+.playerList{width:130px!important;padding:5px!important;border-radius:10px!important;top:62px!important;left:5px!important}
+.listTitle{font-size:8px!important;margin:2px 4px 4px!important}
+.listPlayer{height:19px!important;font-size:8px!important;gap:4px!important;padding:2px 4px!important}
+.listNumber{width:14px!important;height:14px!important;font-size:8px!important}
+.listHealth{height:4px!important}
+.exitBtn{right:7px!important;top:265px!important;width:42px!important;height:42px!important;min-width:42px!important;min-height:42px!important;border-radius:10px!important;font-size:8px!important;padding:2px!important}
+.exitBtn span{font-size:14px!important;line-height:14px!important}
+#voiceBtn{right:7px!important;top:312px!important;width:42px!important;height:42px!important;min-width:42px!important;min-height:42px!important;border-radius:10px!important;font-size:8px!important;padding:2px!important}
+#voiceBtn span{font-size:14px!important;line-height:14px!important}
+.voiceStatus{right:7px!important;top:357px!important;font-size:7px!important;padding:3px 5px!important}
+.controlBtns{right:7px!important;bottom:7px!important;width:125px!important;height:125px!important}
+.gameBtn{border-width:2px!important;box-shadow:0 4px 10px #0008!important}
+.gameBtn span{font-size:16px!important}
+.gameBtn small{font-size:7px!important;margin-top:0!important}
+.fire{width:50px!important;height:50px!important;right:54px!important;top:0!important}
+.reload{width:42px!important;height:42px!important;left:0!important;bottom:0!important}
+.nitroBtn{width:44px!important;height:44px!important;right:0!important;bottom:0!important}
+@media(max-width:800px){.topHud{gap:3px!important}.profile{width:96px!important;min-width:96px!important;height:44px!important}.avatar{width:27px!important;height:27px!important;font-size:15px!important}.profileName{font-size:10px!important;max-width:58px}.profileBar{width:48px!important}.stat{min-width:40px!important;padding:3px!important}.statTop{font-size:6px!important}.bar{height:3px!important}.alive{min-width:44px!important;font-size:6px!important;line-height:9px!important}.exitBtn{top:250px!important}.controlBtns{width:115px!important;height:115px!important}.fire{width:46px!important;height:46px!important;right:50px!important}.reload{width:39px!important;height:39px!important}.nitroBtn{width:41px!important;height:41px!important}}
+
+/* AUTO MATCH / CAR GAME */
+.roomCode strong{font-size:18px!important;letter-spacing:1px}
+#startBtn{display:block!important}
+
+/* FRIEND INVITE */
+.inviteBtn{width:100%;height:50px;margin-top:10px;border-radius:13px;background:linear-gradient(#9b4dff,#5c16c8);color:#fff;font-weight:900;border:1px solid #d5a8ff;box-shadow:0 0 16px #8b3dff44}.inviteMini{position:absolute;right:7px;top:405px;width:42px;height:42px;border-radius:10px;background:#6626b8e8;border:1px solid #d09aff;color:#fff;font-size:8px;font-weight:900;z-index:8}.inviteMini span{display:block;font-size:14px;line-height:14px}.inviteOverlay{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:#000b;backdrop-filter:blur(6px);z-index:70}.inviteOverlay.show{display:flex}.inviteCard{width:min(90%,360px);padding:22px;border-radius:22px;background:#041727f7;border:1px solid #b86cff;box-shadow:0 0 35px #8b3dff55;text-align:center}.inviteCard h2{margin:0 0 14px}.inviteCode{padding:12px;margin:10px 0 15px;border-radius:13px;background:#00101d;border:1px solid #b86cff55;color:#dcbcff;font-size:25px;font-weight:1000;letter-spacing:4px}.inviteAction{width:100%;height:48px;border-radius:12px;margin-top:8px;color:#fff;font-weight:900;background:linear-gradient(#9b4dff,#5c16c8)}.inviteClose{background:#183044}.inviteHint{font-size:11px;color:#9bdfff;margin-top:10px;line-height:16px}@media(max-width:800px){.inviteMini{top:358px}}
+.matchCard{text-align:center}.matchTimer{font-size:72px;line-height:1;font-weight:1000;color:#ffd52e;text-shadow:0 0 22px #ffb300;margin:10px 0 2px}.matchLabel{font-size:12px;color:#7edfff;font-weight:900;letter-spacing:2px;margin-bottom:12px}.matchCard .players{margin-top:4px;max-height:310px;overflow:auto}.matchReady{color:#21ef72!important;font-weight:900}.matchWaiting{color:#ffd52e!important}
+/* FINAL MOBILE CONTROL FIX: larger touch targets and reliable joystick */
+#game #world{z-index:0;touch-action:none;pointer-events:none}
+#game .joystick{position:absolute!important;z-index:30!important;width:150px!important;height:150px!important;left:14px!important;bottom:16px!important;touch-action:none!important;pointer-events:auto!important;user-select:none!important;-webkit-user-select:none!important}
+#game .stick{width:62px!important;height:62px!important;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none!important}
+#game .controlBtns{position:absolute!important;z-index:30!important;right:12px!important;bottom:12px!important;width:184px!important;height:176px!important;transform:none!important;pointer-events:none}
+#game .gameBtn{pointer-events:auto!important;touch-action:none!important;border-width:3px!important;box-shadow:0 5px 14px #0009!important}
+#game .fire{width:78px!important;height:78px!important;right:82px!important;top:0!important}
+#game .reload{width:66px!important;height:66px!important;left:0!important;bottom:0!important}
+#game .nitroBtn{width:68px!important;height:68px!important;right:0!important;bottom:0!important}
+#game .gameBtn span{font-size:23px!important}
+#game .gameBtn small{font-size:10px!important}
+@media(max-width:380px){#game .joystick{width:132px!important;height:132px!important;left:9px!important;bottom:10px!important}#game .stick{width:56px!important;height:56px!important}#game .controlBtns{width:164px!important;height:158px!important;right:7px!important;bottom:8px!important}#game .fire{width:70px!important;height:70px!important;right:72px!important}#game .reload{width:60px!important;height:60px!important}#game .nitroBtn{width:62px!important;height:62px!important}}
+body.brightTheme #home{background:radial-gradient(circle at 50% 20%,#2b9de5 0,#16506e 45%,#082035 90%)}
+
+/* VIDEO-ISSUE FIX: consistent mobile controls and readable HUD */
+#game .topHud{z-index:12;display:flex;gap:5px;top:6px;left:6px;right:6px;align-items:flex-start;pointer-events:none}
+#game .profile{width:112px;min-width:112px;height:48px;padding:4px;gap:5px}
+#game .avatar{width:30px;height:30px;font-size:16px}
+#game .stats{min-width:0;gap:3px}
+#game .stat{min-width:0;padding:4px;flex:1}
+#game .statTop{font-size:clamp(6px,1.6vw,10px);line-height:1.2}
+#game .bar{height:4px}
+#game .alive{min-width:48px;padding:4px;font-size:7px;line-height:1.35}
+#game .joystick{z-index:40!important;width:clamp(112px,22vw,150px)!important;height:clamp(112px,22vw,150px)!important;left:max(10px,env(safe-area-inset-left))!important;bottom:max(14px,env(safe-area-inset-bottom))!important;touch-action:none!important}
+#game .stick{width:54px;height:54px;pointer-events:none!important}
+#game .controlBtns{z-index:40!important;right:max(10px,env(safe-area-inset-right))!important;bottom:max(14px,env(safe-area-inset-bottom))!important;width:168px!important;height:160px!important;transform:none!important;pointer-events:none!important}
+#game .gameBtn{pointer-events:auto!important;touch-action:none!important}
+#game .fire{width:70px!important;height:70px!important;right:74px!important;top:0!important}
+#game .reload{width:54px!important;height:54px!important;left:0!important;bottom:0!important}
+#game .nitroBtn{width:58px!important;height:58px!important;right:0!important;bottom:0!important}
+#game .exitBtn{z-index:20!important;top:calc(190px + env(safe-area-inset-top))!important;right:8px!important;width:44px!important;height:44px!important}
+#game #voiceBtn{z-index:20!important;top:calc(240px + env(safe-area-inset-top))!important;right:8px!important;width:44px!important;height:44px!important}
+#game .voiceStatus{z-index:20!important;top:calc(288px + env(safe-area-inset-top))!important;right:6px!important;max-width:100px;font-size:8px!important}
+#game .inviteMini{z-index:20!important;top:calc(330px + env(safe-area-inset-top))!important;right:8px!important}
+#game #world{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
+@media(max-width:420px){#game .profile{width:86px;min-width:86px;height:42px}#game .avatar{width:25px;height:25px}#game .profileName{font-size:9px;max-width:48px}#game .level{font-size:7px}#game .profileBar{width:42px}#game .stat{padding:3px 2px}#game .alive{min-width:39px;font-size:6px;padding:3px}#game .controlBtns{width:150px!important;height:145px!important}#game .fire{width:64px!important;height:64px!important;right:66px!important}#game .reload{width:49px!important;height:49px!important}#game .nitroBtn{width:53px!important;height:53px!important}}
+
+.playerReadyClock{white-space:nowrap;font-variant-numeric:tabular-nums}
+</style>
+
+<style id="uzar-final-portrait-fix">
+/* Keep the playfield full-screen and all touch controls inside the visible phone viewport. */
+#game{position:absolute;inset:0;overflow:hidden;min-width:0;min-height:0}
+#game #world{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0;pointer-events:none;touch-action:none}
+#game .topHud{z-index:12;left:5px;right:5px;top:max(5px,env(safe-area-inset-top));gap:4px;align-items:flex-start;flex-wrap:nowrap;overflow:hidden}
+#game .profile{width:clamp(72px,23vw,145px);min-width:72px;height:44px;padding:3px;gap:4px;border-radius:9px}
+#game .avatar{width:29px;height:29px;min-width:29px;font-size:17px;border-width:1px}
+#game .profileName{font-size:9px;max-width:75px}.level{font-size:8px}.profileBar{width:48px;height:4px;margin-top:2px}
+#game .stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px;flex:1;min-width:0}
+#game .stat{min-width:0;padding:3px 4px;border-radius:6px}
+#game .statTop{font-size:7px;line-height:9px;gap:2px;white-space:nowrap}.bar{height:3px;margin-top:2px}
+#game .alive{min-width:43px;padding:3px 4px;font-size:7px;line-height:10px;border-radius:6px}
+#game .playerList{top:58px;left:5px;width:92px;padding:4px;border-radius:8px;z-index:10}
+#game .listTitle{font-size:7px;margin:2px}.listPlayer{height:16px;font-size:7px;padding:1px 2px;gap:3px}.listNumber{width:12px;height:12px;font-size:7px}.listHealth{height:3px}
+#game .minimap{top:58px;right:5px;width:76px;height:76px;border-width:2px;border-radius:10px;z-index:10}
+#game .safeTimer{top:140px;right:5px;padding:4px 5px;font-size:7px;border-radius:7px;z-index:10}
+#game .safeTimer b{font-size:9px}
+#game .joystick{z-index:40;width:clamp(104px,30vw,132px)!important;height:clamp(104px,30vw,132px)!important;left:max(8px,env(safe-area-inset-left))!important;bottom:max(18px,env(safe-area-inset-bottom))!important;touch-action:none!important;pointer-events:auto!important}
+#game .stick{width:48px!important;height:48px!important}
+#game .controlBtns{z-index:40;width:140px!important;height:142px!important;right:max(7px,env(safe-area-inset-right))!important;bottom:max(18px,env(safe-area-inset-bottom))!important;transform:none!important;pointer-events:none}
+#game .gameBtn{pointer-events:auto;touch-action:none;border-width:2px!important}
+#game .fire{width:62px!important;height:62px!important;right:64px!important;top:0!important}
+#game .reload{width:48px!important;height:48px!important;left:0!important;bottom:0!important}
+#game .nitroBtn{width:50px!important;height:50px!important;right:0!important;bottom:0!important}
+#game .gameBtn span{font-size:18px!important}#game .gameBtn small{font-size:8px!important}
+#game .exitBtn{z-index:20;right:5px!important;top:242px!important;transform:scale(.72)!important;transform-origin:top right}
+#game #voiceBtn{z-index:20;right:5px!important;top:275px!important;transform:scale(.72)!important;transform-origin:top right}
+#game .inviteMini{z-index:20;right:5px!important;top:308px!important;transform:scale(.72)!important;transform-origin:top right}
+#game .voiceStatus{z-index:20;right:5px!important;top:341px!important;max-width:95px;font-size:7px}
+@media (orientation:landscape){#game .topHud{left:8px;right:8px;top:5px}#game .profile{width:clamp(100px,18vw,145px)}#game .playerList{top:58px;width:115px}#game .minimap{width:88px;height:88px}#game .joystick{width:116px!important;height:116px!important}#game .controlBtns{width:150px!important;height:150px!important}}
+#roomCodeInput{box-sizing:border-box;text-align:center;border:1px solid #23caff55;background:#041827;color:#fff;border-radius:12px;padding:12px;font-weight:800}
+#joinCodeBtn{font-size:12px;min-height:48px}
+#startBtn:disabled{opacity:.78;filter:saturate(.75)}
+</style>
+
+</head>
+<body>
+<div id="app">
+<section id="home" class="screen active"><div class="homeBg"></div><div class="homeCard"><button class="themeBtn" type="button" aria-label="Theme">☀️</button><div class="logo">UZAR<span>BATTLE ROYALE</span></div><div class="subLogo">🚗 CAR COMBAT • PLAY TO SURVIVE</div><input id="playerName" class="nameInput" maxlength="14" placeholder="Player Name" value="Mijanur"><button id="createBtn" class="mainBtn">🌐 CREATE / FIND ONLINE ROOM</button><div style="display:flex;gap:7px;margin-top:9px"><input id="roomCodeInput" class="nameInput" maxlength="6" placeholder="ROOM CODE" style="min-width:0;flex:1;text-transform:uppercase;letter-spacing:2px"><button id="joinCodeBtn" class="mainBtn" style="width:42%;margin:0;padding:8px">JOIN ROOM</button></div><button id="offlineBtn" class="mainBtn offlineBtn" type="button">🎮 PLAY OFFLINE (5 BOTS)</button><div id="homeStatus" style="margin-top:18px;color:#70ddff;font-size:16px">Online: Supabase • Offline: available</div><div class="infoRow"><div class="infoBox"><b>👥 2+5</b>2 ONLINE + 5 BOTS</div><div class="infoBox"><b>⚔️</b>BATTLE</div><div class="infoBox"><b>🗺️</b>REAL MAP</div></div></div></section>
+<section id="room" class="screen"><div class="roomCard matchCard"><div class="roomTitle">⚡ MATCHMAKING</div><div class="roomCode" style="margin:8px 0;padding:8px"><small>ROOM CODE · বন্ধুকে দিন</small><strong id="liveRoomCode">------</strong> <button id="liveCopyCode" type="button" style="padding:6px 10px;border-radius:8px;background:#087ddd;color:#fff;border:0;font-weight:900">COPY</button></div><div class="matchTimer" id="matchTimer">00:00</div><div class="matchLabel">WAITING TIME · START চাপুন</div><div class="count">PLAYERS <b id="playerCount">0/2</b></div><div id="roomPlayers" class="players"></div><div class="roomActions"><button id="startBtn" class="startBtn">🚀 START MATCH</button><button id="inviteRoomBtn" class="leaveBtn">🔗 INVITE FRIEND</button><button id="leaveRoomBtn" class="leaveBtn">↩ CANCEL</button></div><div id="roomStatus" class="status">২ জন অনলাইন খেলোয়াড় লাগবে • বন্ধুকে INVITE LINK পাঠান</div></div></section>
+<section id="game" class="screen"><canvas id="world"></canvas><div class="topHud"><div class="profile"><div class="avatar">🪖</div><div style="min-width:0"><div id="hudName" class="profileName">Mijanur 👑</div><div class="level">Lv. 5</div><div class="profileBar"><i></i></div></div></div><div class="stats"><div class="stat"><div class="statTop"><span>❤️ HP</span><span id="hpText">100/100</span></div><div class="bar hp"><i id="hpBar"></i></div></div><div class="stat"><div class="statTop"><span>🛡 ARMOR</span><span id="armorText">100/100</span></div><div class="bar armor"><i id="armorBar"></i></div></div><div class="stat"><div class="statTop"><span>⚡ NITRO</span><span id="nitroText">100/100</span></div><div class="bar nitro"><i id="nitroBar"></i></div></div><div class="stat"><div class="statTop"><span>🔫 AMMO</span><span id="ammoText">30/30</span></div><div class="bar ammo"><i id="ammoBar"></i></div></div></div><div class="alive">👤 ALIVE <b id="aliveText">20/20</b><br>💀 KILLS <b id="killsText">0</b><br>🏆 SCORE <b id="scoreText">0</b></div></div>
+<div class="playerList"><div class="listTitle">PLAYERS</div><div id="gamePlayers"></div></div><div class="minimap"><canvas id="mini"></canvas><div class="safe"></div><div class="north">N</div></div><div class="safeTimer">🛡 SAFE ZONE<b id="safeTime">00:42</b></div><button id="exitGameBtn" class="exitBtn"><span>🚗</span>EXIT</button><button id="voiceBtn"><span>🎙️</span>VOICE</button><button id="inviteGameBtn" class="inviteMini" type="button"><span>👥</span>INVITE</button><div id="voiceStatus" class="voiceStatus">Voice off</div><div id="joystick" class="joystick"><div id="stick" class="stick"></div></div><div class="controlBtns"><button id="fireBtn" class="gameBtn fire"><span>🎯</span><small>FIRE</small></button><button id="reloadBtn" class="gameBtn reload"><span>↻</span><small>RELOAD</small></button><button id="nitroBtn" class="gameBtn nitroBtn"><span>⚡</span><small>NITRO</small></button></div><div id="centerMsg" class="centerMsg"></div><div id="pauseOverlay" class="overlay"><div class="pauseCard"><h2>Ⅱ PAUSE</h2><button id="resumeBtn" class="pauseBtn resume">▶ RESUME</button><button class="pauseBtn settings">⚙ SETTINGS</button><button id="pauseLeaveBtn" class="pauseBtn leave">🚪 LEAVE GAME</button></div></div></section>
+<div id="inviteOverlay" class="inviteOverlay"><div class="inviteCard"><h2>👥 INVITE FRIENDS</h2><div>রুম কোড</div><div id="inviteCode" class="inviteCode">------</div><button id="shareInviteBtn" class="inviteAction">📤 SHARE INVITE</button><button id="copyInviteBtn" class="inviteAction">📋 COPY INVITE LINK</button><button id="copyRoomCodeBtn" class="inviteAction">🔑 COPY ROOM CODE</button><button id="closeInviteBtn" class="inviteAction inviteClose">✕ CLOSE</button><div class="inviteHint">বন্ধুকে লিংক পাঠালে একই রুমে সরাসরি ঢুকবে।</div></div></div><section id="winner" class="screen"><div class="winnerCard"><div class="crown">👑</div><div class="winnerTitle">#1 WINNER</div><div id="winnerName" class="winnerName">Mijanur</div><div style="color:#a9dfff">🏆 BATTLE ROYALE CHAMPION</div><button id="winnerHome" class="mainBtn" style="margin-top:20px">🏠 HOME</button></div></section>
+</div>
+
+<script type="module">
+// UZAR database adapter: Supabase REST for online rooms + in-memory DB for offline play.
+const SUPABASE_URL="https://hrjuxwjcadbmaqydbbei.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_-A7EBGILSJI8PQKPF5C69w_CT_riuwB";
+const db={};
+let offlineMode=false;
+const localRooms={};
+const localListeners=new Set();
+const cloneData=v=>v===undefined?undefined:JSON.parse(JSON.stringify(v));
+function ref(_db,path=""){return {path:String(path||"").split("/").filter(Boolean)}}
+function pathGet(root,parts){let v=root;for(const k of parts){if(v==null)return undefined;v=v[k]}return v}
+function pathSet(root,parts,value){if(!parts.length)return value;let o=root;for(let i=0;i<parts.length-1;i++){const k=parts[i];if(!o[k]||typeof o[k]!=="object")o[k]={};o=o[k]}if(value===undefined)delete o[parts[parts.length-1]];else o[parts[parts.length-1]]=cloneData(value);return root}
+function snap(value){return {val:()=>cloneData(value),exists:()=>value!==undefined&&value!==null,forEach:fn=>{if(value&&typeof value==="object")Object.entries(value).forEach(([key,v])=>fn({key,val:()=>cloneData(v)}))}}}
+// Supabase JSONB may contain a JSON-encoded string if an older build saved JSON.stringify(state).
+// Normalize it before any path access or mutation so properties like "players" are never set on a string.
+function normalizeRoomState(value){
+ if(typeof value!=="string")return value&&typeof value==="object"?value:{};
+ let parsed=value;
+ for(let i=0;i<2&&typeof parsed==="string";i++){try{parsed=JSON.parse(parsed)}catch(_){return {}}}
+ return parsed&&typeof parsed==="object"&&!Array.isArray(parsed)?parsed:{};
+}
+function localNotify(){for(const l of [...localListeners]){try{l.cb(snap(pathGet({rooms:localRooms},l.path)))}catch(e){}}}
+async function api(path,opts={}){const r=await fetch(SUPABASE_URL+"/rest/v1/"+path,{...opts,headers:{apikey:SUPABASE_PUBLISHABLE_KEY,"Content-Type":"application/json",...(opts.headers||{})}});if(!r.ok){const t=await r.text();throw new Error("Supabase "+r.status+": "+t.slice(0,220))}if(r.status===204)return null;const t=await r.text();return t?JSON.parse(t):null}
+async function readRooms(){const rows=await api("uzar_rooms?select=code,state");const out={};for(const row of rows||[])out[row.code]=normalizeRoomState(row.state);return out}
+async function readRoom(code){const rows=await api("uzar_rooms?select=state&code=eq."+encodeURIComponent(code)+"&limit=1");return rows&&rows.length?normalizeRoomState(rows[0].state):undefined}
+async function writeRoom(code,state){
+ // Legacy fallback used only for offline/migration helpers. Online path writes use atomic RPC.
+ await api("uzar_rooms?on_conflict=code",{method:"POST",headers:{Prefer:"resolution=merge-duplicates,return=minimal"},body:JSON.stringify({code,state})});
+}
+async function patchRoomAtomic(code,path,value,mode="set"){
+ // Atomic server-side JSONB path patch prevents one player's update from overwriting another player's data.
+ await api("rpc/uzar_room_patch",{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify({p_code:code,p_path:path,p_value:value===undefined?null:value,p_mode:mode})});
+}
+async function mutatePath(parts,value,mode="set"){
+ if(offlineMode){const current=pathGet({rooms:localRooms},parts);if(mode==="remove"){if(parts.length===2)delete localRooms[parts[1]];else pathSet({rooms:localRooms},parts,undefined)}else if(mode==="merge"){pathSet({rooms:localRooms},parts,{...(current||{}),...(value||{})})}else pathSet({rooms:localRooms},parts,value);localNotify();return}
+ if(parts[0]!=="rooms")throw new Error("Unsupported database path");
+ if(parts.length===1){if(mode==="remove")throw new Error("Cannot remove all rooms");for(const [code,state] of Object.entries(value||{}))await patchRoomAtomic(code,[],state,"set");return}
+ const code=parts[1],path=parts.slice(2);
+ if(path.length===0&&mode==="remove"){await api("uzar_rooms?code=eq."+encodeURIComponent(code),{method:"DELETE",headers:{Prefer:"return=minimal"}});return}
+ await patchRoomAtomic(code,path,value,mode);
+}
+async function get(r){if(offlineMode)return snap(pathGet({rooms:localRooms},r.path));if(!r.path.length)return snap(await readRooms());if(r.path[0]!=="rooms")return snap(undefined);const state=await readRoom(r.path[1]);return snap(r.path.length===2?state:pathGet(state,r.path.slice(2)))}
+async function set(r,v){return mutatePath(r.path,v,"set")}
+async function update(r,v){if(!r.path.length&&v&&Object.keys(v).some(k=>k.startsWith("rooms/"))){const entries=Object.entries(v);for(const [p,val] of entries){const parts=p.split("/").filter(Boolean);if(parts[0]!=="rooms"||!parts[1])continue;if(offlineMode){pathSet({rooms:localRooms},parts,val);localNotify()}else await patchRoomAtomic(parts[1],parts.slice(2),val,"set")}return}return mutatePath(r.path,v,"merge")}
+async function remove(r){return mutatePath(r.path,undefined,"remove")}
+function onValue(r,cb){let stopped=false;const listener={path:r.path,cb};if(offlineMode){localListeners.add(listener);Promise.resolve().then(()=>{if(!stopped)cb(snap(pathGet({rooms:localRooms},r.path)))})}else{const tick=async()=>{if(stopped)return;try{const value=r.path.length===0?await readRooms():r.path[0]==="rooms"?(async()=>{const st=await readRoom(r.path[1]);return r.path.length===2?st:pathGet(st,r.path.slice(2))})():undefined;if(!stopped)cb(snap(value))}catch(e){console.warn(e)}};tick();listener.timer=setInterval(tick,650)}return()=>{stopped=true;localListeners.delete(listener);if(listener.timer)clearInterval(listener.timer)}}
+function onDisconnect(_r){return {remove:async()=>{},cancel:async()=>{}}}
+function push(r,v){const key="k_"+Date.now().toString(36)+Math.random().toString(36).slice(2,8);const promise=set(ref(db,[...r.path,key].join("/")),v);return {key,then:promise.then.bind(promise),catch:promise.catch.bind(promise)}}
+// NOTE: This REST-backed transaction is read/modify/write, not server-atomic. Keep match authoritative actions host-owned.
+async function runTransaction(r,fn){const before=await get(r),current=before.val(),next=fn(cloneData(current));if(next===undefined)return{committed:false,snapshot:before};await set(r,next);return{committed:true,snapshot:await get(r)}}
+
+let myId="p_"+Math.random().toString(36).slice(2,10)+"_"+Date.now().toString(36);
+let myName="Mijanur",roomCode="",isHost=false,roomUnsub=null,playersUnsub=null,pickupsUnsub=null,bulletsUnsub=null;
+let players={},pickups={},bullets={},bulletHits={};
+let gameStarted=false,paused=false,lastSync=0,lastFire=0,lastMuzzleFlash=0;
+let matchCountdown=15,matchTimerId=null,matchStarted=false,matchCountdownSeconds=15;
+let launchRequestInFlight=false;
+window.localReadyAt=0;
+const MIN_PLAYERS=2,MAX_PLAYERS=2,MAX_BOTS=5,MATCH_DURATION_MS=5*60*1000;
+let voiceEnabled=false,voiceStream=null,voicePeers=new Map(),voiceUnsub=null,voiceCandidateUnsubs=new Map(),voicePendingCandidates=new Map(),voiceSignalPeers=new Set();
+const voiceConfig={iceServers:[{urls:"stun:stun.l.google.com:19302"},{urls:"stun:stun1.l.google.com:19302"}]};
+function voiceRoomKey(a,b){return [a,b].sort().join("__")}
+function setVoiceStatus(t){const el=document.getElementById("voiceStatus");if(el){el.textContent=t;el.style.display="block";}}
+async function createVoicePeer(peerId,initiator){
+  if(!voiceEnabled||peerId===myId||voicePeers.has(peerId))return;
+  const pc=new RTCPeerConnection(voiceConfig); const key=voiceRoomKey(myId,peerId); const base=ref(db,"rooms/"+roomCode+"/voice/"+key);
+  const audio=document.createElement("audio");audio.autoplay=true;audio.playsInline=true;audio.style.display="none";document.body.appendChild(audio);
+  if(voiceStream) voiceStream.getTracks().forEach(t=>pc.addTrack(t,voiceStream));
+  pc.ontrack=e=>{audio.srcObject=e.streams[0];audio.play().catch(()=>{})};
+  pc.onicecandidate=e=>{if(e.candidate)push(ref(db,"rooms/"+roomCode+"/voiceCandidates/"+key+"/"+myId),e.candidate.toJSON()).catch(()=>{})};
+  pc.onconnectionstatechange=()=>{if(["failed","closed","disconnected"].includes(pc.connectionState))removeVoicePeer(peerId)};
+  const candidateRef=ref(db,"rooms/"+roomCode+"/voiceCandidates/"+key+"/"+peerId);
+  const cu=onValue(candidateRef,s=>{s.forEach(x=>{const c=x.val();if(!c)return;try{if(pc.remoteDescription)pc.addIceCandidate(new RTCIceCandidate(c));else{const q=voicePendingCandidates.get(peerId)||[];q.push(c);voicePendingCandidates.set(peerId,q)}}catch(_){}})});
+  voiceCandidateUnsubs.set(peerId,cu);
+  voicePeers.set(peerId,{pc,audio,key});
+  pc.addEventListener("signalingstatechange",async()=>{if(pc.remoteDescription){const q=voicePendingCandidates.get(peerId)||[];for(const c of q){try{await pc.addIceCandidate(new RTCIceCandidate(c))}catch(_){}}voicePendingCandidates.delete(peerId)}});
+  if(initiator){
+    const offer=await pc.createOffer();await pc.setLocalDescription(offer);await set(ref(db,"rooms/"+roomCode+"/voice/"+key+"/offer"),{type:offer.type,sdp:offer.sdp,from:myId});
+  }
+}
+async function handleVoicePeer(peerId){
+  if(!voiceEnabled||peerId===myId||voiceSignalPeers.has(peerId))return;
+  voiceSignalPeers.add(peerId);
+  try {
+  const initiator=myId<peerId;
+  if(initiator && !voicePeers.has(peerId)) await createVoicePeer(peerId,true);
+  else if(!initiator && !voicePeers.has(peerId)) await createVoicePeer(peerId,false);
+  const key=voiceRoomKey(myId,peerId);
+  const offerUn=onValue(ref(db,"rooms/"+roomCode+"/voice/"+key+"/offer"),async s=>{
+    const offer=s.val(); if(!offer||offer.from===myId)return; const item=voicePeers.get(peerId); if(!item)return;
+    try{if(item.pc.signalingState!=="stable")return;await item.pc.setRemoteDescription(offer);const ans=await item.pc.createAnswer();await item.pc.setLocalDescription(ans);await set(ref(db,"rooms/"+roomCode+"/voice/"+key+"/answer"),{type:ans.type,sdp:ans.sdp,from:myId})}catch(_){ }
+  });
+  const ansUn=onValue(ref(db,"rooms/"+roomCode+"/voice/"+key+"/answer"),async s=>{
+    const ans=s.val(),item=voicePeers.get(peerId);if(!ans||!item||ans.from===myId)return;
+    try{if(item.pc.signalingState==="have-local-offer")await item.pc.setRemoteDescription(ans)}catch(_){ }
+  });
+  const old=voicePeers.get(peerId); if(old){old.offerUn=offerUn;old.ansUn=ansUn}
+  } catch(err) { voiceSignalPeers.delete(peerId); removeVoicePeer(peerId); console.warn("Voice peer setup failed",err); }
+}
+function removeVoicePeer(peerId){voiceSignalPeers.delete(peerId);const item=voicePeers.get(peerId);if(!item)return;try{item.pc.close()}catch(_){}try{item.audio.remove()}catch(_){}if(voiceCandidateUnsubs.has(peerId)){voiceCandidateUnsubs.get(peerId)();voiceCandidateUnsubs.delete(peerId)}if(item.offerUn)item.offerUn();if(item.ansUn)item.ansUn();voicePendingCandidates.delete(peerId);voicePeers.delete(peerId)}
+async function setupVoiceListener(){
+  if(offlineMode||voiceUnsub||!roomCode)return;
+  voiceUnsub=onValue(ref(db,"rooms/"+roomCode+"/players"),snap=>{if(!voiceEnabled)return;const data=snap.val()||{};Object.entries(data).forEach(([id,p])=>{if(id!==myId&&!p?.bot)handleVoicePeer(id)});for(const id of [...voicePeers.keys()])if(!data[id])removeVoicePeer(id)});
+}
+function cleanupVoice(){if(voiceUnsub){voiceUnsub();voiceUnsub=null}for(const id of [...voicePeers.keys()])removeVoicePeer(id);voiceCandidateUnsubs.clear();voicePendingCandidates.clear();voiceSignalPeers.clear();if(voiceStream){voiceStream.getTracks().forEach(t=>t.stop());voiceStream=null}voiceEnabled=false;const b=document.getElementById("voiceBtn");if(b){b.classList.remove("active");b.classList.add("muted");b.innerHTML="<span>🎙️</span>VOICE"}setVoiceStatus("Voice off")}
+async function toggleVoice(){
+  if(offlineMode){showMessage("🎙️ OFFLINE MODE");setVoiceStatus("Voice needs online room");return}
+  if(voiceEnabled){cleanupVoice();return}
+  if(!roomCode){showMessage("ROOM NOT READY");setVoiceStatus("Join a room first");return}
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){showMessage("VOICE NEEDS HTTPS");setVoiceStatus("Use HTTPS hosting");return}
+  try{voiceStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}});voiceEnabled=true;const b=document.getElementById("voiceBtn");b.classList.add("active");b.classList.remove("muted");b.innerHTML="<span>🎙️</span>ON";setVoiceStatus("Connecting voice…");await setupVoiceListener();setVoiceStatus("Voice on")}catch(e){voiceStream=null;showMessage("🎙️ MIC PERMISSION NEEDED");setVoiceStatus("Microphone blocked")}
+}
+
+
+let player={x:1800,y:1800,angle:0,speed:0,hp:100,armor:100,nitro:100,ammo:30,alive:true,kills:0,score:0};
+
+function screen(id){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active")}
+const nameInput=document.getElementById("playerName"),homeStatus=document.getElementById("homeStatus"),roomStatus=document.getElementById("roomStatus");
+
+function makeRoomCode(){const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";let code="";for(let i=0;i<6;i++)code+=chars[Math.floor(Math.random()*chars.length)];return code}
+
+function createPickupData(){
+const a=[[700,700],[1250,650],[2100,650],[2950,800],[700,1450],[1150,2250],[2100,1500],[2900,1450],[650,2850],[1250,3150],[2200,2850],[3000,3050]];
+const h=[[950,950],[1650,700],[2500,900],[3150,1300],[950,1900],[1450,1500],[2350,1900],[3050,2100],[800,2450],[1550,3000],[2400,3150],[3150,2700]];
+const out={};a.forEach((p,i)=>out["a"+i]={type:"ammo",x:p[0],y:p[1],amount:10,active:true});h.forEach((p,i)=>out["h"+i]={type:"hp",x:p[0],y:p[1],amount:25,active:true});return out;
+}
+
+function makePlayerData(name,x,y,extra={}){
+return {name,x,y,angle:0,hp:100,armor:100,nitro:100,ammo:30,alive:true,kills:0,score:0,joinedAt:Date.now(),...extra};
+}
+function makeBotData(i){
+ // Give every bot its own spawn point. The old fallback placed BOT 4+
+ // at exactly [1800,1800], on top of the first player's car, blocking movement
+ // and drawing over the player's car.
+ const positions=[
+  [450,450],[3150,3150],[3150,500],[500,3150],
+  [1000,500],[2550,450],[3350,1100],[450,1700],
+  [1050,2450],[2300,2750],[3250,2250],[2500,3350],
+  [1400,700],[2100,500],[2850,1450],[850,2850]
+ ];
+ const pos=positions[(Math.max(1,Number(i)||1)-1)%positions.length];
+ return makePlayerData("BOT "+i,pos[0],pos[1],{bot:true,botIndex:i});
+}
+function countHumans(data){return Object.values(data?.players||{}).filter(p=>p&&!p.bot).length}
+
+async function createRoom(){
+myName=nameInput.value.trim()||"Mijanur";roomCode=makeRoomCode();isHost=true;matchStarted=false;matchCountdown=0;matchCountdownSeconds=0;window.matchStartAt=0;window.localReadyAt=0;window.currentRoomStatus="waiting";homeStatus.textContent="⏳ Matchmaking...";
+try{
+const playersData={};
+playersData[myId]=makePlayerData(myName,1800,1250,{ready:false,invulnerableUntil:Date.now()+5000});
+player={...player,x:1800,y:1250,angle:0,speed:0,alive:true};
+for(let i=1;i<=MAX_BOTS;i++)playersData["bot"+i]=makeBotData(i);
+
+await set(ref(db,"rooms/"+roomCode),{host:myId,createdAt:Date.now(),status:"waiting",startRequestedAt:null,maxPlayers:MAX_PLAYERS,maxBots:MAX_BOTS,minPlayers:2,startedAt:null,matchDuration:MATCH_DURATION_MS});
+await set(ref(db,"rooms/"+roomCode+"/players"),playersData);
+await set(ref(db,"rooms/"+roomCode+"/pickups"),createPickupData());
+await set(ref(db,"rooms/"+roomCode+"/bullets"),{});
+await onDisconnect(ref(db,"rooms/"+roomCode+"/players/"+myId)).remove();
+openRoom();
+}catch(err){console.error(err);homeStatus.textContent="❌ সার্ভার লেখার সমস্যা: "+err.message+" • আগে uzar_room_patch SQL function চালান"}
+}
+
+async function joinRoom(){
+myName=nameInput.value.trim()||"Mijanur";homeStatus.textContent="⏳ Online room খোঁজা হচ্ছে...";
+try{
+const roomsSnap=await get(ref(db,"rooms"));let found=null;
+if(roomsSnap.exists()){
+for(const [code,data] of Object.entries(roomsSnap.val()||{})){
+if(!data)continue;const humans=countHumans(data);
+if(humans<MAX_PLAYERS && data.status==="waiting"){found={code,data};break}
+}
+}
+if(!found){await createRoom();return}
+roomCode=found.code;isHost=false;
+const pSnap=await get(ref(db,"rooms/"+roomCode+"/players"));
+const current=pSnap.exists()?pSnap.val():{};
+if(countHumans({players:current})>=MAX_PLAYERS){homeStatus.textContent="⏳ Room full, নতুন game তৈরি হচ্ছে...";await createRoom();return}
+const pos={x:500+Math.random()*2600,y:500+Math.random()*2600};
+player={...player,x:pos.x,y:pos.y,angle:0,speed:0,alive:true};
+await set(ref(db,"rooms/"+roomCode+"/players/"+myId),makePlayerData(myName,pos.x,pos.y,{ready:false}));
+await onDisconnect(ref(db,"rooms/"+roomCode+"/players/"+myId)).remove();
+openRoom();
+}catch(err){console.error(err);homeStatus.textContent="❌ Player যোগ হয়নি: "+err.message+" • uzar_room_patch SQL function ও table permission পরীক্ষা করুন"}
+}
+
+async function ensureBattleData(){
+if(!roomCode||!isHost)return;
+const p=await get(ref(db,"rooms/"+roomCode+"/pickups"));if(!p.exists())await set(ref(db,"rooms/"+roomCode+"/pickups"),createPickupData());
+const b=await get(ref(db,"rooms/"+roomCode+"/bullets"));if(!b.exists())await set(ref(db,"rooms/"+roomCode+"/bullets"),{});
+}
+
+function openRoom(){screen("room");const codeEl=document.getElementById("liveRoomCode");if(codeEl)codeEl.textContent=roomCode||"------";listenRoom();listenPlayers();listenPickups();listenBullets();ensureBattleData();updateMatchUI()}
+function listenRoom(){if(roomUnsub)roomUnsub();roomUnsub=onValue(ref(db,"rooms/"+roomCode),snap=>{
+if(!snap.exists()){leaveLocal();return}
+const data=snap.val()||{};window.currentRoomStatus=data.status||"waiting";
+if(data.status==="ended"){if(matchTimerId)clearInterval(matchTimerId);matchTimerId=null;gameStarted=false;screen("winner");document.getElementById("winnerName").textContent=data.winnerName||"Winner";document.querySelector(".winnerTitle").textContent="🏆 MOST KILLS: "+Number(data.winnerKills||0);return}
+if(data.status==="started"){
+ if(matchTimerId)clearInterval(matchTimerId);matchTimerId=null;
+ matchStarted=true;window.gameStartedAt=Number(data.startedAt||Date.now());startGame();
+}else{
+ // Each player starts their own lobby timer only when that player presses START.
+ // Do not start the other player's timer from the room-level event.
+ const mine=players?.[myId];
+ if(mine?.ready && Number(mine.readyAt||0)){
+   matchStarted=true;window.matchStartAt=Number(mine.readyAt);window.localReadyAt=window.matchStartAt;
+   if(!matchTimerId)startMatchCountdown();
+ }else if(!window.localReadyAt){
+   matchStarted=false;window.matchStartAt=0;
+   if(matchTimerId){clearInterval(matchTimerId);matchTimerId=null}
+ }
+}
+updateMatchUI();
+})}
+
+function listenPlayers(){
+if(playersUnsub)playersUnsub();
+playersUnsub=onValue(ref(db,"rooms/"+roomCode+"/players"),snap=>{
+players=snap.exists()?snap.val():{};
+const mine=players[myId];
+if(mine){
+ // Remote snapshots may arrive late; never replace local movement coordinates.
+ player.hp=Math.max(0,Math.min(100,Number(mine.hp??player.hp)));
+ player.armor=Math.max(0,Math.min(100,Number(mine.armor??player.armor)));
+ player.nitro=Math.max(0,Math.min(100,Number(mine.nitro??player.nitro)));
+ player.ammo=Math.max(0,Math.min(30,Number(mine.ammo??player.ammo)));
+ // Accept death from server only when it is newer than the last local respawn.
+ if(mine.alive===false && Number(mine.deadAt||0)>Number(window.localLastRespawnAt||0) && !window.localRespawnAt){
+   player.alive=false;
+   if(!window.localRespawnAt)window.localRespawnAt=Date.now()+4000;
+ } else if(mine.alive!==false && !window.localRespawnAt){
+   player.alive=true;
+ }
+ player.kills=Number(mine.kills??player.kills);player.score=Number(mine.score??player.score);
+ // Keep the render snapshot consistent with the local car state.
+ players[myId]={...mine,x:player.x,y:player.y,angle:player.angle,alive:player.alive,hp:player.hp,armor:player.armor,nitro:player.nitro,ammo:player.ammo};
+}
+renderRoomPlayers();renderGamePlayers();
+document.getElementById("playerCount").textContent=countHumans({players})+"/"+MAX_PLAYERS;
+ // Start/continue this client's timer only after this specific player pressed START.
+ const roomSnapStatus=window.currentRoomStatus||"waiting";
+ if(roomSnapStatus!=="started" && mine?.ready && Number(mine.readyAt||0)){
+   matchStarted=true;window.matchStartAt=Number(mine.readyAt);window.localReadyAt=window.matchStartAt;
+   if(!matchTimerId)startMatchCountdown();
+ }else if(roomSnapStatus!=="started" && !mine?.ready && !window.localReadyAt){
+   matchStarted=false;window.matchStartAt=0;
+   if(matchTimerId){clearInterval(matchTimerId);matchTimerId=null}
+ }
+ updateMatchUI();tryLaunchMatch();
+document.getElementById("aliveText").textContent=Object.values(players).filter(p=>p&&p.alive!==false).length+"/"+(MAX_PLAYERS+MAX_BOTS);
+});
+}
+
+function listenPickups(){if(pickupsUnsub)pickupsUnsub();pickupsUnsub=onValue(ref(db,"rooms/"+roomCode+"/pickups"),snap=>{pickups=snap.exists()?snap.val():{}})}
+function listenBullets(){if(bulletsUnsub)bulletsUnsub();bulletsUnsub=onValue(ref(db,"rooms/"+roomCode+"/bullets"),snap=>{bullets=snap.exists()?snap.val():{}})}
+
+function formatElapsed(startAt){const seconds=Math.max(0,Math.floor((Date.now()-Number(startAt||0))/1000));return "START: "+String(Math.floor(seconds/60)).padStart(2,"0")+":"+String(seconds%60).padStart(2,"0")}
+
+function renderRoomPlayers(){
+const box=document.getElementById("roomPlayers");if(!box)return;box.innerHTML="";
+// The matchmaking lobby lists only real people; bots are added to the battle, not counted as joined friends.
+const humans=Object.entries(players||{}).filter(([,p])=>p&&!p.bot).sort((a,b)=>(a[1].joinedAt||0)-(b[1].joinedAt||0));
+for(let index=0;index<MAX_PLAYERS;index++){
+ const entry=humans[index];const row=document.createElement("div");row.className="playerRow";
+ if(!entry){row.innerHTML=`<div class="playerNum">${index+1}</div><div class="playerName" style="color:#78a9bf">Waiting for player…<div style="font-size:10px;margin-top:2px">🔗 Invite link / Room Code</div></div>`;box.appendChild(row);continue;}
+ const [id,p]=entry;const state=p.ready?"▶ START চাপা হয়েছে":"⏳ START-এর অপেক্ষায়";const readyAt=p.ready?Number(p.readyAt||0):0;
+ row.innerHTML=`<div class="playerNum">${index+1}</div><div class="playerName">${escapeHTML(p.name||"Player")}${id===myId&&isHost?" 👑":""}<div style="font-size:10px;color:${p.ready?'#21ef72':'#ffd45a'};margin-top:2px">${state}</div><div class="playerReadyClock" data-ready-at="${readyAt}" style="font-size:10px;color:#7edfff;margin-top:2px">${readyAt?formatElapsed(readyAt):""}</div></div>`;box.appendChild(row);
+}
+updateMatchUI();
+}
+
+function renderGamePlayers(){
+const box=document.getElementById("gamePlayers");if(!box)return;box.innerHTML="";
+Object.entries(players).slice(0,10).forEach(([id,p],index)=>{
+const row=document.createElement("div");row.className="listPlayer"+(id===myId?" me":"");const hp=Math.max(0,Math.min(100,p.hp||0));
+row.innerHTML=`<div class="listNumber">${index+1}</div><div style="width:62px;overflow:hidden;text-overflow:ellipsis">${escapeHTML(p.name||"Player")}</div><div class="listHealth"><i style="width:${hp}%"></i></div>`;box.appendChild(row)});
+}
+
+async function hostStart(){
+ if(!roomCode||gameStarted)return;
+ const current=players?.[myId];
+ if(current?.ready){showMessage("✅ আপনি START দিয়েছেন; অন্য খেলোয়াড়ের অপেক্ষা করুন");return;}
+ try{
+   // First START starts an elapsed waiting timer. It does not auto-launch.
+   const roomRef=ref(db,"rooms/"+roomCode);
+   const roomSnap=await get(roomRef);
+   const roomData=roomSnap.val()||{};
+   if(roomData.status!=="waiting"){
+     showMessage("ম্যাচ ইতিমধ্যে শুরু হয়েছে");return;
+   }
+   // This player's own timer begins now. The other player has a separate readyAt.
+   const myReadyAt=Date.now();
+   window.localReadyAt=myReadyAt;window.matchStartAt=myReadyAt;matchStarted=true;
+   if(!matchTimerId)startMatchCountdown();
+   updateMatchUI();
+   await update(ref(db,"rooms/"+roomCode+"/players/"+myId),{ready:true,readyAt:myReadyAt});
+   const refreshed=await get(ref(db,"rooms/"+roomCode+"/players"));
+   players=refreshed.val()||players;
+   if(!matchTimerId)startMatchCountdown();
+   renderRoomPlayers();updateMatchUI();
+   await tryLaunchMatch();
+ }catch(err){console.error(err);showMessage("❌ START sync failed");roomStatus.textContent="START sync failed — অনলাইন সংযোগ পরীক্ষা করুন"}
+}
+async function tryLaunchMatch(){
+ // The host alone publishes one shared start timestamp, so both clients enter on the same room event.
+ if(!roomCode||gameStarted||!isHost||launchRequestInFlight)return;
+ launchRequestInFlight=true;
+ try{
+   const [roomSnap,playersSnap]=await Promise.all([get(ref(db,"rooms/"+roomCode)),get(ref(db,"rooms/"+roomCode+"/players"))]);
+   const data=roomSnap.val()||{},freshPlayers=playersSnap.val()||{};
+   const humans=Object.values(freshPlayers).filter(p=>p&&!p.bot);
+   const readyCount=humans.filter(p=>p.ready===true).length;
+   // Exactly two real players must be present and both must press START.
+   if(data.status==="started"||humans.length!==MAX_PLAYERS||readyCount!==MAX_PLAYERS)return;
+   const startedAt=Date.now();
+   await update(ref(db,"rooms/"+roomCode),{status:"started",startedAt,matchDuration:MATCH_DURATION_MS});
+ }catch(err){console.warn("launch sync failed",err)}
+ finally{launchRequestInFlight=false}
+}
+function startMatchCountdown(){
+ if(matchTimerId)clearInterval(matchTimerId);
+ matchTimerId=setInterval(()=>{
+   if(!roomCode){clearInterval(matchTimerId);matchTimerId=null;return}
+   const start=Number(window.matchStartAt||0);
+   matchCountdown=start?Math.max(0,Math.floor((Date.now()-start)/1000)):0;
+   updateMatchUI();
+ },500);
+}
+
+function updateMatchUI(){
+ const humans=Object.entries(players||{}).filter(([,p])=>p&&!p.bot);
+ const n=humans.length,ready=humans.filter(([,p])=>p.ready===true).length;
+ const timer=document.getElementById("matchTimer"),status=document.getElementById("roomStatus"),btn=document.getElementById("startBtn");
+ if(!timer||!status)return;
+ const timerStart=Number(window.matchStartAt||window.localReadyAt||0);const seconds=timerStart?Math.max(0,Math.floor((Date.now()-timerStart)/1000)):0;
+ timer.textContent=String(Math.floor(seconds/60)).padStart(2,"0")+":"+String(seconds%60).padStart(2,"0");
+ document.querySelectorAll(".playerReadyClock[data-ready-at]").forEach(el=>{const at=Number(el.getAttribute("data-ready-at")||0);el.textContent=at?formatElapsed(at):""});
+ if(n>=MAX_PLAYERS&&ready>=MAX_PLAYERS){status.textContent="✅ দুজনের START সম্পন্ন — ম্যাচে ঢুকছে…";status.className="status matchReady"}
+ else if(ready>0){status.textContent=`⏱ আপনার টাইমার চলছে (${ready}/2 জন START দিয়েছে) — অন্য খেলোয়াড় START দিলেই দুজন একসাথে ম্যাচে ঢুকবে`;status.className="status matchWaiting"}
+ else if(n>=MAX_PLAYERS){status.textContent="🟢 ২ জন যুক্ত হয়েছে — দুজনকেই START চাপতে হবে";status.className="status matchReady"}
+ else{status.textContent=`🔗 ${n}/2 জন যুক্ত হয়েছে — INVITE LINK বা ROOM CODE দিয়ে বন্ধুকে যোগ করুন`;status.className="status matchWaiting"}
+ if(btn){const me=players?.[myId];btn.disabled=!!me?.ready;btn.textContent=me?.ready?"⏳ START দেওয়া হয়েছে":"🚀 START MATCH";}
+}
+
+function startGame(){
+if(gameStarted)return;
+gameStarted=true;
+screen("game");
+document.getElementById("hudName").textContent=myName+(isHost?" 👑":"");
+// Recover local car state before the first rendered frame.
+if(!player || !Number.isFinite(Number(player.x)) || !Number.isFinite(Number(player.y))){
+ player={x:1800,y:1800,angle:0,speed:0,hp:100,armor:100,nitro:100,ammo:30,alive:true,kills:0,score:0};
+}
+player.x=Math.max(60,Math.min(WORLD-60,Number(player.x)));
+player.y=Math.max(60,Math.min(WORLD-60,Number(player.y)));
+if(player.alive!==true && player.alive!==false)player.alive=true;
+if(!players || typeof players!=="object")players={};
+players[myId]={...(players[myId]||{}),name:myName,x:player.x,y:player.y,angle:player.angle||0,hp:player.hp??100,armor:player.armor??100,alive:player.alive!==false,invulnerableUntil:player.invulnerableUntil||Date.now()+5000};
+player.invulnerableUntil=player.invulnerableUntil||Date.now()+5000;
+resizeCanvas();resizeMini();lastTime=performance.now();updateCamera();setupVoiceListener();requestAnimationFrame(gameLoop);
+}
+
+const canvas=document.getElementById("world"),ctx=canvas.getContext("2d",{alpha:false,desynchronized:true}),mini=document.getElementById("mini"),mctx=mini.getContext("2d",{alpha:false}),WORLD=3600;ctx.imageSmoothingEnabled=false;mctx.imageSmoothingEnabled=false;
+let camera={x:0,y:0};
+function resizeCanvas(){const rect=canvas.parentElement.getBoundingClientRect();const w=Math.max(1,Math.round(rect.width||innerWidth));const h=Math.max(1,Math.round(rect.height||innerHeight));const dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);canvas.style.width=w+"px";canvas.style.height=h+"px";ctx.setTransform(dpr,0,0,dpr,0,0)}
+function resizeMini(){mini.width=mini.clientWidth*devicePixelRatio;mini.height=mini.clientHeight*devicePixelRatio;mctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0)}
+window.addEventListener("resize",()=>{resizeCanvas();resizeMini();if(gameStarted){updateCamera();lastTime=performance.now()}});
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&gameStarted){resizeCanvas();resizeMini();updateCamera();lastTime=performance.now();requestAnimationFrame(()=>{try{drawWorld();drawCar(player,true,"#078dff")}catch(e){console.warn("resume render recovery",e)}});}});
+window.addEventListener("pageshow",()=>{if(gameStarted){resizeCanvas();resizeMini();updateCamera();lastTime=performance.now();}});
+
+const trees=[],crates=[],buildings=[];
+function generateWorld(){
+for(let i=0;i<90;i++)trees.push({x:100+Math.random()*3400,y:100+Math.random()*3400,r:18+Math.random()*18});
+for(let i=0;i<35;i++)crates.push({x:150+Math.random()*3300,y:150+Math.random()*3300,s:22+Math.random()*16});
+buildings.push({x:300,y:400,w:470,h:300},{x:2700,y:500,w:450,h:280},{x:250,y:2600,w:520,h:360},{x:2750,y:2600,w:500,h:340},{x:1450,y:250,w:400,h:250});
+}generateWorld();
+
+function drawPickups(){
+Object.values(pickups).forEach(p=>{if(!p||p.active===false)return;const x=p.x,y=p.y;ctx.save();ctx.shadowBlur=18;ctx.shadowColor=p.type==="ammo"?"#ffd21c":"#20ff72";
+if(p.type==="ammo"){ctx.fillStyle="#c98b19";ctx.fillRect(x-15,y-12,30,24);ctx.strokeStyle="#ffe477";ctx.lineWidth=3;ctx.strokeRect(x-15,y-12,30,24);ctx.fillStyle="#222";ctx.fillRect(x-8,y-8,16,5);ctx.fillStyle="#fff";ctx.font="bold 5px Arial";ctx.textAlign="center";ctx.fillText("🔫",x,y+6)}
+else{ctx.fillStyle="#e9eeee";ctx.fillRect(x-14,y-14,28,28);ctx.strokeStyle="#fff";ctx.lineWidth=2;ctx.strokeRect(x-14,y-14,28,28);ctx.fillStyle="#16ed63";ctx.fillRect(x-4,y-10,8,20);ctx.fillRect(x-10,y-4,20,8)}
+ctx.restore()})
+}
+
+function drawWorld(){
+ctx.save();ctx.translate(-camera.x,-camera.y);ctx.fillStyle="#318b35";ctx.fillRect(camera.x,camera.y,canvas.clientWidth||window.innerWidth,canvas.clientHeight||window.innerHeight);
+const viewW=canvas.clientWidth||window.innerWidth,viewH=canvas.clientHeight||window.innerHeight;const vx0=camera.x-120,vy0=camera.y-120,vx1=camera.x+viewW+120,vy1=camera.y+viewH+120;
+for(let i=0;i<110;i++){const x=(i*197)%WORLD,y=(i*331)%WORLD;if(x+35<vx0||x>vx1||y+18<vy0||y>vy1)continue;ctx.fillStyle=i%2?"#3c9839":"#2f8132";ctx.fillRect(x,y,35,18)}
+ctx.fillStyle="#343b43";if(vx1>0&&vy0<1950&&vy1>1650)ctx.fillRect(Math.max(0,vx0),1650,Math.min(WORLD,vx1)-Math.max(0,vx0),300);if(vx0<1950&&vx1>1650&&vy1>0&&vy0<WORLD)ctx.fillRect(1650,Math.max(0,vy0),300,Math.min(WORLD,vy1)-Math.max(0,vy0));ctx.strokeStyle="#e8c646";ctx.lineWidth=7;ctx.setLineDash([50,40]);ctx.beginPath();ctx.moveTo(Math.max(0,vx0),1800);ctx.lineTo(Math.min(WORLD,vx1),1800);ctx.stroke();ctx.beginPath();ctx.moveTo(1800,Math.max(0,vy0));ctx.lineTo(1800,Math.min(WORLD,vy1));ctx.stroke();ctx.setLineDash([]);
+if(vx1>3200&&vx0<3600){ctx.fillStyle="#159ed4";ctx.fillRect(Math.max(3200,vx0),Math.max(0,vy0),Math.min(3600,vx1)-Math.max(3200,vx0),Math.min(WORLD,vy1)-Math.max(0,vy0))}if(vx1>3050&&vx0<3600&&vy1>1650&&vy0<1950){ctx.fillStyle="#525960";ctx.fillRect(Math.max(3050,vx0),1650,Math.min(3600,vx1)-Math.max(3050,vx0),Math.min(1950,vy1)-1650)}
+buildings.forEach(b=>{if(b.x+b.w<vx0||b.x>vx1||b.y+b.h<vy0||b.y>vy1)return;ctx.fillStyle="#182733";ctx.fillRect(b.x+10,b.y+15,b.w,b.h);ctx.fillStyle="#9a5635";ctx.fillRect(b.x,b.y,b.w,b.h);ctx.fillStyle="#2786bf";ctx.fillRect(b.x,b.y,b.w,55);ctx.fillStyle="#d6b27b";for(let x=b.x+35;x<b.x+b.w-20;x+=70)ctx.fillRect(x,b.y+95,35,45)});
+trees.forEach(t=>{if(t.x+t.r<vx0||t.x-t.r>vx1||t.y+t.r<vy0||t.y-t.r>vy1)return;ctx.fillStyle="#173c1d";ctx.beginPath();ctx.arc(t.x+6,t.y+10,t.r,0,Math.PI*2);ctx.fill();ctx.fillStyle="#1e762c";ctx.beginPath();ctx.arc(t.x,t.y,t.r,0,Math.PI*2);ctx.fill();ctx.fillStyle="#39a83c";ctx.beginPath();ctx.arc(t.x-5,t.y-6,t.r*.55,0,Math.PI*2);ctx.fill()});
+crates.forEach(c=>{if(c.x+c.s<vx0||c.x>vx1||c.y+c.s<vy0||c.y>vy1)return;ctx.fillStyle="#744622";ctx.fillRect(c.x,c.y,c.s,c.s);ctx.strokeStyle="#d28a3d";ctx.lineWidth=3;ctx.strokeRect(c.x,c.y,c.s,c.s)});
+drawPickups();ctx.strokeStyle="#fff";ctx.lineWidth=7;ctx.beginPath();ctx.arc(1800,1800,1300,0,Math.PI*2);ctx.stroke();ctx.restore();
+}
+
+function drawCar(p,isMe,color){
+  if(!p || !Number.isFinite(Number(p.x)) || !Number.isFinite(Number(p.y))) return;
+  const vw=Math.max(1,canvas.clientWidth||window.innerWidth),vh=Math.max(1,canvas.clientHeight||window.innerHeight);
+  const worldX=Number(p.x),worldY=Number(p.y);
+  let sx=worldX-camera.x,sy=worldY-camera.y;
+  if(isMe){
+    // Recompute camera from the authoritative local position every time. This
+    // prevents a stale camera after Android app switching / viewport resizing.
+    updateCamera();
+    sx=Number(player.x)-camera.x;sy=Number(player.y)-camera.y;
+    // When the player is at a world edge the camera cannot fully center it;
+    // clamp the camera-space position only as a final rendering safeguard.
+    if(!Number.isFinite(sx)||!Number.isFinite(sy)){sx=vw/2;sy=vh/2;}
+    sx=Math.max(26,Math.min(vw-26,sx));
+    sy=Math.max(48,Math.min(vh-48,sy));
+  }else if(sx < -90 || sy < -90 || sx > vw+90 || sy > vh+90){return;}
+  ctx.save();ctx.translate(sx,sy);ctx.rotate(Number(p.angle)||0);
+  if(isMe&&Date.now()-lastMuzzleFlash<90){ctx.fillStyle="#ffe23b";ctx.shadowBlur=20;ctx.shadowColor="#ff9d00";ctx.beginPath();ctx.moveTo(0,-48);ctx.lineTo(-10,-30);ctx.lineTo(0,-34);ctx.lineTo(10,-30);ctx.closePath();ctx.fill();ctx.shadowBlur=0}
+  ctx.fillStyle="#0008";ctx.beginPath();ctx.ellipse(0,8,29,46,0,0,Math.PI*2);ctx.fill();
+  if(isMe&&Number(player.speed)>300){ctx.fillStyle="#35dfff";ctx.beginPath();ctx.moveTo(-9,37);ctx.lineTo(0,63);ctx.lineTo(9,37);ctx.closePath();ctx.fill()}
+  const grad=ctx.createLinearGradient(-25,-40,25,40);grad.addColorStop(0,color);grad.addColorStop(.5,"#ffffff55");grad.addColorStop(1,color);ctx.fillStyle=grad;
+  function roundedRect(x,y,w,h,r){r=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+  roundedRect(-23,-42,46,84,13);ctx.fill();ctx.fillStyle="#061522";roundedRect(-15,-25,30,25,8);ctx.fill();ctx.fillStyle="#ff3030";ctx.fillRect(-18,31,9,5);ctx.fillRect(9,31,9,5);ctx.restore();
+  ctx.font="bold 12px Arial";ctx.textAlign="center";ctx.fillStyle="#fff";ctx.fillText(p.name||"Player",sx,sy-55);
+  const hp=Math.max(0,Math.min(100,Number(p.hp??0)));ctx.fillStyle="#10201a";ctx.fillRect(sx-24,sy-48,48,5);ctx.fillStyle="#20ed70";ctx.fillRect(sx-24,sy-48,48*(hp/100),5);
+  if(p.alive===false){ctx.fillStyle="#ff3333";ctx.font="bold 13px Arial";ctx.fillText("ELIMINATED",sx,sy+60)}
+}
+
+function bulletPosition(b,now=Date.now()){const age=(now-Number(b.createdAt||now))/1000;return{x:Number(b.x)+Number(b.vx)*age,y:Number(b.y)+Number(b.vy)*age}}
+function drawBullets(){
+const now=Date.now();
+Object.entries(bullets).forEach(([id,b])=>{if(!b)return;const age=(now-Number(b.createdAt||now))/1000;if(age<0||age>1.7)return;const pos=bulletPosition(b,now),px=pos.x-Number(b.vx)*.045,py=pos.y-Number(b.vy)*.045;ctx.save();ctx.strokeStyle="#ffe83b";ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(px-camera.x,py-camera.y);ctx.lineTo(pos.x-camera.x,pos.y-camera.y);ctx.stroke();ctx.fillStyle="#fff7a0";ctx.beginPath();ctx.arc(pos.x-camera.x,pos.y-camera.y,3,0,Math.PI*2);ctx.fill();ctx.restore()})
+}
+
+function updateBullets(){
+if(!roomCode)return;const now=Date.now();
+for(const [id,b] of Object.entries(bullets)){
+ if(!b)continue;const age=(now-Number(b.createdAt||now))/1000;
+ if(age>1.75){if(offlineMode){if(localRooms.OFFLINE?.bullets)delete localRooms.OFFLINE.bullets[id];delete bullets[id];localNotify()}else if(b.owner===myId||(isHost&&b.bot))remove(ref(db,"rooms/"+roomCode+"/bullets/"+id));continue}
+ const canProcess=b.owner===myId||(isHost&&b.bot);if(!canProcess)continue;
+ const pos=bulletPosition(b,now);bulletHits[id]??={};
+ for(const [targetId,target] of Object.entries(players)){
+  if(targetId===b.owner||!target||target.alive===false||bulletHits[id][targetId])continue;
+  if(targetId===myId&&Date.now()<Number(player.invulnerableUntil||0))continue;
+  if(Math.hypot(Number(target.x)-pos.x,Number(target.y)-pos.y)>42)continue;
+  bulletHits[id][targetId]=true;
+  if(offlineMode){
+   const local=localRooms.OFFLINE?.players?.[targetId];
+   if(local){let damage=Number(b.damage||22),armor=Math.max(0,Number(local.armor||0)),hp=Math.max(0,Number(local.hp??100));const absorb=Math.min(armor,damage);armor-=absorb;damage-=absorb;hp=Math.max(0,hp-damage);local.armor=armor;local.hp=hp;if(hp<=0){local.hp=0;local.alive=false;if(b.owner===myId){player.kills++;player.score+=100;showMessage("💀 ELIMINATED!")}}else if(b.owner===myId){player.score+=10;showMessage("🎯 HIT!")}players[targetId]={...local};localNotify();}
+   if(localRooms.OFFLINE?.bullets)delete localRooms.OFFLINE.bullets[id];delete bullets[id];
+  }else{damagePlayer(targetId,b,b.owner);remove(ref(db,"rooms/"+roomCode+"/bullets/"+id));}
+  break;
+ }
+}
+}
+
+async function damagePlayer(targetId,b,killerId=myId){
+const targetRef=ref(db,"rooms/"+roomCode+"/players/"+targetId);
+const result=await runTransaction(targetRef,current=>{
+if(!current||current.alive===false||Number(current.invulnerableUntil||0)>Date.now())return;
+let damage=Number(b.damage||22),armor=Math.max(0,Number(current.armor||0)),hp=Math.max(0,Number(current.hp??100));
+const absorb=Math.min(armor,damage);armor-=absorb;damage-=absorb;hp=Math.max(0,hp-damage);
+if(hp<=0)return{...current,hp:0,armor:0,alive:false,deadAt:Date.now(),lastHitBy:killerId,lastHitAt:Number(b.createdAt||Date.now())};
+return{...current,hp,armor,alive:true};
+});
+if(result.committed&&killerId===myId){const v=result.snapshot.val();if(v&&v.alive===false){player.kills++;player.score+=100;showMessage("💀 ELIMINATED!")}else{player.score+=10;showMessage("🎯 HIT!")}await syncPlayer(true)}
+}
+
+function updateCamera(){
+  const rect=canvas.getBoundingClientRect();
+  const vw=Math.max(1,Number(canvas.clientWidth)||Number(rect.width)||Number(innerWidth)||1);
+  const vh=Math.max(1,Number(canvas.clientHeight)||Number(rect.height)||Number(innerHeight)||1);
+  // Keep a single authoritative local position for online and offline.
+  if(!player||typeof player!=="object")player={x:WORLD/2,y:WORLD/2,angle:0,speed:0,hp:100,armor:100,nitro:100,ammo:30,alive:true,kills:0,score:0};
+  const px=Number(player.x),py=Number(player.y);
+  player.x=Math.max(60,Math.min(WORLD-60,Number.isFinite(px)?px:WORLD/2));
+  player.y=Math.max(60,Math.min(WORLD-60,Number.isFinite(py)?py:WORLD/2));
+  // Never allow a stale/invalid camera value to push the local car off-screen.
+  const maxX=Math.max(0,WORLD-vw),maxY=Math.max(0,WORLD-vh);
+  camera.x=Math.max(0,Math.min(maxX,player.x-vw/2));
+  camera.y=Math.max(0,Math.min(maxY,player.y-vh/2));
+  if(!Number.isFinite(camera.x))camera.x=0;
+  if(!Number.isFinite(camera.y))camera.y=0;
+}
+
+function drawMini(){
+const w=mini.clientWidth,h=mini.clientHeight;mctx.clearRect(0,0,w,h);mctx.fillStyle="#268044";mctx.fillRect(0,0,w,h);mctx.fillStyle="#358fb5";mctx.fillRect(w*.88,0,w*.12,h);mctx.fillStyle="#50555a";mctx.fillRect(0,h*.46,w,h*.08);mctx.fillRect(w*.46,0,w*.08,h);mctx.strokeStyle="white";mctx.lineWidth=2;mctx.beginPath();mctx.arc(w/2,h/2,w*.36,0,Math.PI*2);mctx.stroke();
+Object.values(pickups).forEach(p=>{if(!p||p.active===false)return;const x=p.x/WORLD*w,y=p.y/WORLD*h;mctx.fillStyle=p.type==="ammo"?"#ffd21c":"#20ff70";mctx.beginPath();mctx.arc(x,y,2.5,0,Math.PI*2);mctx.fill()});
+Object.entries(players).forEach(([id,p])=>{if(typeof p.x!=="number"||p.alive===false)return;const x=p.x/WORLD*w,y=p.y/WORLD*h;mctx.fillStyle=id===myId?"#00eaff":"#ff3939";mctx.beginPath();mctx.arc(x,y,3,0,Math.PI*2);mctx.fill()});
+}
+
+let lastTime=performance.now(),bulletTick=0,miniTick=0,hudTick=0,pickupTick=0;
+function gameLoop(now){
+  if(!gameStarted)return;
+  // Always queue the next frame, even if a single update/render step throws.
+  // This prevents a one-frame exception from permanently stopping the game.
+  try {
+    const safeNow=Number.isFinite(now)?now:performance.now();
+    const dt=Math.max(0,Math.min(.05,(safeNow-lastTime)/1000));
+    lastTime=safeNow;
+    if(isHost&&roomCode&&window.gameStartedAt&&Date.now()-window.gameStartedAt>=MATCH_DURATION_MS){
+      const aliveEntries=Object.entries(players||{}).filter(([,p])=>p);
+      aliveEntries.sort((a,b)=>Number(b[1].kills||0)-Number(a[1].kills||0));
+      const win=aliveEntries[0];
+      update(ref(db,"rooms/"+roomCode),{status:"ended",winnerId:win?.[0]||myId,winnerName:win?.[1]?.name||myName,winnerKills:Number(win?.[1]?.kills??player.kills),endedAt:Date.now()}).catch(e=>console.warn("match end sync failed",e));
+      window.gameStartedAt=0;
+    }
+    if(!paused){
+      updateBots(dt);updateGame(dt);pickupTick+=dt;bulletTick+=dt;miniTick+=dt;hudTick+=dt;
+      if(bulletTick>=.045){bulletTick=0;updateBullets()}
+      if(!player||typeof player!=="object")player={x:WORLD/2,y:WORLD/2,angle:0,speed:0,hp:100,armor:100,nitro:100,ammo:30,alive:true,kills:0,score:0};
+      if(!Number.isFinite(Number(player.x)))player.x=WORLD/2;
+      if(!Number.isFinite(Number(player.y)))player.y=WORLD/2;
+      if(!Number.isFinite(Number(player.angle)))player.angle=0;
+      player.x=Math.max(60,Math.min(WORLD-60,Number(player.x)));
+      player.y=Math.max(60,Math.min(WORLD-60,Number(player.y)));
+      updateCamera();
+      const vw=canvas.clientWidth||innerWidth,vh=canvas.clientHeight||innerHeight;
+      ctx.clearRect(0,0,vw,vh);
+      drawWorld();
+      // Draw bots/remotes first, then the local car last so it stays visible.
+      try { drawBullets(); } catch(renderError) { console.warn("Bullet render skipped",renderError); }
+      Object.entries(players||{}).forEach(([id,p])=>{
+        if(id===myId||!p||p.alive===false)return;
+        try { drawCar(p,false,carColor(id)); } catch(renderError) { console.warn("Remote car render skipped",id,renderError); }
+      });
+      // The local car must never be hidden by a bot car or stale remote snapshot.
+      drawCar(player,true,"#078dff");
+      if(miniTick>=.10){miniTick=0;drawMini()}
+      if(hudTick>=.10){hudTick=0;updateHUD()}
+    }
+  } catch(err) {
+    console.error("UZAR game frame recovered from error:",err);
+    // Restore a valid local car state so the next frame can render it.
+    if(!player||typeof player!=="object")player={x:WORLD/2,y:WORLD/2,angle:0,speed:0,hp:100,armor:100,nitro:100,ammo:30,alive:true,kills:0,score:0};
+    if(!Number.isFinite(Number(player.x)))player.x=WORLD/2;
+    if(!Number.isFinite(Number(player.y)))player.y=WORLD/2;
+    if(!Number.isFinite(Number(player.angle)))player.angle=0;
+  } finally {
+    if(gameStarted)requestAnimationFrame(gameLoop);
+  }
+}
+
+let joyX=0,joyY=0,nitroActive=false;
+let botTick=0,botShotTick=0;
+// Cars are solid: keep their centers apart so one car cannot drive over another.
+// A conservative circular hitbox covers the long rotated car sprite.
+function carPositionBlocked(x,y,excludeId,minGap=78,fromX=null,fromY=null){
+  for(const [id,other] of Object.entries(players||{})){
+    if(id===excludeId||!other||other.alive===false)continue;
+    const ox=Number(other.x),oy=Number(other.y);
+    if(!Number.isFinite(ox)||!Number.isFinite(oy))continue;
+    const nextDist=Math.hypot(x-ox,y-oy);
+    if(nextDist>=minGap)continue;
+    // If cars are already overlapping (e.g. at spawn), let the car move away.
+    if(fromX!==null&&fromY!==null){
+      const oldDist=Math.hypot(fromX-ox,fromY-oy);
+      if(oldDist<minGap && nextDist>oldDist+0.01)continue;
+    }
+    return true;
+  }
+  return false;
+}
+function moveCarWithCollision(id,x,y,oldX,oldY){
+  oldX=Number.isFinite(Number(oldX))?Number(oldX):WORLD/2;
+  oldY=Number.isFinite(Number(oldY))?Number(oldY):WORLD/2;
+  x=Math.max(60,Math.min(WORLD-60,Number(x)));y=Math.max(60,Math.min(WORLD-60,Number(y)));
+  const dx=x-oldX,dy=y-oldY,dist=Math.hypot(dx,dy);
+  const steps=Math.max(1,Math.ceil(dist/6));
+  let cx=oldX,cy=oldY;
+  for(let i=1;i<=steps;i++){
+    const tx=Math.max(60,Math.min(WORLD-60,oldX+dx*i/steps));
+    const ty=Math.max(60,Math.min(WORLD-60,oldY+dy*i/steps));
+    if(!carPositionBlocked(tx,ty,id,72,cx,cy)){cx=tx;cy=ty;continue;}
+    // Slide along a vehicle instead of freezing when the forward path is blocked.
+    const candidates=[
+      {x:tx,y:cy,axis:'x'}, {x:cx,y:ty,axis:'y'},
+      {x:cx+(-dy/Math.max(1,dist))*6,y:cy+(dx/Math.max(1,dist))*6,axis:'slide1'},
+      {x:cx+(dy/Math.max(1,dist))*6,y:cy+(-dx/Math.max(1,dist))*6,axis:'slide2'}
+    ];
+    let chosen=null,best=-Infinity;
+    for(const c of candidates){
+      c.x=Math.max(60,Math.min(WORLD-60,c.x));c.y=Math.max(60,Math.min(WORLD-60,c.y));
+      if(carPositionBlocked(c.x,c.y,id,72,cx,cy))continue;
+      // Prefer the candidate that makes the most progress in the requested direction.
+      const progress=(c.x-cx)*dx+(c.y-cy)*dy;
+      if(progress>best){best=progress;chosen=c;}
+    }
+    if(chosen){cx=chosen.x;cy=chosen.y;continue;}
+    // Spawn overlaps must be escapable: accept only a move that increases the
+    // distance from every car currently overlapping this one.
+    let overlapping=false,improves=true;
+    for(const [otherId,other] of Object.entries(players||{})){
+      if(otherId===id||!other||other.alive===false)continue;
+      const ox=Number(other.x),oy=Number(other.y);if(!Number.isFinite(ox)||!Number.isFinite(oy))continue;
+      const before=Math.hypot(cx-ox,cy-oy),after=Math.hypot(tx-ox,ty-oy);
+      if(before<72){overlapping=true;if(after<=before+0.1)improves=false;}
+    }
+    if(overlapping&&improves){cx=tx;cy=ty;continue;}
+    break;
+  }
+  return {x:Math.max(60,Math.min(WORLD-60,cx)),y:Math.max(60,Math.min(WORLD-60,cy))};
+}
+
+function updateBots(dt){
+if(!isHost||!roomCode)return;botTick+=dt;botShotTick+=dt;if(botTick<.12)return;const step=botTick;botTick=0;
+const humanList=Object.entries(players).filter(([,p])=>p&&!p.bot&&p.alive!==false);
+const changes={};
+for(let i=1;i<=MAX_BOTS;i++){
+const id="bot"+i,p=players[id];if(!p)continue;if(p.alive===false){const deadAt=Number(p.deadAt||0);if(deadAt&&Date.now()-deadAt>=4000){p.x=500+Math.random()*2600;p.y=500+Math.random()*2600;p.hp=100;p.armor=100;p.alive=true;p.deadAt=0;changes["rooms/"+roomCode+"/players/"+id+"/x"]=p.x;changes["rooms/"+roomCode+"/players/"+id+"/y"]=p.y;changes["rooms/"+roomCode+"/players/"+id+"/hp"]=100;changes["rooms/"+roomCode+"/players/"+id+"/armor"]=100;changes["rooms/"+roomCode+"/players/"+id+"/alive"]=true;changes["rooms/"+roomCode+"/players/"+id+"/deadAt"]=0;}continue;}
+let target=null,td=Infinity;for(const [,h] of humanList){const d=Math.hypot(Number(h.x)-Number(p.x),Number(h.y)-Number(p.y));if(d<td){td=d;target=h}}
+let dx=0,dy=0;if(target){dx=Number(target.x)-Number(p.x);dy=Number(target.y)-Number(p.y);const d=Math.hypot(dx,dy)||1;dx/=d;dy/=d;p.angle=Math.atan2(dy,dx)+Math.PI/2;}else{const a=Date.now()/1800+i;dx=Math.cos(a);dy=Math.sin(a)}
+const speed=(target&&td<190)?0:145,oldX=Number(p.x),oldY=Number(p.y);const next=moveCarWithCollision(id,oldX+dx*speed*step,oldY+dy*speed*step,oldX,oldY);p.x=next.x;p.y=next.y;
+changes["rooms/"+roomCode+"/players/"+id+"/x"]=p.x;changes["rooms/"+roomCode+"/players/"+id+"/y"]=p.y;changes["rooms/"+roomCode+"/players/"+id+"/angle"]=p.angle;
+if(target&&td<900&&botShotTick>=1.1){const a=Math.atan2(Number(target.y)-p.y,Number(target.x)-p.x);const now=Date.now();const bid="botb_"+id+"_"+now.toString(36)+"_"+Math.random().toString(36).slice(2,5);changes["rooms/"+roomCode+"/bullets/"+bid]={owner:id,bot:true,x:p.x+Math.cos(a)*42,y:p.y+Math.sin(a)*42,vx:Math.cos(a)*1150,vy:Math.sin(a)*1150,createdAt:now,damage:14};}}
+if(botShotTick>=1.1)botShotTick=0;if(Object.keys(changes).length){if(offlineMode){for(const [path,value] of Object.entries(changes)){const parts=path.split("/");const id=parts[3],field=parts[4];if(localRooms.OFFLINE?.players?.[id])localRooms.OFFLINE.players[id][field]=value;}}else update(ref(db),changes).catch(()=>{});}
+}
+
+function updateGame(dt){
+if(!player.alive){
+ player.speed=0;joyX=0;joyY=0;
+ if(!window.localRespawnAt)window.localRespawnAt=Date.now()+4000;
+ if(Date.now()>=window.localRespawnAt){
+   window.localRespawnAt=0;player.x=500+Math.random()*2600;player.y=500+Math.random()*2600;
+   player.hp=100;player.armor=100;player.alive=true;player.nitro=100;player.ammo=30;player.invulnerableUntil=Date.now()+3000;
+   syncPlayer(true);showMessage("♻️ RESPAWN!");
+ }
+ return;
+}else window.localRespawnAt=0;
+let dx=Number.isFinite(joyX)?joyX:0,dy=Number.isFinite(joyY)?joyY:0,len=Math.hypot(dx,dy);
+if(len>.08){dx/=Math.max(1,len);dy/=Math.max(1,len);player.angle=Math.atan2(dy,dx)+Math.PI/2;let speed=300;if(nitroActive&&player.nitro>0){speed=520;player.nitro=Math.max(0,player.nitro-35*dt)}else player.nitro=Math.min(100,player.nitro+8*dt);const oldX=player.x,oldY=player.y;const next=moveCarWithCollision(myId,oldX+dx*speed*dt,oldY+dy*speed*dt,oldX,oldY);player.x=next.x;player.y=next.y;player.speed=(next.x===oldX&&next.y===oldY)?0:speed}else{player.speed*=.9;player.nitro=Math.min(100,player.nitro+6*dt)}
+player.x=Math.max(60,Math.min(WORLD-60,player.x));player.y=Math.max(60,Math.min(WORLD-60,player.y));
+players[myId]={...(players[myId]||{}),x:player.x,y:player.y,angle:player.angle,alive:player.alive,hp:player.hp,armor:player.armor,nitro:player.nitro,ammo:player.ammo,name:myName};
+if(pickupTick>=.12){pickupTick=0;checkPickups()}syncPlayer();
+}
+
+async function checkPickups(){
+if(!roomCode||!player.alive)return;
+for(const [id,p] of Object.entries(pickups)){
+if(!p||p.active===false||Math.hypot(player.x-p.x,player.y-p.y)>55)continue;
+if(p.type==="ammo"&&player.ammo>=30)continue;
+if(p.type==="hp"&&player.hp>=100)continue;
+const pickupRef=ref(db,"rooms/"+roomCode+"/pickups/"+id);
+let result;
+if(offlineMode){const current=localRooms.OFFLINE?.pickups?.[id];if(!current||current.active===false)continue;current.active=false;current.pickedBy=myId;result={committed:true,snapshot:snap(current)};pickups[id]={...current};localNotify();}
+else result=await runTransaction(pickupRef,current=>{if(!current||current.active===false)return;return{...current,active:false,pickedBy:myId}});
+if(result.committed&&result.snapshot.val()?.pickedBy===myId){
+if(p.type==="ammo"){player.ammo=Math.min(30,player.ammo+Number(p.amount||10));showMessage("🔫 +10 AMMO")}
+else{player.hp=Math.min(100,player.hp+Number(p.amount||25));showMessage("❤️ +25 HP")}
+await syncPlayer(true);
+setTimeout(async()=>{try{if(offlineMode){const item=localRooms.OFFLINE?.pickups?.[id];if(item){item.active=true;item.pickedBy=null;pickups[id]={...item};localNotify();}}else await update(pickupRef,{active:true,pickedBy:null})}catch(e){}},p.type==="ammo"?8000:10000);
+}
+}
+}
+
+function fire(){
+if(!gameStarted||paused)return;if(!player.alive){showMessage("💀 YOU ARE ELIMINATED");return}
+const now=Date.now();if(now-lastFire<180)return;
+if(player.ammo<=0){showMessage("🔫 AMMO EMPTY");return}
+lastFire=now;lastMuzzleFlash=now;player.ammo--;const angle=player.angle-Math.PI/2;
+const bulletId="b_"+myId+"_"+now.toString(36)+"_"+Math.random().toString(36).slice(2,6);
+const b={owner:myId,x:player.x+Math.cos(angle)*47,y:player.y+Math.sin(angle)*47,vx:Math.cos(angle)*1450,vy:Math.sin(angle)*1450,createdAt:now,damage:22};
+if(offlineMode){
+  if(!localRooms.OFFLINE) return;
+  localRooms.OFFLINE.bullets=localRooms.OFFLINE.bullets||{};
+  localRooms.OFFLINE.bullets[bulletId]=b;bullets[bulletId]=b;localNotify();
+}else set(ref(db,"rooms/"+roomCode+"/bullets/"+bulletId),b).catch(console.error);
+showMessage("🔥");syncPlayer(true);
+}
+
+function reload(){if(!gameStarted||paused)return;if(player.ammo>=30){showMessage("🔫 AMMO FULL");return}player.ammo=30;showMessage("🔄 RELOADED");syncPlayer(true)}
+function setNitro(v){nitroActive=v}
+
+async function syncPlayer(force=false){
+const now=Date.now();if(!force&&now-lastSync<(offlineMode?280:700))return;lastSync=now;
+const data={name:myName,x:player.x,y:player.y,angle:player.angle,hp:player.hp,armor:player.armor,nitro:player.nitro,ammo:player.ammo,alive:player.alive,kills:player.kills,score:player.score};
+if(offlineMode){if(localRooms.OFFLINE){localRooms.OFFLINE.players[myId]={...(localRooms.OFFLINE.players[myId]||{}),...data};players[myId]={...(players[myId]||{}),...data}}return}
+if(!roomCode)return;
+try{await update(ref(db,"rooms/"+roomCode+"/players/"+myId),data)}catch(e){console.warn(e)}
+}
+
+function updateHUD(){
+document.getElementById("hpText").textContent=Math.round(player.hp)+"/100";document.getElementById("armorText").textContent=Math.round(player.armor)+"/100";document.getElementById("nitroText").textContent=Math.round(player.nitro)+"/100";document.getElementById("ammoText").textContent=player.ammo+"/30";document.getElementById("hpBar").style.width=Math.max(0,player.hp)+"%";document.getElementById("armorBar").style.width=Math.max(0,player.armor)+"%";document.getElementById("nitroBar").style.width=Math.max(0,player.nitro)+"%";document.getElementById("ammoBar").style.width=(player.ammo/30*100)+"%";document.getElementById("killsText").textContent=player.kills;document.getElementById("scoreText").textContent=player.score
+}
+
+const joystick=document.getElementById("joystick"),stick=document.getElementById("stick");let joyActive=false,joyPointerId=null;
+function joystickMove(clientX,clientY){
+ const r=joystick.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+ let x=clientX-cx,y=clientY-cy;
+ const stickRadius=(stick.getBoundingClientRect().width||60)/2;
+ const max=Math.max(18,r.width/2-stickRadius-7),d=Math.hypot(x,y);
+ if(d>max){x=x/d*max;y=y/d*max}
+ joyX=Math.max(-1,Math.min(1,x/max));joyY=Math.max(-1,Math.min(1,y/max));
+ stick.style.left=(r.width/2+x)+"px";stick.style.top=(r.height/2+y)+"px";
+}
+function joystickReset(){joyX=0;joyY=0;joyActive=false;joyPointerId=null;stick.style.left="50%";stick.style.top="50%"}
+// Keep joystick input robust on Android touch screens where pointer capture can be interrupted.
+window.addEventListener("pointerup",e=>{if(joyActive&&joyPointerId!==null&&e.pointerId===joyPointerId)joystickReset()},{passive:true});
+window.addEventListener("pointercancel",e=>{if(joyActive&&joyPointerId!==null&&e.pointerId===joyPointerId)joystickReset()},{passive:true});
+joystick.addEventListener("pointerdown",e=>{e.preventDefault();joyActive=true;joyPointerId=e.pointerId;try{joystick.setPointerCapture(e.pointerId)}catch(_){}joystickMove(e.clientX,e.clientY)});
+joystick.addEventListener("pointermove",e=>{if(joyActive&&(joyPointerId===null||e.pointerId===joyPointerId)){e.preventDefault();joystickMove(e.clientX,e.clientY)}});
+joystick.addEventListener("pointerup",e=>{if(joyPointerId===null||e.pointerId===joyPointerId)joystickReset()});
+joystick.addEventListener("pointercancel",e=>{if(joyPointerId!==null&&e.pointerId===joyPointerId)joystickReset()});
+// Use Pointer Events only. Mixing touch and pointer handlers can reset the
+// joystick immediately on Android when pointercancel fires after touchstart.
+joystick.addEventListener("contextmenu",e=>e.preventDefault());
+
+document.getElementById("fireBtn").addEventListener("pointerdown",e=>{e.preventDefault();fire()});
+document.getElementById("reloadBtn").addEventListener("pointerdown",reload);
+const nitroBtn=document.getElementById("nitroBtn");nitroBtn.addEventListener("pointerdown",e=>{e.preventDefault();try{nitroBtn.setPointerCapture(e.pointerId)}catch(_){}setNitro(true)});nitroBtn.addEventListener("pointerup",()=>setNitro(false));nitroBtn.addEventListener("pointercancel",()=>setNitro(false));nitroBtn.addEventListener("lostpointercapture",()=>setNitro(false));
+document.getElementById("createBtn").addEventListener("click",joinRoom);
+document.getElementById("joinCodeBtn")?.addEventListener("click",()=>joinRoomByCode(document.getElementById("roomCodeInput").value));
+document.getElementById("roomCodeInput")?.addEventListener("input",e=>{e.target.value=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,6)});
+document.querySelector(".themeBtn")?.addEventListener("click",()=>{document.body.classList.toggle("brightTheme");const b=document.querySelector(".themeBtn");b.textContent=document.body.classList.contains("brightTheme")?"🌙":"☀️"});
+document.getElementById("offlineBtn").addEventListener("click",async()=>{
+ offlineMode=true;cleanupVoice();myName=nameInput.value.trim()||"Mijanur";roomCode="OFFLINE";isHost=true;matchStarted=true;gameStarted=false;paused=false;
+ Object.keys(localRooms).forEach(k=>delete localRooms[k]);
+ const start=makePlayerData(myName,1800,1250,{invulnerableUntil:Date.now()+5000});localRooms.OFFLINE={host:myId,createdAt:Date.now(),status:"started",maxPlayers:MAX_PLAYERS,maxBots:MAX_BOTS,minPlayers:1,startedAt:Date.now(),matchDuration:MATCH_DURATION_MS,players:{[myId]:start,bot1:makeBotData(1),bot2:makeBotData(2),bot3:makeBotData(3),bot4:makeBotData(4),bot5:makeBotData(5)},pickups:createPickupData(),bullets:{}};
+ player={...start,x:1800,y:1250};players=cloneData(localRooms.OFFLINE.players);pickups=cloneData(localRooms.OFFLINE.pickups);bullets={};homeStatus.textContent="🎮 Offline game চালু হচ্ছে...";startGame();listenPlayers();listenPickups();listenBullets();setVoiceStatus("Offline mode — voice unavailable");
+});
+
+document.getElementById("startBtn").addEventListener("click",hostStart);document.getElementById("liveCopyCode")?.addEventListener("click",copyRoomCode);document.getElementById("liveRoomCode")?.addEventListener("click",copyRoomCode);
+
+document.getElementById("inviteRoomBtn")?.addEventListener("click",openInvite);document.getElementById("inviteGameBtn")?.addEventListener("click",openInvite);document.getElementById("shareInviteBtn")?.addEventListener("click",shareInvite);document.getElementById("copyInviteBtn")?.addEventListener("click",copyInvite);document.getElementById("copyRoomCodeBtn")?.addEventListener("click",copyRoomCode);document.getElementById("inviteCode")?.addEventListener("click",copyRoomCode);document.getElementById("closeInviteBtn")?.addEventListener("click",closeInvite);document.getElementById("inviteOverlay")?.addEventListener("click",e=>{if(e.target.id==="inviteOverlay")closeInvite()});
+function pauseGame(){paused=true;document.getElementById("pauseOverlay").classList.add("show")}
+document.getElementById("resumeBtn").addEventListener("click",()=>{paused=false;document.getElementById("pauseOverlay").classList.remove("show")});
+
+async function leaveRoom(){try{if(roomCode)await remove(ref(db,"rooms/"+roomCode+"/players/"+myId))}catch(e){}leaveLocal()}
+function leaveLocal(){
+cleanupVoice();
+gameStarted=false;window.gameStartedAt=0;window.matchStartAt=0;window.localReadyAt=0;window.currentRoomStatus="waiting";window.localRespawnAt=0;if(matchTimerId){clearInterval(matchTimerId);matchTimerId=null}matchStarted=false;roomCode="";isHost=false;players={};pickups={};bullets={};bulletHits={};
+if(roomUnsub)roomUnsub();if(playersUnsub)playersUnsub();if(pickupsUnsub)pickupsUnsub();if(bulletsUnsub)bulletsUnsub();
+roomUnsub=null;playersUnsub=null;pickupsUnsub=null;bulletsUnsub=null;screen("home");homeStatus.textContent="";offlineMode=false;
+}
+document.getElementById("leaveRoomBtn").addEventListener("click",leaveRoom);document.getElementById("pauseLeaveBtn").addEventListener("click",leaveRoom);document.getElementById("exitGameBtn").addEventListener("click",pauseGame);document.getElementById("voiceBtn").addEventListener("click",toggleVoice);
+
+let msgTimer;function showMessage(text){const box=document.getElementById("centerMsg");box.textContent=text;box.classList.add("show");clearTimeout(msgTimer);msgTimer=setTimeout(()=>box.classList.remove("show"),700)}
+document.getElementById("winnerHome").addEventListener("click",leaveLocal);
+
+function getInviteUrl(){return location.href.split("?")[0].split("#")[0]+"?room="+encodeURIComponent(roomCode)}
+function openInvite(){if(!roomCode){showMessage("❌ ROOM NOT READY");return}document.getElementById("inviteCode").textContent=roomCode;document.getElementById("inviteOverlay").classList.add("show")}
+function closeInvite(){document.getElementById("inviteOverlay").classList.remove("show")}
+async function copyTextReliable(text){
+  const value=String(text||"");
+  try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(value);return true}}catch(e){}
+  try{const ta=document.createElement("textarea");ta.value=value;ta.setAttribute("readonly","");ta.style.position="fixed";ta.style.left="8px";ta.style.right="8px";ta.style.bottom="12px";ta.style.zIndex="999999";ta.style.width="calc(100% - 16px)";ta.style.height="72px";ta.style.background="#fff";ta.style.color="#000";ta.style.fontSize="18px";ta.style.padding="8px";document.body.appendChild(ta);ta.focus();ta.select();ta.setSelectionRange(0,value.length);let ok=false;try{ok=document.execCommand("copy")}catch(e){}if(ok){ta.remove();return true}showMessage("লেখাটি সিলেক্ট হয়েছে—চেপে ধরে Copy করুন");return false}catch(e){}
+  try{window.prompt("কপি করার জন্য নিচের লেখা চেপে ধরে Copy করুন:",value)}catch(e){}
+  return false;
+}
+async function shareInvite(){const url=getInviteUrl();const text="🚗 UZAR Battle Royale-এ আমার সাথে অনলাইনে খেলো! একই রুমে যোগ দিতে এই লিংক খোলো: "+url+"\nRoom Code: "+roomCode;try{if(navigator.share){await navigator.share({title:"UZAR Battle Royale",text,url})}else{const ok=await copyTextReliable(text);showMessage(ok?"📤 INVITE COPIED":"লিংকটি সিলেক্ট করে Copy করুন")}}catch(e){if(e?.name!=="AbortError"){const ok=await copyTextReliable(text);showMessage(ok?"📤 INVITE COPIED":"লিংক কপি হয়নি — SHARE ব্যবহার করুন")}}}
+async function copyInvite(){const text="🚗 UZAR Battle Royale-এ আমার সাথে অনলাইনে খেলো! এই লিংক খুলে একই রুমে যোগ দাও: "+getInviteUrl()+"\nRoom Code: "+roomCode;const ok=await copyTextReliable(text);showMessage(ok?"📋 INVITE LINK COPIED":"কপি হয়নি — লেখাটি চেপে ধরে Copy করুন")}
+async function copyRoomCode(){const ok=await copyTextReliable(roomCode);showMessage(ok?"🔑 ROOM CODE COPIED: "+roomCode:"রুম কোড: "+roomCode+" — কোডটি চেপে ধরে Copy করুন")}
+
+async function joinRoomByCode(code){const clean=String(code||"").trim().toUpperCase();if(!/^[A-Z0-9]{6}$/.test(clean)){homeStatus.textContent="❌ Room Code অবশ্যই ৬ অক্ষরের হতে হবে";return}myName=nameInput.value.trim()||"Mijanur";homeStatus.textContent="⏳ বন্ধুর রুমে ঢোকা হচ্ছে...";try{const roomSnap=await get(ref(db,"rooms/"+clean));if(!roomSnap.exists()){homeStatus.textContent="❌ এই রুম পাওয়া যায়নি — কোড ঠিক আছে কি না দেখুন";return}const data=roomSnap.val()||{};if(data.status!=="waiting"){homeStatus.textContent="❌ এই রুমে ম্যাচ শুরু হয়ে গেছে";return}const ps=await get(ref(db,"rooms/"+clean+"/players"));const current=ps.exists()?ps.val():{};if(current[myId]){roomCode=clean;isHost=String(data.host||"")===myId;openRoom();return}if(countHumans({players:current})>=MAX_PLAYERS){homeStatus.textContent="❌ রুম পূর্ণ (2/2)";return}roomCode=clean;isHost=false;const pos={x:400+Math.random()*2800,y:400+Math.random()*2800};player={...player,x:pos.x,y:pos.y,angle:0,speed:0,alive:true};await set(ref(db,"rooms/"+roomCode+"/players/"+myId),makePlayerData(myName,pos.x,pos.y,{ready:false}));const verify=await get(ref(db,"rooms/"+roomCode+"/players/"+myId));if(!verify.exists()){roomCode="";homeStatus.textContent="❌ সার্ভারে খেলোয়াড় যুক্ত হয়নি — Supabase permission/RLS পরীক্ষা করুন";return}await onDisconnect(ref(db,"rooms/"+roomCode+"/players/"+myId)).remove();openRoom()}catch(err){console.error(err);homeStatus.textContent="❌ রুমে ঢোকা যায়নি: "+(err?.message||"অনলাইন সংযোগ বা permission পরীক্ষা করুন")}}
+
+function carColor(id){const colors=["#ff3030","#a63dff","#ffb300","#22d65d","#1bbcff","#ff4caa","#9dff28","#ff722e","#dddddd"];let n=0;for(let i=0;i<id.length;i++)n+=id.charCodeAt(i);return colors[n%colors.length]}
+function escapeHTML(str){return String(str).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
+
+const keys={};
+window.addEventListener("keydown",e=>{keys[e.key.toLowerCase()]=true;if(e.key===" ")fire();if(e.key.toLowerCase()==="r")reload();if(e.key==="Shift")nitroActive=true});
+window.addEventListener("keyup",e=>{keys[e.key.toLowerCase()]=false;if(e.key==="Shift")nitroActive=false});
+setInterval(()=>{if(!joyActive){let x=0,y=0;if(keys["a"]||keys["arrowleft"])x--;if(keys["d"]||keys["arrowright"])x++;if(keys["w"]||keys["arrowup"])y--;if(keys["s"]||keys["arrowdown"])y++;joyX=x;joyY=y}},30);
+const inviteRoom=new URLSearchParams(location.search).get("room");if(inviteRoom){const ci=document.getElementById("roomCodeInput");if(ci)ci.value=inviteRoom.toUpperCase();setTimeout(()=>joinRoomByCode(inviteRoom),500)}
+nameInput.value="Mijanur";
+</script>
+</body>
+</html>
