@@ -422,24 +422,34 @@ async function api(path,opts={}){const r=await fetch(SUPABASE_URL+"/rest/v1/"+pa
 async function readRooms(){const rows=await api("uzar_rooms?select=code,state");const out={};for(const row of rows||[])out[row.code]=normalizeRoomState(row.state);return out}
 async function readRoom(code){const rows=await api("uzar_rooms?select=state&code=eq."+encodeURIComponent(code)+"&limit=1");return rows&&rows.length?normalizeRoomState(rows[0].state):undefined}
 async function writeRoom(code,state){
- // Legacy fallback used only for offline/migration helpers. Online path writes use atomic RPC.
+ // Match the table schema shown in Supabase: code + state (created_at is DB-default).
+ // Do not send updated_at because the current table may not have that column.
  await api("uzar_rooms?on_conflict=code",{method:"POST",headers:{Prefer:"resolution=merge-duplicates,return=minimal"},body:JSON.stringify({code,state})});
-}
-async function patchRoomAtomic(code,path,value,mode="set"){
- // Atomic server-side JSONB path patch prevents one player's update from overwriting another player's data.
- await api("rpc/uzar_room_patch",{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify({p_code:code,p_path:path,p_value:value===undefined?null:value,p_mode:mode})});
 }
 async function mutatePath(parts,value,mode="set"){
  if(offlineMode){const current=pathGet({rooms:localRooms},parts);if(mode==="remove"){if(parts.length===2)delete localRooms[parts[1]];else pathSet({rooms:localRooms},parts,undefined)}else if(mode==="merge"){pathSet({rooms:localRooms},parts,{...(current||{}),...(value||{})})}else pathSet({rooms:localRooms},parts,value);localNotify();return}
  if(parts[0]!=="rooms")throw new Error("Unsupported database path");
- if(parts.length===1){if(mode==="remove")throw new Error("Cannot remove all rooms");for(const [code,state] of Object.entries(value||{}))await patchRoomAtomic(code,[],state,"set");return}
- const code=parts[1],path=parts.slice(2);
- if(path.length===0&&mode==="remove"){await api("uzar_rooms?code=eq."+encodeURIComponent(code),{method:"DELETE",headers:{Prefer:"return=minimal"}});return}
- await patchRoomAtomic(code,path,value,mode);
+ if(parts.length===1){if(mode==="remove")throw new Error("Cannot remove all rooms");for(const [code,state] of Object.entries(value||{}))await writeRoom(code,state);return}
+ const code=parts[1];let state=normalizeRoomState(await readRoom(code));
+ if(parts.length===2&&mode==="remove"){await api("uzar_rooms?code=eq."+encodeURIComponent(code),{method:"DELETE",headers:{Prefer:"return=minimal"}});return}
+ if(state===undefined)state={};
+ // Use a database-side JSONB patch for nested SET operations. This avoids
+ // read/modify/write races when two phones add themselves to the same room.
+ if(parts.length>2 && mode==="set"){
+   const patchPath=parts.slice(2).join("/");
+   await api("rpc/uzar_room_patch",{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify({p_code:code,p_path:patchPath,p_value:value===undefined?null:value})});
+   return;
+ }
+ if(parts.length===2&&mode==="set")state=cloneData(value||{});
+ else if(parts.length===2&&mode==="merge")state={...state,...(value||{})};
+ else if(mode==="remove")pathSet(state,parts.slice(2),undefined);
+ else if(mode==="merge"){const cur=pathGet(state,parts.slice(2))||{};pathSet(state,parts.slice(2),{...cur,...(value||{})})}
+ else pathSet(state,parts.slice(2),value);
+ await writeRoom(code,state);
 }
 async function get(r){if(offlineMode)return snap(pathGet({rooms:localRooms},r.path));if(!r.path.length)return snap(await readRooms());if(r.path[0]!=="rooms")return snap(undefined);const state=await readRoom(r.path[1]);return snap(r.path.length===2?state:pathGet(state,r.path.slice(2)))}
 async function set(r,v){return mutatePath(r.path,v,"set")}
-async function update(r,v){if(!r.path.length&&v&&Object.keys(v).some(k=>k.startsWith("rooms/"))){const entries=Object.entries(v);for(const [p,val] of entries){const parts=p.split("/").filter(Boolean);if(parts[0]!=="rooms"||!parts[1])continue;if(offlineMode){pathSet({rooms:localRooms},parts,val);localNotify()}else await patchRoomAtomic(parts[1],parts.slice(2),val,"set")}return}return mutatePath(r.path,v,"merge")}
+async function update(r,v){if(!r.path.length&&v&&Object.keys(v).some(k=>k.startsWith("rooms/"))){const grouped={};for(const [p,val] of Object.entries(v)){const parts=p.split("/").filter(Boolean);if(parts[0]!=="rooms"||!parts[1])continue;(grouped[parts[1]]??=[]).push([parts.slice(2),val])}for(const [code,entries] of Object.entries(grouped)){let state=offlineMode?(localRooms[code]||{}):normalizeRoomState(await readRoom(code));for(const [parts,val] of entries)pathSet(state,parts,val);if(offlineMode){localRooms[code]=state;localNotify()}else await writeRoom(code,state)}return}return mutatePath(r.path,v,"merge")}
 async function remove(r){return mutatePath(r.path,undefined,"remove")}
 function onValue(r,cb){let stopped=false;const listener={path:r.path,cb};if(offlineMode){localListeners.add(listener);Promise.resolve().then(()=>{if(!stopped)cb(snap(pathGet({rooms:localRooms},r.path)))})}else{const tick=async()=>{if(stopped)return;try{const value=r.path.length===0?await readRooms():r.path[0]==="rooms"?(async()=>{const st=await readRoom(r.path[1]);return r.path.length===2?st:pathGet(st,r.path.slice(2))})():undefined;if(!stopped)cb(snap(value))}catch(e){console.warn(e)}};tick();listener.timer=setInterval(tick,650)}return()=>{stopped=true;localListeners.delete(listener);if(listener.timer)clearInterval(listener.timer)}}
 function onDisconnect(_r){return {remove:async()=>{},cancel:async()=>{}}}
@@ -539,7 +549,13 @@ function makeBotData(i){
  const pos=positions[(Math.max(1,Number(i)||1)-1)%positions.length];
  return makePlayerData("BOT "+i,pos[0],pos[1],{bot:true,botIndex:i});
 }
-function countHumans(data){return Object.values(data?.players||{}).filter(p=>p&&!p.bot).length}
+function countHumans(data){
+ let value=data;
+ if(typeof value==="string"){try{value=JSON.parse(value)}catch(_){value={}}}
+ const candidate=value?.players??value??{};
+ const o=typeof candidate==="string"?(()=>{try{return JSON.parse(candidate)}catch(_){return {}}})():candidate;
+ return Object.values(o&&typeof o==="object"&&!Array.isArray(o)?o:{}).filter(p=>p&&typeof p==="object"&&!p.bot).length;
+}
 
 async function createRoom(){
 myName=nameInput.value.trim()||"Mijanur";roomCode=makeRoomCode();isHost=true;matchStarted=false;matchCountdown=0;matchCountdownSeconds=0;window.matchStartAt=0;window.localReadyAt=0;window.currentRoomStatus="waiting";homeStatus.textContent="⏳ Matchmaking...";
@@ -555,7 +571,7 @@ await set(ref(db,"rooms/"+roomCode+"/pickups"),createPickupData());
 await set(ref(db,"rooms/"+roomCode+"/bullets"),{});
 await onDisconnect(ref(db,"rooms/"+roomCode+"/players/"+myId)).remove();
 openRoom();
-}catch(err){console.error(err);homeStatus.textContent="❌ সার্ভার লেখার সমস্যা: "+err.message+" • আগে uzar_room_patch SQL function চালান"}
+}catch(err){console.error(err);homeStatus.textContent="❌ Supabase সমস্যা: "+err.message+" • SQL টেবিল ও RLS policy পরীক্ষা করুন"}
 }
 
 async function joinRoom(){
@@ -578,7 +594,7 @@ player={...player,x:pos.x,y:pos.y,angle:0,speed:0,alive:true};
 await set(ref(db,"rooms/"+roomCode+"/players/"+myId),makePlayerData(myName,pos.x,pos.y,{ready:false}));
 await onDisconnect(ref(db,"rooms/"+roomCode+"/players/"+myId)).remove();
 openRoom();
-}catch(err){console.error(err);homeStatus.textContent="❌ Player যোগ হয়নি: "+err.message+" • uzar_room_patch SQL function ও table permission পরীক্ষা করুন"}
+}catch(err){console.error(err);homeStatus.textContent="❌ অনলাইন সংযোগ ব্যর্থ: "+err.message+" • Supabase SQL/RLS সেটআপ পরীক্ষা করুন"}
 }
 
 async function ensureBattleData(){
@@ -633,7 +649,7 @@ if(mine){
  players[myId]={...mine,x:player.x,y:player.y,angle:player.angle,alive:player.alive,hp:player.hp,armor:player.armor,nitro:player.nitro,ammo:player.ammo};
 }
 renderRoomPlayers();renderGamePlayers();
-document.getElementById("playerCount").textContent=countHumans({players})+"/"+MAX_PLAYERS;
+document.getElementById("playerCount").textContent=countHumans(players)+"/"+MAX_PLAYERS;
  // Start/continue this client's timer only after this specific player pressed START.
  const roomSnapStatus=window.currentRoomStatus||"waiting";
  if(roomSnapStatus!=="started" && mine?.ready && Number(mine.readyAt||0)){
@@ -1144,7 +1160,7 @@ async function shareInvite(){const url=getInviteUrl();const text="🚗 UZAR Batt
 async function copyInvite(){const text="🚗 UZAR Battle Royale-এ আমার সাথে অনলাইনে খেলো! এই লিংক খুলে একই রুমে যোগ দাও: "+getInviteUrl()+"\nRoom Code: "+roomCode;const ok=await copyTextReliable(text);showMessage(ok?"📋 INVITE LINK COPIED":"কপি হয়নি — লেখাটি চেপে ধরে Copy করুন")}
 async function copyRoomCode(){const ok=await copyTextReliable(roomCode);showMessage(ok?"🔑 ROOM CODE COPIED: "+roomCode:"রুম কোড: "+roomCode+" — কোডটি চেপে ধরে Copy করুন")}
 
-async function joinRoomByCode(code){const clean=String(code||"").trim().toUpperCase();if(!/^[A-Z0-9]{6}$/.test(clean)){homeStatus.textContent="❌ Room Code অবশ্যই ৬ অক্ষরের হতে হবে";return}myName=nameInput.value.trim()||"Mijanur";homeStatus.textContent="⏳ বন্ধুর রুমে ঢোকা হচ্ছে...";try{const roomSnap=await get(ref(db,"rooms/"+clean));if(!roomSnap.exists()){homeStatus.textContent="❌ এই রুম পাওয়া যায়নি — কোড ঠিক আছে কি না দেখুন";return}const data=roomSnap.val()||{};if(data.status!=="waiting"){homeStatus.textContent="❌ এই রুমে ম্যাচ শুরু হয়ে গেছে";return}const ps=await get(ref(db,"rooms/"+clean+"/players"));const current=ps.exists()?ps.val():{};if(current[myId]){roomCode=clean;isHost=String(data.host||"")===myId;openRoom();return}if(countHumans({players:current})>=MAX_PLAYERS){homeStatus.textContent="❌ রুম পূর্ণ (2/2)";return}roomCode=clean;isHost=false;const pos={x:400+Math.random()*2800,y:400+Math.random()*2800};player={...player,x:pos.x,y:pos.y,angle:0,speed:0,alive:true};await set(ref(db,"rooms/"+roomCode+"/players/"+myId),makePlayerData(myName,pos.x,pos.y,{ready:false}));const verify=await get(ref(db,"rooms/"+roomCode+"/players/"+myId));if(!verify.exists()){roomCode="";homeStatus.textContent="❌ সার্ভারে খেলোয়াড় যুক্ত হয়নি — Supabase permission/RLS পরীক্ষা করুন";return}await onDisconnect(ref(db,"rooms/"+roomCode+"/players/"+myId)).remove();openRoom()}catch(err){console.error(err);homeStatus.textContent="❌ রুমে ঢোকা যায়নি: "+(err?.message||"অনলাইন সংযোগ বা permission পরীক্ষা করুন")}}
+async function joinRoomByCode(code){const clean=String(code||"").trim().toUpperCase();if(!/^[A-Z0-9]{6}$/.test(clean)){homeStatus.textContent="❌ Room Code অবশ্যই ৬ অক্ষরের হতে হবে";return}myName=nameInput.value.trim()||"Mijanur";homeStatus.textContent="⏳ বন্ধুর রুমে ঢোকা হচ্ছে...";try{const roomSnap=await get(ref(db,"rooms/"+clean));if(!roomSnap.exists()){homeStatus.textContent="❌ এই রুম পাওয়া যায়নি — কোড ঠিক আছে কি না দেখুন";return}const data=roomSnap.val()||{};if(data.status!=="waiting"){homeStatus.textContent="❌ এই রুমে ম্যাচ শুরু হয়ে গেছে";return}const ps=await get(ref(db,"rooms/"+clean+"/players"));const current=ps.exists()?ps.val():{};if(current[myId]){roomCode=clean;isHost=String(data.host||"")===myId;openRoom();return}if(countHumans({players:current})>=MAX_PLAYERS){homeStatus.textContent="❌ রুম পূর্ণ (2/2)";return}roomCode=clean;isHost=false;const pos={x:400+Math.random()*2800,y:400+Math.random()*2800};player={...player,x:pos.x,y:pos.y,angle:0,speed:0,alive:true};await set(ref(db,"rooms/"+roomCode+"/players/"+myId),makePlayerData(myName,pos.x,pos.y,{ready:false}));const verify=await get(ref(db,"rooms/"+roomCode+"/players/"+myId));if(!verify.exists()){roomCode="";homeStatus.textContent="❌ সার্ভারে খেলোয়াড় যুক্ত হয়নি — Supabase permission/RLS পরীক্ষা করুন";return}await onDisconnect(ref(db,"rooms/"+roomCode+"/players/"+myId)).remove();openRoom()}catch(err){console.error(err);homeStatus.textContent="❌ রুমে ঢোকা যায়নি: "+(err?.message||"অনলাইন সংযোগ বা Supabase permission পরীক্ষা করুন")}}
 
 function carColor(id){const colors=["#ff3030","#a63dff","#ffb300","#22d65d","#1bbcff","#ff4caa","#9dff28","#ff722e","#dddddd"];let n=0;for(let i=0;i<id.length;i++)n+=id.charCodeAt(i);return colors[n%colors.length]}
 function escapeHTML(str){return String(str).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
