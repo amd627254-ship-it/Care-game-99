@@ -112,7 +112,7 @@ border-radius:24px;
 background:#041523ee;
 border:1px solid #1ebcff66;
 box-shadow:0 0 35px #00aaff33}.roomTitle{text-align:center;
-font-size:23px;font-weight:900}.roomCode{margin:14px 0;padding:15px;text-align:center;border-radius:15px;background:#00101d;border:1px solid #1abaff55}.roomCode small{display:block;color:#82cbea;margin-bottom:5px}.roomCode strong{font-size:24px;color:#57e7ff;letter-spacing:2px}.count{text-align:right;color:#55eaff;margin-bottom:8px}.players{display:grid;grid-template-columns:1fr 1fr;gap:7px}.playerRow{display:flex;align-items:center;gap:7px;padding:8px;border-radius:10px;background:#071d2c;border:1px solid #ffffff10;min-width:0}.playerNum{width:25px;height:25px;display:flex;align-items:center;justify-content:center;border-radius:7px;font-weight:bold;background:#087ddd}.playerName{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}.roomActions{display:flex;gap:8px;margin-top:15px;flex-wrap:wrap}.roomActions button{flex:1 1 28%;min-width:92px;height:50px;border-radius:13px;color:white;font-weight:900}.startBtn{background:linear-gradient(#1fee65,#009b38);display:none!important}.leaveBtn{background:#10283a;border:1px solid #2680aa}.status{text-align:center;color:#65dfff;margin-top:12px;font-size:13px}
+font-size:23px;font-weight:900}.roomCode{margin:14px 0;padding:15px;text-align:center;border-radius:15px;background:#00101d;border:1px solid #1abaff55}.roomCode small{display:block;color:#82cbea;margin-bottom:5px}.roomCode strong{font-size:24px;color:#57e7ff;letter-spacing:2px}.count{text-align:right;color:#55eaff;margin-bottom:8px}.players{display:grid;grid-template-columns:1fr 1fr;gap:7px}.playerRow{display:flex;align-items:center;gap:7px;padding:8px;border-radius:10px;background:#071d2c;border:1px solid #ffffff10;min-width:0}.playerNum{width:25px;height:25px;display:flex;align-items:center;justify-content:center;border-radius:7px;font-weight:bold;background:#087ddd}.playerName{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}.roomActions{display:flex;gap:8px;margin-top:15px;flex-wrap:wrap}.roomActions button{flex:1 1 28%;min-width:92px;height:50px;border-radius:13px;color:white;font-weight:900}.startBtn{background:linear-gradient(#1fee65,#009b38)}.leaveBtn{background:#10283a;border:1px solid #2680aa}.status{text-align:center;color:#65dfff;margin-top:12px;font-size:13px}
 
 
 #game{background:#102a16}#world{position:absolute;inset:0;width:100%;height:100%;display:block}
@@ -390,10 +390,10 @@ body.brightTheme #home{background:radial-gradient(circle at 50% 20%,#2b9de5 0,#1
 <body>
 <div id="app">
 <section id="home" class="screen active"><div class="homeBg"></div><div class="homeCard"><button class="themeBtn" type="button" aria-label="Theme">☀️</button><div class="logo">UZAR<span>BATTLE ROYALE</span></div><div class="subLogo">🚗 CAR COMBAT • PLAY TO SURVIVE</div><input id="playerName" class="nameInput" maxlength="14" placeholder="Player Name" value="Mijanur"><button id="createBtn" class="mainBtn">🌐 CREATE / FIND ONLINE ROOM</button><div style="display:flex;gap:7px;margin-top:9px"><input id="roomCodeInput" class="nameInput" maxlength="6" placeholder="ROOM CODE" style="min-width:0;flex:1;text-transform:uppercase;letter-spacing:2px"><button id="joinCodeBtn" class="mainBtn" style="width:42%;margin:0;padding:8px">JOIN ROOM</button></div><button id="offlineBtn" class="mainBtn offlineBtn" type="button">🎮 PLAY OFFLINE (5 BOTS)</button><div id="homeStatus" style="margin-top:18px;color:#70ddff;font-size:16px">Online: Supabase • Offline: available</div><div class="infoRow"><div class="infoBox"><b>👥 2+5</b>2 ONLINE + 5 BOTS</div><div class="infoBox"><b>⚔️</b>BATTLE</div><div class="infoBox"><b>🗺️</b>REAL MAP</div></div></div></section>
-<section id="room" class="screen"><div class="roomCard matchCard"><div class="roomTitle">⚡ MATCHMAKING</div><div class="roomCode" style="margin:8px 0;padding:8px"><small>ROOM CODE · বন্ধুকে দিন</small><strong id="liveRoomCode">------</strong> <button id="liveCopyCode" type="button" style="padding:6px 10px;border-radius:8px;background:#087ddd;color:#fff;border:0;font-weight:900">COPY</button></div><div class="matchTimer" id="matchTimer">00:00</div><div class="matchLabel">WAITING TIME · ২ জন হলেই অটো START</div><div class="count">PLAYERS <b id="playerCount">0/2</b></div><div id="roomPlayers" class="players"></div><div class="roomActions"><button id="startBtn" class="startBtn">🚀 START MATCH</button><button id="inviteRoomBtn" class="leaveBtn">🔗 INVITE FRIEND</button><button id="leaveRoomBtn" class="leaveBtn">↩ CANCEL</button></div><div id="roomStatus" class="status">সার্ভারে অটো ম্যাচমেকিং চলছে • ২ জন হলেই ম্যাচ অটো START হবে</div></div></section>
+<section id="room" class="screen"><div class="roomCard matchCard"><div class="roomTitle">⚡ MATCHMAKING</div><div class="matchTimer" id="matchTimer">00:00</div><div class="matchLabel">WAITING TIME · START TO READY</div><div class="count">PLAYERS <b id="playerCount">0/2</b></div><div id="roomPlayers" class="players"></div><div class="roomActions"><button id="startBtn" class="startBtn">🚀 START / READY</button><button id="inviteRoomBtn" class="leaveBtn">🔗 INVITE FRIEND</button><button id="leaveRoomBtn" class="leaveBtn">↩ CANCEL</button></div><div id="roomStatus" class="status">২ জন অনলাইন খেলোয়াড় লাগবে • বন্ধুকে INVITE LINK পাঠান</div></div></section>
 <section id="game" class="screen"><canvas id="world"></canvas><div class="topHud"><div class="profile"><div class="avatar">🪖</div><div style="min-width:0"><div id="hudName" class="profileName">Mijanur 👑</div><div class="level">Lv. 5</div><div class="profileBar"><i></i></div></div></div><div class="stats"><div class="stat"><div class="statTop"><span>❤️ HP</span><span id="hpText">100/100</span></div><div class="bar hp"><i id="hpBar"></i></div></div><div class="stat"><div class="statTop"><span>🛡 ARMOR</span><span id="armorText">100/100</span></div><div class="bar armor"><i id="armorBar"></i></div></div><div class="stat"><div class="statTop"><span>⚡ NITRO</span><span id="nitroText">100/100</span></div><div class="bar nitro"><i id="nitroBar"></i></div></div><div class="stat"><div class="statTop"><span>🔫 AMMO</span><span id="ammoText">30/30</span></div><div class="bar ammo"><i id="ammoBar"></i></div></div></div><div class="alive">👤 ALIVE <b id="aliveText">20/20</b><br>💀 KILLS <b id="killsText">0</b><br>🏆 SCORE <b id="scoreText">0</b></div></div>
 <div class="playerList"><div class="listTitle">PLAYERS</div><div id="gamePlayers"></div></div><div class="minimap"><canvas id="mini"></canvas><div class="safe"></div><div class="north">N</div></div><div class="safeTimer">🛡 SAFE ZONE<b id="safeTime">00:42</b></div><button id="exitGameBtn" class="exitBtn"><span>🚗</span>EXIT</button><button id="voiceBtn"><span>🎙️</span>VOICE</button><button id="inviteGameBtn" class="inviteMini" type="button"><span>👥</span>INVITE</button><div id="voiceStatus" class="voiceStatus">Voice off</div><div id="joystick" class="joystick"><div id="stick" class="stick"></div></div><div class="controlBtns"><button id="fireBtn" class="gameBtn fire"><span>🎯</span><small>FIRE</small></button><button id="reloadBtn" class="gameBtn reload"><span>↻</span><small>RELOAD</small></button><button id="nitroBtn" class="gameBtn nitroBtn"><span>⚡</span><small>NITRO</small></button></div><div id="centerMsg" class="centerMsg"></div><div id="pauseOverlay" class="overlay"><div class="pauseCard"><h2>Ⅱ PAUSE</h2><button id="resumeBtn" class="pauseBtn resume">▶ RESUME</button><button class="pauseBtn settings">⚙ SETTINGS</button><button id="pauseLeaveBtn" class="pauseBtn leave">🚪 LEAVE GAME</button></div></div></section>
-<div id="inviteOverlay" class="inviteOverlay"><div class="inviteCard"><h2>👥 INVITE FRIENDS</h2><div>রুম কোড</div><div id="inviteCode" class="inviteCode">------</div><button id="shareInviteBtn" class="inviteAction">📤 SHARE INVITE</button><button id="copyInviteBtn" class="inviteAction">📋 COPY INVITE LINK</button><button id="copyRoomCodeBtn" class="inviteAction">🔑 COPY ROOM CODE</button><button id="closeInviteBtn" class="inviteAction inviteClose">✕ CLOSE</button><div class="inviteHint">বন্ধুকে লিংক পাঠালে একই রুমে সরাসরি ঢুকবে।</div></div></div><section id="winner" class="screen"><div class="winnerCard"><div class="crown">👑</div><div class="winnerTitle">#1 WINNER</div><div id="winnerName" class="winnerName">Mijanur</div><div style="color:#a9dfff">🏆 BATTLE ROYALE CHAMPION</div><button id="winnerHome" class="mainBtn" style="margin-top:20px">🏠 HOME</button></div></section>
+<div id="inviteOverlay" class="inviteOverlay"><div class="inviteCard"><h2>👥 INVITE FRIENDS</h2><div>রুম কোড</div><div id="inviteCode" class="inviteCode">------</div><button id="shareInviteBtn" class="inviteAction">📤 SHARE INVITE</button><button id="copyInviteBtn" class="inviteAction">📋 COPY INVITE LINK</button><button id="closeInviteBtn" class="inviteAction inviteClose">✕ CLOSE</button><div class="inviteHint">বন্ধুকে লিংক পাঠালে একই রুমে সরাসরি ঢুকবে।</div></div></div><section id="winner" class="screen"><div class="winnerCard"><div class="crown">👑</div><div class="winnerTitle">#1 WINNER</div><div id="winnerName" class="winnerName">Mijanur</div><div style="color:#a9dfff">🏆 BATTLE ROYALE CHAMPION</div><button id="winnerHome" class="mainBtn" style="margin-top:20px">🏠 HOME</button></div></section>
 </div>
 
 <script type="module">
@@ -411,62 +411,66 @@ function pathSet(root,parts,value){if(!parts.length)return value;let o=root;for(
 function snap(value){return {val:()=>cloneData(value),exists:()=>value!==undefined&&value!==null,forEach:fn=>{if(value&&typeof value==="object")Object.entries(value).forEach(([key,v])=>fn({key,val:()=>cloneData(v)}))}}}
 function localNotify(){for(const l of [...localListeners]){try{l.cb(snap(pathGet({rooms:localRooms},l.path)))}catch(e){}}}
 async function api(path,opts={}){const r=await fetch(SUPABASE_URL+"/rest/v1/"+path,{...opts,headers:{apikey:SUPABASE_PUBLISHABLE_KEY,"Content-Type":"application/json",...(opts.headers||{})}});if(!r.ok){const t=await r.text();throw new Error("Supabase "+r.status+": "+t.slice(0,220))}if(r.status===204)return null;const t=await r.text();return t?JSON.parse(t):null}
-// Supabase schema compatibility: uzar_rooms.state is TEXT in this project,
-// while the game works with JavaScript objects. Parse/stringify at the API edge.
-function decodeRoomRow(row){
- if(!row)return undefined;
- let state=row.state;
- if(typeof state==="string"){
-   try{state=JSON.parse(state)}catch(_){state={};}
+function normalizeRoomState(value){
+ // Older builds stored JSONB as a JSON-encoded string (sometimes double-encoded).
+ // Unwrap strings until we get an object, so nested writes never target a string.
+ let v=value;
+ for(let i=0;i<4&&typeof v==="string";i++){
+   const t=v.trim(); if(!t)return {};
+   try{v=JSON.parse(t)}catch(_){return {}}
  }
- if(!state||typeof state!=="object"||Array.isArray(state))state={};
- state={...state};
- if(row.status)state.status=row.status;
- return state;
+ return v&&typeof v==="object"&&!Array.isArray(v)?v:{};
 }
-async function readRooms(){
- const rows=await api("uzar_rooms?select=code,room_code,state,status");
- const out={};
- for(const row of rows||[]){const code=String(row.code||row.room_code||"").trim().toUpperCase();if(code)out[code]=decodeRoomRow(row)||{};}
- return out;
-}
-async function readRoom(code){
- const clean=String(code||"").trim().toUpperCase();
- const rows=await api("uzar_rooms?select=code,room_code,state,status&code=eq."+encodeURIComponent(clean)+"&limit=1");
- if(rows&&rows.length)return decodeRoomRow(rows[0]);
- // Older table versions may store the room key in room_code instead.
- const alt=await api("uzar_rooms?select=code,room_code,state,status&room_code=eq."+encodeURIComponent(clean)+"&limit=1");
- return alt&&alt.length?decodeRoomRow(alt[0]):undefined;
-}
+async function readRooms(){const rows=await api("uzar_rooms?select=code,state");const out={};for(const row of rows||[])out[row.code]=normalizeRoomState(row.state);return out}
+async function readRoom(code){const rows=await api("uzar_rooms?select=state&code=eq."+encodeURIComponent(code)+"&limit=1");return rows&&rows.length?normalizeRoomState(rows[0].state):undefined}
 async function writeRoom(code,state){
- const clean=String(code||"").trim().toUpperCase();
- const safeState=(state&&typeof state==="object"&&!Array.isArray(state))?state:{};
- const row={code:clean,room_code:clean,state:JSON.stringify(safeState),status:String(safeState.status||"waiting")};
- const existing=await api("uzar_rooms?select=id&code=eq."+encodeURIComponent(clean)+"&limit=1");
- if(existing&&existing.length){
-   await api("uzar_rooms?code=eq."+encodeURIComponent(clean),{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({state:row.state,status:row.status,room_code:clean})});
- }else{
-   await api("uzar_rooms",{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify(row)});
- }
+ const safeState=normalizeRoomState(state);
+ // This project database uses a TEXT state column. Store serialized JSON text;
+ // normalizeRoomState() parses it back to an object on reads.
+ await api("uzar_rooms?on_conflict=code",{method:"POST",headers:{Prefer:"resolution=merge-duplicates,return=minimal"},body:JSON.stringify({code,state:JSON.stringify(safeState),updated_at:new Date().toISOString()})});
 }
 async function mutatePath(parts,value,mode="set"){
  if(offlineMode){const current=pathGet({rooms:localRooms},parts);if(mode==="remove"){if(parts.length===2)delete localRooms[parts[1]];else pathSet({rooms:localRooms},parts,undefined)}else if(mode==="merge"){pathSet({rooms:localRooms},parts,{...(current||{}),...(value||{})})}else pathSet({rooms:localRooms},parts,value);localNotify();return}
  if(parts[0]!=="rooms")throw new Error("Unsupported database path");
  if(parts.length===1){if(mode==="remove")throw new Error("Cannot remove all rooms");for(const [code,state] of Object.entries(value||{}))await writeRoom(code,state);return}
- const code=String(parts[1]||"").trim().toUpperCase();
- if(!code)throw new Error("Room code is required");
- // Every online write is applied atomically by PostgreSQL to the JSON stored
- // in the existing TEXT state column. This prevents two players overwriting
- // each other's nested player records during simultaneous joins/updates.
- const path=parts.slice(2).join("/");
- await api("rpc/uzar_room_patch",{method:"POST",headers:{Prefer:"return=representation"},body:JSON.stringify({p_code:code,p_path:path,p_value:value===undefined?null:value,p_mode:mode})});
+ const code=parts[1];
+ if(parts.length===2){
+   if(mode==="remove"){await api("uzar_rooms?code=eq."+encodeURIComponent(code),{method:"DELETE",headers:{Prefer:"return=minimal"}});return}
+   const current=normalizeRoomState(await readRoom(code));
+   const next=mode==="merge"?{...current,...(value||{})}:normalizeRoomState(cloneData(value||{}));
+   await writeRoom(code,next);return;
+ }
+ // Use the database row-locking RPC for nested writes. A full read/modify/write here
+ // allowed two phones joining at once to overwrite each other's player entry.
+ const subPath=parts.slice(2).join("/");
+ let nextValue=value;
+ if(mode==="merge"){
+   const state=normalizeRoomState(await readRoom(code));
+   const current=pathGet(state,parts.slice(2));
+   nextValue={...(current&&typeof current==="object"?current:{}),...(value||{})};
+ }
+ if(mode==="remove")nextValue=null;
+ try {
+  await api("rpc/uzar_room_patch",{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify({p_code:code,p_path:subPath,p_value:nextValue===undefined?null:nextValue})});
+ } catch(rpcError) {
+  // Fallback for an outdated/missing RPC: keep the TEXT state column serialized as JSON.
+  const currentState=normalizeRoomState(await readRoom(code));
+  if(mode==="remove") {
+   const parent=pathGet(currentState,parts.slice(2,-1));
+   if(parent&&typeof parent==="object") delete parent[parts[parts.length-1]];
+  } else {
+   pathSet(currentState,parts.slice(2),nextValue);
+  }
+  await writeRoom(code,currentState);
+  console.warn("Room patch RPC fallback used",rpcError);
+ }
 }
 async function get(r){if(offlineMode)return snap(pathGet({rooms:localRooms},r.path));if(!r.path.length)return snap(await readRooms());if(r.path[0]!=="rooms")return snap(undefined);const state=await readRoom(r.path[1]);return snap(r.path.length===2?state:pathGet(state,r.path.slice(2)))}
 async function set(r,v){return mutatePath(r.path,v,"set")}
-async function update(r,v){if(!r.path.length&&v&&Object.keys(v).some(k=>k.startsWith("rooms/"))){for(const [p,val] of Object.entries(v)){const parts=p.split("/").filter(Boolean);if(parts[0]!=="rooms"||!parts[1])continue;await mutatePath(["rooms",parts[1],...parts.slice(2)],val,parts.length===2?"merge":"set")}return}return mutatePath(r.path,v,"merge")}
+async function update(r,v){if(!r.path.length&&v&&Object.keys(v).some(k=>k.startsWith("rooms/"))){for(const [p,val] of Object.entries(v)){const parts=p.split("/").filter(Boolean);if(parts[0]==="rooms"&&parts[1])await mutatePath(parts,val,"set")}return}return mutatePath(r.path,v,"merge")}
 async function remove(r){return mutatePath(r.path,undefined,"remove")}
-function onValue(r,cb){let stopped=false;const listener={path:r.path,cb};if(offlineMode){localListeners.add(listener);Promise.resolve().then(()=>{if(!stopped)cb(snap(pathGet({rooms:localRooms},r.path)))})}else{const tick=async()=>{if(stopped)return;try{const value=r.path.length===0?await readRooms():r.path[0]==="rooms"?(async()=>{const st=await readRoom(r.path[1]);return r.path.length===2?st:pathGet(st,r.path.slice(2))})():undefined;if(!stopped)cb(snap(value))}catch(e){console.warn(e)}};tick();listener.timer=setInterval(tick,650)}return()=>{stopped=true;localListeners.delete(listener);if(listener.timer)clearInterval(listener.timer)}}
-function onDisconnect(_r){return {remove:async()=>{},cancel:async()=>{}}} // Supabase REST has no Firebase-style onDisconnect; stale-player cleanup needs a server heartbeat/cleanup policy.
+function onValue(r,cb){let stopped=false;const listener={path:r.path,cb};if(offlineMode){localListeners.add(listener);Promise.resolve().then(()=>{if(!stopped)cb(snap(pathGet({rooms:localRooms},r.path)))})}else{const tick=async()=>{if(stopped)return;try{const value=r.path.length===0?await readRooms():r.path[0]==="rooms"?(async()=>{const st=await readRoom(r.path[1]);return r.path.length===2?st:pathGet(st,r.path.slice(2))})():undefined;if(!stopped)cb(snap(value))}catch(e){console.warn(e);const status=document.getElementById("roomStatus")||document.getElementById("homeStatus");if(status)status.textContent="❌ Supabase read error: "+(e?.message||String(e))}};tick();listener.timer=setInterval(tick,650)}return()=>{stopped=true;localListeners.delete(listener);if(listener.timer)clearInterval(listener.timer)}}
+function onDisconnect(_r){return {remove:async()=>{},cancel:async()=>{}}}
 function push(r,v){const key="k_"+Date.now().toString(36)+Math.random().toString(36).slice(2,8);const promise=set(ref(db,[...r.path,key].join("/")),v);return {key,then:promise.then.bind(promise),catch:promise.catch.bind(promise)}}
 // NOTE: This REST-backed transaction is read/modify/write, not server-atomic. Keep match authoritative actions host-owned.
 async function runTransaction(r,fn){const before=await get(r),current=before.val(),next=fn(cloneData(current));if(next===undefined)return{committed:false,snapshot:before};await set(r,next);return{committed:true,snapshot:await get(r)}}
@@ -563,7 +567,7 @@ function makeBotData(i){
  const pos=positions[(Math.max(1,Number(i)||1)-1)%positions.length];
  return makePlayerData("BOT "+i,pos[0],pos[1],{bot:true,botIndex:i});
 }
-function countHumans(data){let list=data?.players??data??{};if(typeof list==="string"){try{list=JSON.parse(list)}catch(_){list={}}}if(!list||typeof list!=="object"||Array.isArray(list))return 0;return Object.values(list).filter(p=>p&&typeof p==="object"&&!p.bot).length}
+function countHumans(data){return Object.values(data?.players||{}).filter(p=>p&&!p.bot).length}
 
 async function createRoom(){
 myName=nameInput.value.trim()||"Mijanur";roomCode=makeRoomCode();isHost=true;matchStarted=false;matchCountdown=0;matchCountdownSeconds=0;window.matchStartAt=0;window.localReadyAt=0;window.currentRoomStatus="waiting";homeStatus.textContent="⏳ Matchmaking...";
@@ -573,9 +577,10 @@ playersData[myId]=makePlayerData(myName,1800,1250,{ready:false,invulnerableUntil
 player={...player,x:1800,y:1250,angle:0,speed:0,alive:true};
 for(let i=1;i<=MAX_BOTS;i++)playersData["bot"+i]=makeBotData(i);
 
-// Publish the room and its initial player list atomically so another client
-// cannot discover an empty room and then have its join overwritten by a later players write.
-await set(ref(db,"rooms/"+roomCode),{host:myId,createdAt:Date.now(),status:"waiting",startRequestedAt:null,maxPlayers:MAX_PLAYERS,maxBots:MAX_BOTS,minPlayers:2,startedAt:null,matchDuration:MATCH_DURATION_MS,players:playersData,pickups:createPickupData(),bullets:{}});
+await set(ref(db,"rooms/"+roomCode),{host:myId,createdAt:Date.now(),status:"waiting",startRequestedAt:null,maxPlayers:MAX_PLAYERS,maxBots:MAX_BOTS,minPlayers:2,startedAt:null,matchDuration:MATCH_DURATION_MS});
+await set(ref(db,"rooms/"+roomCode+"/players"),playersData);
+await set(ref(db,"rooms/"+roomCode+"/pickups"),createPickupData());
+await set(ref(db,"rooms/"+roomCode+"/bullets"),{});
 await onDisconnect(ref(db,"rooms/"+roomCode+"/players/"+myId)).remove();
 openRoom();
 }catch(err){console.error(err);homeStatus.textContent="❌ Supabase সমস্যা: "+err.message+" • SQL টেবিল ও RLS policy পরীক্ষা করুন"}
@@ -610,13 +615,7 @@ const p=await get(ref(db,"rooms/"+roomCode+"/pickups"));if(!p.exists())await set
 const b=await get(ref(db,"rooms/"+roomCode+"/bullets"));if(!b.exists())await set(ref(db,"rooms/"+roomCode+"/bullets"),{});
 }
 
-function openRoom(){
- screen("room");const codeEl=document.getElementById("liveRoomCode");if(codeEl)codeEl.textContent=roomCode||"------";
- // Waiting timer begins automatically as soon as this client joins matchmaking.
- if(!window.matchStartAt){window.matchStartAt=Date.now();window.localReadyAt=window.matchStartAt;}
- if(!matchTimerId)startMatchCountdown();
- listenRoom();listenPlayers();listenPickups();listenBullets();ensureBattleData();updateMatchUI();
-}
+function openRoom(){screen("room");listenRoom();listenPlayers();listenPickups();listenBullets();ensureBattleData();updateMatchUI()}
 function listenRoom(){if(roomUnsub)roomUnsub();roomUnsub=onValue(ref(db,"rooms/"+roomCode),snap=>{
 if(!snap.exists()){leaveLocal();return}
 const data=snap.val()||{};window.currentRoomStatus=data.status||"waiting";
@@ -625,10 +624,16 @@ if(data.status==="started"){
  if(matchTimerId)clearInterval(matchTimerId);matchTimerId=null;
  matchStarted=true;window.gameStartedAt=Number(data.startedAt||Date.now());startGame();
 }else{
- // Matchmaking timer runs automatically while waiting; no READY button is required.
- matchStarted=false;
- if(!window.matchStartAt){window.matchStartAt=Date.now();window.localReadyAt=window.matchStartAt;}
- if(!matchTimerId)startMatchCountdown();
+ // Each player starts their own lobby timer only when that player presses START.
+ // Do not start the other player's timer from the room-level event.
+ const mine=players?.[myId];
+ if(mine?.ready && Number(mine.readyAt||0)){
+   matchStarted=true;window.matchStartAt=Number(mine.readyAt);window.localReadyAt=window.matchStartAt;
+   if(!matchTimerId)startMatchCountdown();
+ }else if(!window.localReadyAt){
+   matchStarted=false;window.matchStartAt=0;
+   if(matchTimerId){clearInterval(matchTimerId);matchTimerId=null}
+ }
 }
 updateMatchUI();
 })}
@@ -656,12 +661,16 @@ if(mine){
  players[myId]={...mine,x:player.x,y:player.y,angle:player.angle,alive:player.alive,hp:player.hp,armor:player.armor,nitro:player.nitro,ammo:player.ammo};
 }
 renderRoomPlayers();renderGamePlayers();
-document.getElementById("playerCount").textContent=countHumans({players})+"/"+MAX_PLAYERS;
- // Automatic matchmaking: no per-player READY state is required.
+// Keep the counter tied to the exact same human-player filter used by the lobby rows.
+document.getElementById("playerCount").textContent=Object.entries(players||{}).filter(([id,p])=>p && !p.bot && !String(id).startsWith("bot")).length+"/"+MAX_PLAYERS;
+ // Start/continue this client's timer only after this specific player pressed START.
  const roomSnapStatus=window.currentRoomStatus||"waiting";
- if(roomSnapStatus!=="started"){
-   if(!window.matchStartAt){window.matchStartAt=Date.now();window.localReadyAt=window.matchStartAt;}
+ if(roomSnapStatus!=="started" && mine?.ready && Number(mine.readyAt||0)){
+   matchStarted=true;window.matchStartAt=Number(mine.readyAt);window.localReadyAt=window.matchStartAt;
    if(!matchTimerId)startMatchCountdown();
+ }else if(roomSnapStatus!=="started" && !mine?.ready && !window.localReadyAt){
+   matchStarted=false;window.matchStartAt=0;
+   if(matchTimerId){clearInterval(matchTimerId);matchTimerId=null}
  }
  updateMatchUI();tryLaunchMatch();
 document.getElementById("aliveText").textContent=Object.values(players).filter(p=>p&&p.alive!==false).length+"/"+(MAX_PLAYERS+MAX_BOTS);
@@ -676,13 +685,15 @@ function formatElapsed(startAt){const seconds=Math.max(0,Math.floor((Date.now()-
 function renderRoomPlayers(){
 const box=document.getElementById("roomPlayers");if(!box)return;box.innerHTML="";
 // The matchmaking lobby lists only real people; bots are added to the battle, not counted as joined friends.
-const humans=Object.entries(players||{}).filter(([,p])=>p&&!p.bot).sort((a,b)=>(a[1].joinedAt||0)-(b[1].joinedAt||0));
+const humans=Object.entries(players||{}).filter(([id,p])=>p && !p.bot && !String(id).startsWith("bot")).sort((a,b)=>(a[1].joinedAt||0)-(b[1].joinedAt||0));
 for(let index=0;index<MAX_PLAYERS;index++){
  const entry=humans[index];const row=document.createElement("div");row.className="playerRow";
  if(!entry){row.innerHTML=`<div class="playerNum">${index+1}</div><div class="playerName" style="color:#78a9bf">Waiting for player…<div style="font-size:10px;margin-top:2px">🔗 Invite link / Room Code</div></div>`;box.appendChild(row);continue;}
- const [id,p]=entry;const state=p.ready?"▶ START চাপা হয়েছে":"⏳ START-এর অপেক্ষায়";const readyAt=p.ready?Number(p.readyAt||0):0;
+ const [id,p]=entry;const state=p.ready?"✅ READY":"⏳ NOT READY";const readyAt=p.ready?Number(p.readyAt||0):0;
  row.innerHTML=`<div class="playerNum">${index+1}</div><div class="playerName">${escapeHTML(p.name||"Player")}${id===myId&&isHost?" 👑":""}<div style="font-size:10px;color:${p.ready?'#21ef72':'#ffd45a'};margin-top:2px">${state}</div><div class="playerReadyClock" data-ready-at="${readyAt}" style="font-size:10px;color:#7edfff;margin-top:2px">${readyAt?formatElapsed(readyAt):""}</div></div>`;box.appendChild(row);
 }
+const countEl=document.getElementById("playerCount");
+if(countEl) countEl.textContent=humans.length+"/"+MAX_PLAYERS;
 updateMatchUI();
 }
 
@@ -694,27 +705,49 @@ row.innerHTML=`<div class="listNumber">${index+1}</div><div style="width:62px;ov
 }
 
 async function hostStart(){
- // Legacy button handler: the room now auto-starts when two real players are present.
  if(!roomCode||gameStarted)return;
- if(!window.matchStartAt){window.matchStartAt=Date.now();window.localReadyAt=window.matchStartAt;}
- if(!matchTimerId)startMatchCountdown();
- await tryLaunchMatch();
- updateMatchUI();
+ const current=players?.[myId];
+ if(current?.ready){showMessage("✅ আপনি START দিয়েছেন; অন্য খেলোয়াড়ের অপেক্ষা করুন");return;}
+ try{
+   // First START starts an elapsed waiting timer. It does not auto-launch.
+   const roomRef=ref(db,"rooms/"+roomCode);
+   const roomSnap=await get(roomRef);
+   const roomData=roomSnap.val()||{};
+   if(roomData.status!=="waiting"){
+     showMessage("ম্যাচ ইতিমধ্যে শুরু হয়েছে");return;
+   }
+   // This player's own timer begins now. The other player has a separate readyAt.
+   const myReadyAt=Date.now();
+   window.localReadyAt=myReadyAt;window.matchStartAt=myReadyAt;matchStarted=true;
+   if(!matchTimerId)startMatchCountdown();
+   updateMatchUI();
+   await update(ref(db,"rooms/"+roomCode+"/players/"+myId),{ready:true,readyAt:myReadyAt});
+   const refreshed=await get(ref(db,"rooms/"+roomCode+"/players"));
+   players=refreshed.val()||players;
+   if(!matchTimerId)startMatchCountdown();
+   renderRoomPlayers();updateMatchUI();
+   await tryLaunchMatch();
+ }catch(err){console.error(err);showMessage("❌ START sync failed");roomStatus.textContent="START sync failed — অনলাইন সংযোগ পরীক্ষা করুন"}
 }
 async function tryLaunchMatch(){
- // Host publishes one shared start timestamp as soon as two real players have joined.
+ // The host alone publishes one shared start timestamp, so both clients enter on the same room event.
  if(!roomCode||gameStarted||!isHost||launchRequestInFlight)return;
  launchRequestInFlight=true;
  try{
    const [roomSnap,playersSnap]=await Promise.all([get(ref(db,"rooms/"+roomCode)),get(ref(db,"rooms/"+roomCode+"/players"))]);
    const data=roomSnap.val()||{},freshPlayers=playersSnap.val()||{};
-   const humans=Object.values(freshPlayers).filter(p=>p&&typeof p==="object"&&!p.bot);
-   // Exactly two real players present -> auto-start; no READY clicks.
-   if(data.status==="started"||humans.length<MAX_PLAYERS)return;
-   if(humans.length!==MAX_PLAYERS)return;
+   const humans=Object.values(freshPlayers).filter(p=>p&&!p.bot);
+   const hostPlayer=freshPlayers[myId];
+   // Host presses START; once a second real player is in the room, launch both clients.
+   // This avoids a stuck lobby when the joining player doesn't press READY separately.
+   if(data.status==="started"||humans.length!==MAX_PLAYERS||!hostPlayer||hostPlayer.ready!==true)return;
    const startedAt=Date.now();
    await update(ref(db,"rooms/"+roomCode),{status:"started",startedAt,matchDuration:MATCH_DURATION_MS});
- }catch(err){console.warn("automatic launch sync failed",err)}
+ }catch(err){
+   console.warn("launch sync failed",err);
+   const status=document.getElementById("roomStatus");
+   if(status) { status.textContent="❌ ম্যাচ শুরু করা যায়নি: "+(err?.message||String(err)); status.className="status matchWaiting"; }
+ }
  finally{launchRequestInFlight=false}
 }
 function startMatchCountdown(){
@@ -728,17 +761,20 @@ function startMatchCountdown(){
 }
 
 function updateMatchUI(){
- const humans=Object.entries(players||{}).filter(([,p])=>p&&typeof p==="object"&&!p.bot);
- const n=humans.length;
+ const humans=Object.entries(players||{}).filter(([id,p])=>p && !p.bot && !String(id).startsWith("bot"));
+ const n=humans.length,ready=humans.filter(([,p])=>p.ready===true).length;
+ const countNode=document.getElementById("playerCount");
+ if(countNode) countNode.textContent=n+"/"+MAX_PLAYERS;
  const timer=document.getElementById("matchTimer"),status=document.getElementById("roomStatus"),btn=document.getElementById("startBtn");
  if(!timer||!status)return;
  const timerStart=Number(window.matchStartAt||window.localReadyAt||0);const seconds=timerStart?Math.max(0,Math.floor((Date.now()-timerStart)/1000)):0;
  timer.textContent=String(Math.floor(seconds/60)).padStart(2,"0")+":"+String(seconds%60).padStart(2,"0");
- document.querySelectorAll(".playerReadyClock[data-ready-at]").forEach(el=>{el.textContent=""});
- if(window.currentRoomStatus==="started") {status.textContent="✅ ২ জন যোগ হয়েছে — ম্যাচ শুরু হচ্ছে…";status.className="status matchReady"}
- else if(n>=MAX_PLAYERS){status.textContent="🚀 ২ জন সার্ভারে যোগ হয়েছে — অটো ম্যাচ শুরু হচ্ছে…";status.className="status matchReady"}
- else {status.textContent=`🔎 সার্ভারে খেলোয়াড় খোঁজা হচ্ছে — ${n}/2 জন যুক্ত হয়েছে; দ্বিতীয় খেলোয়াড় এলেই অটো START হবে`;status.className="status matchWaiting"}
- if(btn){btn.disabled=true;btn.textContent="⚡ AUTO START";}
+ document.querySelectorAll(".playerReadyClock[data-ready-at]").forEach(el=>{const at=Number(el.getAttribute("data-ready-at")||0);el.textContent=at?formatElapsed(at):""});
+ if(n>=MAX_PLAYERS&&ready>=MAX_PLAYERS){status.textContent="✅ দুইজনই START দিয়েছে — গেমে ঢুকছে…";status.className="status matchReady"}
+ else if(ready>0){status.textContent=`⏱ আপনার START টাইমার চলছে (${ready}/2 READY) — অন্য খেলোয়াড় START দিলেই দুজন একসাথে গেমে ঢুকবে`;status.className="status matchWaiting"}
+ else if(n>=MAX_PLAYERS){status.textContent="🟢 ২ জন যুক্ত হয়েছে — দুজনকেই START চাপতে হবে";status.className="status matchReady"}
+ else{status.textContent=`🔗 ${n}/2 জন যুক্ত হয়েছে — INVITE LINK বা ROOM CODE দিয়ে বন্ধুকে যোগ করুন`;status.className="status matchWaiting"}
+ if(btn){const me=players?.[myId];btn.disabled=!!me?.ready;btn.textContent=me?.ready?"✅ READY — WAITING":"🚀 START / READY";}
 }
 
 function startGame(){
@@ -1114,9 +1150,9 @@ document.getElementById("offlineBtn").addEventListener("click",async()=>{
  player={...start,x:1800,y:1250};players=cloneData(localRooms.OFFLINE.players);pickups=cloneData(localRooms.OFFLINE.pickups);bullets={};homeStatus.textContent="🎮 Offline game চালু হচ্ছে...";startGame();listenPlayers();listenPickups();listenBullets();setVoiceStatus("Offline mode — voice unavailable");
 });
 
-document.getElementById("startBtn").addEventListener("click",hostStart);document.getElementById("liveCopyCode")?.addEventListener("click",copyRoomCode);document.getElementById("liveRoomCode")?.addEventListener("click",copyRoomCode);
+document.getElementById("startBtn").addEventListener("click",hostStart);
 
-document.getElementById("inviteRoomBtn")?.addEventListener("click",openInvite);document.getElementById("inviteGameBtn")?.addEventListener("click",openInvite);document.getElementById("shareInviteBtn")?.addEventListener("click",shareInvite);document.getElementById("copyInviteBtn")?.addEventListener("click",copyInvite);document.getElementById("copyRoomCodeBtn")?.addEventListener("click",copyRoomCode);document.getElementById("inviteCode")?.addEventListener("click",copyRoomCode);document.getElementById("closeInviteBtn")?.addEventListener("click",closeInvite);document.getElementById("inviteOverlay")?.addEventListener("click",e=>{if(e.target.id==="inviteOverlay")closeInvite()});
+document.getElementById("inviteRoomBtn")?.addEventListener("click",openInvite);document.getElementById("inviteGameBtn")?.addEventListener("click",openInvite);document.getElementById("shareInviteBtn")?.addEventListener("click",shareInvite);document.getElementById("copyInviteBtn")?.addEventListener("click",copyInvite);document.getElementById("closeInviteBtn")?.addEventListener("click",closeInvite);document.getElementById("inviteOverlay")?.addEventListener("click",e=>{if(e.target.id==="inviteOverlay")closeInvite()});
 function pauseGame(){paused=true;document.getElementById("pauseOverlay").classList.add("show")}
 document.getElementById("resumeBtn").addEventListener("click",()=>{paused=false;document.getElementById("pauseOverlay").classList.remove("show")});
 
@@ -1132,21 +1168,16 @@ document.getElementById("leaveRoomBtn").addEventListener("click",leaveRoom);docu
 let msgTimer;function showMessage(text){const box=document.getElementById("centerMsg");box.textContent=text;box.classList.add("show");clearTimeout(msgTimer);msgTimer=setTimeout(()=>box.classList.remove("show"),700)}
 document.getElementById("winnerHome").addEventListener("click",leaveLocal);
 
-function getInviteUrl(){return location.href.split("?")[0].split("#")[0]+"?room="+encodeURIComponent(roomCode)}
+function getInviteUrl(){
+ const base=String(location.href||"").split("?")[0].split("#")[0];
+ if(!/^https?:\/\//i.test(base)) return ""; // Local content:// files cannot be opened by friends on other phones.
+ return base+"?room="+encodeURIComponent(roomCode);
+}
 function openInvite(){if(!roomCode){showMessage("❌ ROOM NOT READY");return}document.getElementById("inviteCode").textContent=roomCode;document.getElementById("inviteOverlay").classList.add("show")}
 function closeInvite(){document.getElementById("inviteOverlay").classList.remove("show")}
-async function copyTextReliable(text){
-  const value=String(text||"");
-  try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(value);return true}}catch(e){}
-  try{const ta=document.createElement("textarea");ta.value=value;ta.setAttribute("readonly","");ta.style.position="fixed";ta.style.left="8px";ta.style.right="8px";ta.style.bottom="12px";ta.style.zIndex="999999";ta.style.width="calc(100% - 16px)";ta.style.height="72px";ta.style.background="#fff";ta.style.color="#000";ta.style.fontSize="18px";ta.style.padding="8px";document.body.appendChild(ta);ta.focus();ta.select();ta.setSelectionRange(0,value.length);let ok=false;try{ok=document.execCommand("copy")}catch(e){}if(ok){ta.remove();return true}showMessage("লেখাটি সিলেক্ট হয়েছে—চেপে ধরে Copy করুন");return false}catch(e){}
-  try{window.prompt("কপি করার জন্য নিচের লেখা চেপে ধরে Copy করুন:",value)}catch(e){}
-  return false;
-}
-async function shareInvite(){const url=getInviteUrl();const text="🚗 UZAR Battle Royale-এ আমার সাথে অনলাইনে খেলো! একই রুমে যোগ দিতে এই লিংক খোলো: "+url+"\nRoom Code: "+roomCode;try{if(navigator.share){await navigator.share({title:"UZAR Battle Royale",text,url})}else{const ok=await copyTextReliable(text);showMessage(ok?"📤 INVITE COPIED":"লিংকটি সিলেক্ট করে Copy করুন")}}catch(e){if(e?.name!=="AbortError"){const ok=await copyTextReliable(text);showMessage(ok?"📤 INVITE COPIED":"লিংক কপি হয়নি — SHARE ব্যবহার করুন")}}}
-async function copyInvite(){const text="🚗 UZAR Battle Royale-এ আমার সাথে অনলাইনে খেলো! এই লিংক খুলে একই রুমে যোগ দাও: "+getInviteUrl()+"\nRoom Code: "+roomCode;const ok=await copyTextReliable(text);showMessage(ok?"📋 INVITE LINK COPIED":"কপি হয়নি — লেখাটি চেপে ধরে Copy করুন")}
-async function copyRoomCode(){const ok=await copyTextReliable(roomCode);showMessage(ok?"🔑 ROOM CODE COPIED: "+roomCode:"রুম কোড: "+roomCode+" — কোডটি চেপে ধরে Copy করুন")}
-
-async function joinRoomByCode(code){const clean=String(code||"").trim().toUpperCase();if(!/^[A-Z0-9]{6}$/.test(clean)){homeStatus.textContent="❌ Room Code অবশ্যই ৬ অক্ষরের হতে হবে";return}myName=nameInput.value.trim()||"Mijanur";homeStatus.textContent="⏳ বন্ধুর রুমে ঢোকা হচ্ছে...";try{const roomSnap=await get(ref(db,"rooms/"+clean));if(!roomSnap.exists()){homeStatus.textContent="❌ এই রুম পাওয়া যায়নি — কোড ঠিক আছে কি না দেখুন";return}const data=roomSnap.val()||{};if(data.status!=="waiting"){homeStatus.textContent="❌ এই রুমে ম্যাচ শুরু হয়ে গেছে";return}const ps=await get(ref(db,"rooms/"+clean+"/players"));const current=ps.exists()?ps.val():{};if(current[myId]){roomCode=clean;isHost=String(data.host||"")===myId;openRoom();return}if(countHumans({players:current})>=MAX_PLAYERS){homeStatus.textContent="❌ রুম পূর্ণ (2/2)";return}roomCode=clean;isHost=false;const pos={x:400+Math.random()*2800,y:400+Math.random()*2800};player={...player,x:pos.x,y:pos.y,angle:0,speed:0,alive:true};await set(ref(db,"rooms/"+roomCode+"/players/"+myId),makePlayerData(myName,pos.x,pos.y,{ready:false}));const verify=await get(ref(db,"rooms/"+roomCode+"/players/"+myId));if(!verify.exists()){roomCode="";homeStatus.textContent="❌ সার্ভারে খেলোয়াড় যুক্ত হয়নি — Supabase permission/RLS পরীক্ষা করুন";return}await onDisconnect(ref(db,"rooms/"+roomCode+"/players/"+myId)).remove();openRoom()}catch(err){console.error(err);homeStatus.textContent="❌ রুমে ঢোকা যায়নি: "+(err?.message||"অনলাইন সংযোগ বা Supabase permission পরীক্ষা করুন")}}
+async function shareInvite(){const url=getInviteUrl();const text="🚗 UZAR Battle Royale-এ আমার সাথে অনলাইনে খেলো!\n"+(url?"গেমের লিংক: "+url+"\n":"বন্ধুকে একই গেমের প্রকাশিত Netlify লিংক খুলতে হবে।\n")+"Room Code: "+roomCode;try{if(navigator.share){await navigator.share({title:"UZAR Battle Royale",text,...(url?{url}:{})})}else{await navigator.clipboard.writeText(text);showMessage(url?"📤 INVITE COPIED":"📋 ROOM CODE COPIED — Netlify লিংকও পাঠান")} }catch(e){if(e?.name!=="AbortError")showMessage("❌ SHARE FAILED")}}
+async function copyInvite(){try{await navigator.clipboard.writeText("🚗 UZAR Battle Royale-এ আমার সাথে খেলো! এই লিংক খুলে একই রুমে যোগ দাও: "+getInviteUrl()+"\nRoom Code: "+roomCode);showMessage("📋 INVITE LINK COPIED")}catch(e){showMessage("❌ COPY FAILED")}}
+async function joinRoomByCode(code){const clean=String(code||"").trim().toUpperCase();if(!/^[A-Z0-9]{6}$/.test(clean)){homeStatus.textContent="❌ Room Code অবশ্যই ৬ অক্ষরের হতে হবে";return}myName=nameInput.value.trim()||"Mijanur";homeStatus.textContent="⏳ বন্ধুর রুমে ঢোকা হচ্ছে...";try{const snap=await get(ref(db,"rooms/"+clean));if(!snap.exists()){homeStatus.textContent="❌ এই রুম আর নেই";return}const data=snap.val()||{};if(data.status!=="waiting"){homeStatus.textContent="❌ এই রুমে ম্যাচ শুরু হয়ে গেছে";return}const ps=await get(ref(db,"rooms/"+clean+"/players"));const current=ps.exists()?ps.val():{};if(countHumans({players:current})>=MAX_PLAYERS){homeStatus.textContent="❌ রুম পূর্ণ (2/2)";return}roomCode=clean;isHost=false;const pos={x:400+Math.random()*2800,y:400+Math.random()*2800};player={...player,x:pos.x,y:pos.y,angle:0,speed:0,alive:true};await set(ref(db,"rooms/"+roomCode+"/players/"+myId),makePlayerData(myName,pos.x,pos.y,{ready:false}));await onDisconnect(ref(db,"rooms/"+roomCode+"/players/"+myId)).remove();openRoom()}catch(err){console.error(err);homeStatus.textContent="❌ রুমে ঢোকা যায়নি: "+(err?.message||"সংযোগ পরীক্ষা করুন")}}
 
 function carColor(id){const colors=["#ff3030","#a63dff","#ffb300","#22d65d","#1bbcff","#ff4caa","#9dff28","#ff722e","#dddddd"];let n=0;for(let i=0;i<id.length;i++)n+=id.charCodeAt(i);return colors[n%colors.length]}
 function escapeHTML(str){return String(str).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
