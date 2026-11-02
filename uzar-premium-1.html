@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050a12">
+<title>UZAR Premium • Neon Social</title>
+<script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+<script>
+window.FIREBASE_CONFIG={
+  apiKey:"AIzaSyDEF-_jOaJUcxyerDpvF6J27Jl--m-0VNE",
+  authDomain:"car-game99.firebaseapp.com",
+  databaseURL:"https://car-game99-default-rtdb.firebaseio.com",
+  projectId:"car-game99",
+  storageBucket:"car-game99.firebasestorage.app",
+  messagingSenderId:"93853988741",
+  appId:"1:93853988741:web:f5060e9495ce61b642f6ec"
+};
+/* TURN যোগ করলে মোবাইল ডেটাতেও কল চলবে। নিচের turn লাইন কমেন্ট খুলে
+   নিজের username/credential বসান (Cloudflare TURN / Metered Open Relay)। */
+window.UZAR_ICE=[
+  {urls:["stun:stun.cloudflare.com:3478","stun:stun.l.google.com:19302"]}
+  // {urls:["turn:standard.relay.metered.ca:80",
+  //        "turn:standard.relay.metered.ca:443?transport=tcp",
+  //        "turns:standard.relay.metered.ca:443?transport=tcp"],
+  //  username:"YOUR_USERNAME", credential:"YOUR_CREDENTIAL"}
+];
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#00ff88;--accent2:#7b5cff;--nav-h:68px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%;background:#02060c;color:#fff;font-family:Inter,sans-serif;overflow-x:hidden}
+body{display:flex;justify-content:center;align-items:stretch}
+img,video{max-width:100%;display:block}
+.phone{width:100%;max-width:410px;min-height:100dvh;position:relative;overflow-x:hidden;background:radial-gradient(700px 400px at 20% -10%,rgba(0,255,136,.14),transparent 55%),radial-gradient(600px 500px at 110% 30%,rgba(123,92,255,.15),transparent 60%),#050a12;padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom))}
+.page{display:none;min-height:calc(100dvh - var(--nav-h));flex-direction:column}
+.page.active{display:flex;animation:pop .25s ease}
+.scroll{overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
+.scroll::-webkit-scrollbar{display:none}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.glass{margin:10px 12px;padding:14px;border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.1);box-shadow:0 12px 30px rgba(0,0,0,.18)}
+.small{font-size:11px;color:#8d9aae;overflow-wrap:anywhere}
+.toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + 14px);transform:translate(-50%,20px);width:min(360px,calc(100% - 28px));padding:11px 14px;border-radius:14px;background:rgba(10,20,30,.97);border:1px solid rgba(0,255,136,.35);box-shadow:0 10px 30px rgba(0,0,0,.35);color:#fff;font-size:12px;font-weight:700;z-index:9999999;opacity:0;pointer-events:none;transition:.25s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.themeBtn,.iconbtn{width:40px;height:40px;border:1px solid rgba(255,255,255,.12);border-radius:12px;background:rgba(255,255,255,.05);color:#fff;font-size:16px;cursor:pointer;position:relative}
+.levelBox{margin-top:12px;padding:12px;border-radius:14px;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.07);text-align:left}
+.levelLine{height:7px;border-radius:8px;background:#111d29;overflow:hidden;margin-top:8px}
+.levelFill{height:100%;width:86%;border-radius:8px;background:linear-gradient(90deg,#00ff88,#00d9ff,#7b5cff)}
+.filterTabs{display:flex;gap:7px;padding:0 12px 8px}
+.filterTab{flex:1;border:1px solid rgba(255,255,255,.08);background:#0b1724;color:#8390a3;border-radius:10px;padding:8px 5px;font-size:11px;font-weight:800;cursor:pointer}
+.filterTab.active{background:linear-gradient(135deg,rgba(0,255,136,.18),rgba(0,217,255,.1));color:var(--accent);border-color:rgba(0,255,136,.3)}
+.muted{color:#7f8ba0}.title{font-size:21px;font-weight:800}
+.btn{border:0;border-radius:12px;padding:11px 15px;font-weight:800;color:#00150c;background:linear-gradient(135deg,#00ff88,#00d9ff);box-shadow:0 7px 20px rgba(0,255,136,.22);cursor:pointer}
+.btn2{border:1px solid rgba(255,255,255,.13);border-radius:11px;padding:9px 12px;background:rgba(255,255,255,.06);color:#fff;font-weight:700;cursor:pointer}
+.header{display:flex;justify-content:space-between;align-items:center;padding:14px 14px 6px;gap:8px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.logo{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;font-size:20px;background:linear-gradient(135deg,#00ff88,#7b5cff);flex:0 0 auto}
+.brand b{font-size:16px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px}
+.online{color:var(--accent);font-size:10px;display:block}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:8px 12px}
+.stat{padding:12px 6px;text-align:center;border:1px solid rgba(255,255,255,.1);border-radius:15px;background:rgba(8,15,26,.8);min-width:0}
+.stat b{font-size:19px}
+.green{color:var(--accent)}.blue{color:#54c7ff}.pink{color:#ff83c7}
+.empire{margin:0 12px;padding:16px;border-radius:20px;background:linear-gradient(110deg,rgba(0,255,136,.14),rgba(123,92,255,.16),rgba(0,0,0,.2));border:1px solid rgba(0,255,136,.48)}
+.empireTop{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.live{padding:4px 8px;border-radius:20px;background:var(--accent);color:#001b0d;font-size:9px;font-weight:800}
+.empireBox{margin-top:12px;padding:13px;border-radius:14px;background:rgba(0,0,0,.32);border:1px solid rgba(255,255,255,.07);min-width:0;overflow:hidden}
+.quick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:0 12px}
+.quickCard{padding:12px;border-radius:16px;border:1px solid rgba(255,255,255,.09);display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,rgba(123,92,255,.14),rgba(0,229,255,.06));cursor:pointer;min-width:0}
+.quickCard>div:last-child{min-width:0;overflow:hidden}
+.qicon{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-size:17px;background:linear-gradient(135deg,#7b5cff,#00cfff);flex:0 0 38px}
+.activity{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.activity:last-child{border:0}
+.avatar{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid var(--accent);flex:0 0 auto}
+.bottom{position:fixed;z-index:999;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:410px;height:calc(var(--nav-h) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);display:flex;justify-content:space-around;align-items:center;background:rgba(4,8,14,.97);border-top:1px solid rgba(255,255,255,.09)}
+.nav{width:25%;text-align:center;color:#6f7c91;font-size:10px;cursor:pointer}
+.nav div{font-size:21px;margin-bottom:2px}
+.nav.active{color:var(--accent)}
+.topbar{padding:15px 14px 8px;display:flex;align-items:center;justify-content:space-between}
+.search{margin:4px 12px 10px;display:flex;gap:8px;align-items:center;padding:11px 13px;border:1px solid rgba(0,180,255,.25);border-radius:13px;background:rgba(8,20,35,.8);color:#75839a}
+.search input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:#fff}
+.inviteBanner{margin:0 12px 8px;padding:13px;border-radius:15px;background:linear-gradient(100deg,#7b22ff,#5438ff,#00d9ff);cursor:pointer}
+.chatList{padding:0 12px}
+.chat-item{position:relative;display:flex;align-items:center;gap:11px;padding:12px 9px;border-bottom:1px solid rgba(255,255,255,.055);cursor:pointer}
+.img-wrap{position:relative;flex:none}
+.img-wrap img{width:48px;height:48px;border-radius:50%;object-fit:cover;border:1px solid rgba(255,255,255,.16)}
+.dot{position:absolute;right:0;bottom:1px;width:11px;height:11px;background:var(--accent);border:2px solid #06101a;border-radius:50%}
+.badge{position:absolute;right:2px;top:9px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;display:grid;place-items:center;background:#ff4e70;color:#fff;font-size:10px;font-weight:800}
+.chatName{font-size:13px}
+.chatLast{font-size:10px;color:#8390a3;margin-top:4px}
+.chatTime{font-size:9px;color:#68758a;position:absolute;right:5px;top:8px}
+#friendsPage{background:linear-gradient(180deg,#07101b,#050b13);height:calc(100dvh - var(--nav-h));overflow:hidden}
+#listView{display:flex;flex-direction:column;height:100%;min-height:0;overflow:hidden}
+#chatList{flex:1;min-height:0;overflow-y:auto}
+#chatView{display:none;flex-direction:column;height:100%;min-height:0;background:#07101a}
+.chatHeader{height:62px;padding:0 11px;display:flex;align-items:center;gap:9px;background:rgba(5,11,18,.96);border-bottom:1px solid rgba(255,255,255,.08)}
+.chatHeader>div:not(.actions){min-width:0}
+.chatHeader .actions{margin-left:auto;display:flex;gap:6px}
+.chatIcon{width:34px;height:34px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:#0c1825;color:#fff;cursor:pointer}
+.chat-body{flex:1;min-height:0;overflow-y:auto;padding:14px 11px;background:radial-gradient(400px at 50% 20%,rgba(123,92,255,.08),transparent 70%)}
+.msg-row{display:flex;gap:7px;margin:10px 0;align-items:flex-end}
+.msg-row.me{justify-content:flex-end}
+.msg-row img.ava{width:28px;height:28px;border-radius:50%;object-fit:cover;flex:0 0 28px}
+.bubble-maya{max-width:74%;padding:10px 12px;border-radius:16px;font-size:12px;line-height:1.45;overflow-wrap:anywhere}
+.me.bubble-maya{background:linear-gradient(135deg,#7b3cff,#5e39ff);color:#fff;border-radius:16px 16px 4px 16px}
+.other.bubble-maya{background:#102033;color:#dfe8f5;border:1px solid rgba(255,255,255,.07);border-radius:16px 16px 16px 4px}
+.input-bar{padding:9px;background:#06101a;border-top:1px solid rgba(255,255,255,.08)}
+.field{height:42px;background:#0d1b29;border:1px solid rgba(255,255,255,.08);border-radius:22px;display:flex;align-items:center;padding:0 12px;flex:1;min-width:0}
+.field input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:#fff;font-size:12px}
+.send{width:42px;height:42px;border:0;border-radius:50%;background:linear-gradient(135deg,#00ff88,#00bfff);font-size:16px;color:#00150c;cursor:pointer;flex:0 0 42px}
+#videoArea{padding:6px;background:#000;display:flex;gap:6px}
+#videoArea video{width:50%;height:150px;object-fit:cover;border-radius:12px}
+.roomCard{margin:12px;padding:16px;border-radius:19px;background:linear-gradient(145deg,rgba(0,255,136,.12),rgba(123,92,255,.1));border:1px solid rgba(0,255,136,.3)}
+.memberRow{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.memberRow:last-child{border:0}
+.memberRow img{width:38px;height:38px;border-radius:50%;object-fit:cover;flex:0 0 38px}
+.roomBadge{margin-left:auto;font-size:9px;font-weight:800;padding:4px 7px;border-radius:9px;background:var(--accent);color:#00150c}
+.profileHero{margin:12px;border-radius:22px;padding:20px 15px;text-align:center;background:linear-gradient(180deg,rgba(0,255,136,.12),rgba(123,92,255,.13),rgba(5,10,17,.8));border:1px solid rgba(0,255,136,.35)}
+.profilePic{width:104px;height:104px;border-radius:50%;object-fit:cover;border:3px solid var(--accent);margin:0 auto;cursor:pointer}
+.idbox{margin-top:13px;padding:11px;border-radius:13px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.07)}
+.profileStats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:10px}
+.profileStats div{padding:9px 4px;border-radius:11px;background:rgba(255,255,255,.05)}
+.notiItem{padding:12px;border-radius:13px;background:#0d1723;border:1px solid rgba(255,255,255,.06);margin:7px 0}
+.liveRoomPage{background:radial-gradient(700px at 50% 0%,rgba(123,92,255,.22),transparent 55%),linear-gradient(180deg,#100817,#05080e);padding-bottom:150px!important}
+.roomTop{height:62px;display:flex;align-items:center;gap:8px;padding:0 10px;background:rgba(7,6,15,.9);border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;z-index:10}
+.back{font-size:28px;cursor:pointer}
+.roomTopBtn{width:34px;height:34px;border:1px solid rgba(255,255,255,.12);border-radius:10px;background:#171020;color:#fff;cursor:pointer}
+.roomBanner{margin:10px 12px;padding:11px 13px;border-radius:15px;background:linear-gradient(100deg,rgba(255,53,155,.14),rgba(123,92,255,.18));border:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;gap:8px}
+.seatGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:8px 12px 12px;min-height:290px}
+.seat{height:122px;border-radius:18px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.seat img{width:66px;height:66px;border-radius:50%;object-fit:cover;border:2px solid #a66cff}
+.seat.me img{border-color:var(--accent)}
+.seat.empty{border-style:dashed;color:#6f7b8f;cursor:pointer}
+.seatName{font-size:9px;margin-top:5px;max-width:92%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.seatMute{position:absolute;right:5px;top:5px;background:rgba(0,0,0,.55);width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:10px;border:0;color:#fff}
+.seatVip{position:absolute;left:5px;top:5px;font-size:9px}
+.speakerOn{border-color:rgba(0,255,136,.55)!important;box-shadow:0 0 18px rgba(0,255,136,.18)!important}
+.speakerOn .seatMute{background:#00ff88;color:#00150c}
+.roomAudience{display:flex;flex-wrap:wrap;gap:8px;overflow:hidden;padding:8px 12px 14px;min-height:42px}
+.roomAudience img{width:38px;height:38px;border-radius:50%;object-fit:cover;border:1px solid rgba(255,255,255,.2);cursor:pointer}
+.roomChat{margin:0 12px;height:175px;overflow-y:auto;padding:10px;border-radius:16px;background:rgba(0,0,0,.24);border:1px solid rgba(255,255,255,.07)}
+.roomChatMsg{margin:7px 0;padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.06);font-size:11px;color:#e8edf5;overflow-wrap:anywhere}
+.roomChatMsg b{color:var(--accent)}
+.roomChatMsg.system{text-align:center;color:#9ca8b8}
+.roomInput{position:fixed;bottom:calc(var(--nav-h) + 8px);left:50%;transform:translateX(-50%);width:min(410px,100%);display:flex;gap:7px;padding:8px 12px;background:rgba(7,8,14,.96);z-index:20}
+.roomControls{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(410px,100%);height:calc(var(--nav-h) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);background:rgba(8,8,15,.97);border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-around;align-items:center;z-index:21}
+.roomControls button{width:54px;height:54px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:#151521;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:17px;cursor:pointer}
+.roomControls span{font-size:8px;margin-top:2px}
+.roomControls .mainCall{background:linear-gradient(135deg,#7b3cff,#ff2db2)}
+.roomControls .hang{background:linear-gradient(135deg,#ff365c,#ff1744)}
+@media(max-width:390px){
+  .header{padding:12px 10px 6px}.brand b{font-size:14px;max-width:140px}.logo{width:38px;height:38px}
+  .stats{margin:8px 10px;gap:6px}.stat{padding:10px 3px}.stat b{font-size:16px}
+  .empire{margin:0 10px;padding:13px}.quick{margin:0 10px;gap:7px}.quickCard{padding:9px 8px;gap:7px}
+  .qicon{width:31px;height:31px;flex-basis:31px;font-size:14px}.glass{margin:10px 10px;padding:12px}
+  .seat{height:110px}.seat img{width:58px;height:58px}
+}
+@media(max-width:330px){.quick{grid-template-columns:1fr}.brand b{max-width:110px}}
+</style>
+</head>
+<body>
+<div class="phone">
+<div id="homePage" class="page active scroll">
+  <div class="header"><div class="brand"><div class="logo">⚡</div><div style="min-width:0"><b>UZAR PREMIUM</b><span class="online" id="connState">● Champion • Level 99</span></div></div><div style="display:flex;gap:6px"><button class="themeBtn" onclick="toggleTheme()">◐</button><button class="iconbtn" onclick="NOTI.open()">🔔<span id="badge" style="position:absolute;top:-5px;right:-4px;background:#ff4d6d;color:#fff;font-size:9px;padding:2px 5px;border-radius:9px;display:none">0</span></button></div></div>
+  <div class="stats"><div class="stat"><b class="green" id="statMembers">0</b><br><span class="small">Members</span></div><div class="stat"><b class="blue">48</b><br><span class="small">Messages</span></div><div class="stat"><b class="pink">12</b><br><span class="small">Online</span></div></div>
+  <div class="empire"><div class="empireTop"><b class="green">👑 PRIVATE EMPIRE</b><span class="live">LIVE</span></div><div id="myGroups" class="empireBox"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px"><div class="empireBox" style="margin:0;padding:9px"><span class="small">Group ID</span><br><b id="gidHome" style="font-size:11px;color:#bfe1ff">GRP#---</b></div><div class="empireBox" style="margin:0;padding:9px"><span class="small">Role</span><br><b class="green" style="font-size:11px" id="roleHome">OWNER 👑</b></div></div></div>
+  <div style="padding:0 12px 7px"><b style="font-size:13px">Quick Actions</b></div>
+  <div class="quick"><div class="quickCard" onclick="switchPage('friends',null)"><div class="qicon">💬</div><div><b style="font-size:12px">Private Chat</b><br><span class="small">Friends & Maya</span></div></div><div class="quickCard" onclick="switchPage('rooms',null)"><div class="qicon" style="background:linear-gradient(135deg,#00ff88,#00bfff)">🔒</div><div><b style="font-size:12px">Join Room</b><br><span class="small" id="roomQuick">0 Joined</span></div></div><div class="quickCard" onclick="startCall('audio')"><div class="qicon" style="background:linear-gradient(135deg,#00d9ff,#2364ff)">🎧</div><div><b style="font-size:12px">Voice Chat</b><br><span class="small">Call a friend</span></div></div><div class="quickCard" onclick="startCall('video')"><div class="qicon" style="background:linear-gradient(135deg,#ff4bcb,#7b3cff)">📹</div><div><b style="font-size:12px">Video Call</b><br><span class="small">Live together</span></div></div></div>
+  <div class="glass"><div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:13px">Recent Activity</b><span class="small green">See All ›</span></div><div class="activity"><img class="avatar" src="https://i.pravatar.cc/100?img=5" alt=""><div style="flex:1;min-width:0"><b style="font-size:12px">👑 Akhi Islam</b><br><span class="small">Joined your room</span></div><span class="small">2m ago</span></div><div class="activity"><img class="avatar" src="https://i.pravatar.cc/100?img=26" alt=""><div style="flex:1;min-width:0"><b style="font-size:12px">☆*MONI*☆</b><br><span class="small">Sent you a message</span></div><span class="small">8m ago</span></div></div>
+  <div class="glass" onclick="switchPage('profile',null)" style="display:flex;align-items:center;gap:11px;cursor:pointer"><img id="homeAv" class="avatar" style="width:45px;height:45px" alt=""><div style="flex:1;min-width:0"><b style="font-size:13px">Upgrade Profile</b><br><span class="small">Gallery • ID • Neon Border</span></div><span style="font-size:20px">›</span></div>
+</div>
+
+<div id="friendsPage" class="page">
+  <div id="listView">
+    <div class="topbar"><div><div class="title">Friends</div><span class="small">Chat • Call • Invite</span></div><button class="iconbtn" onclick="createGroup()">＋</button></div>
+    <div class="search">⌕<input id="friendSearch" placeholder="Search friends..." oninput="filterFriends(this.value)"></div>
+    <div class="filterTabs"><button class="filterTab active" onclick="setFriendFilter('all',this)">All</button><button class="filterTab" onclick="setFriendFilter('online',this)">Online</button><button class="filterTab" onclick="setFriendFilter('joined',this)">Joined</button></div>
+    <div class="inviteBanner" onclick="createGroup()"><b>👑 Create Your Empire</b><br><span style="font-size:10px;opacity:.9">Invite your friends & grow together ›</span></div>
+    <div id="chatList" class="scroll"></div>
+  </div>
+  <div id="chatView">
+    <div class="chatHeader"><span onclick="closeChat()" style="font-size:24px;cursor:pointer">‹</span><img id="chatAv" class="avatar" style="width:38px;height:38px" alt=""><div><b id="cName" style="font-size:13px"></b><br><span class="online">● Online</span></div><div class="actions"><button class="chatIcon" onclick="inviteNow()">＋</button><button class="chatIcon" onclick="startCall('audio')">📞</button><button class="chatIcon" onclick="startCall('video')">📹</button></div></div>
+    <div id="videoArea" hidden><video id="myV" autoplay muted playsinline></video><video id="frV" autoplay playsinline></video></div>
+    <div class="chat-body" id="chatBox"></div>
+    <div class="input-bar"><div style="display:flex;gap:7px;align-items:center"><div class="field"><input id="msgIn" placeholder="Type a message..." onkeydown="if(event.key==='Enter')send()"></div><button class="send" onclick="send()">➤</button></div></div>
+  </div>
+</div>
+
+<div id="roomsPage" class="page scroll">
+  <div class="topbar"><div><div class="title">Private Room</div><span class="small">Your members & empire</span></div><button class="iconbtn" onclick="createGroup()">⟳</button></div>
+  <div class="roomCard">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><div style="min-width:0"><b style="color:#00ff88">👑 UZAR Empire</b><br><span class="small">ID: <b id="roomIdShow">---</b></span></div><button class="btn2" onclick="copyGroup()">Copy</button></div>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:12px"><div class="empireBox" style="margin:0;padding:9px;text-align:center"><b id="pMembers">0</b><br><span class="small">Members</span></div><div class="empireBox" style="margin:0;padding:9px;text-align:center"><b id="roomOnline">0</b><br><span class="small">Online</span></div><div class="empireBox" style="margin:0;padding:9px;text-align:center"><b>LIVE</b><br><span class="small">Status</span></div></div>
+    <div id="roomMembers" style="margin-top:8px"></div>
+    <div style="display:flex;gap:7px;margin-top:11px"><div class="field"><input id="joinCode" placeholder="GRP আইডি দিয়ে জয়েন…"></div><button class="btn2" onclick="joinByCode()">Join</button></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:9px;gap:8px"><span class="small">Open join (আইডি জানলেই জয়েন)</span><button class="btn2" id="openJoinBtn" onclick="toggleOpenJoin()">OFF</button></div>
+    <button class="btn" style="width:100%;margin-top:10px" onclick="openLiveRoom()">🚪 OPEN LIVE ROOM</button>
+    <button class="btn2" style="width:100%;margin-top:7px" onclick="switchPage('friends',null)">👥 Invite Friends</button>
+    <div class="small" style="margin-top:8px">🆔 আপনার গ্রুপ আইডি: <b id="myCode" style="color:#bfe1ff">---</b></div>
+  </div>
+</div>
+
+<div id="liveRoomPage" class="page scroll liveRoomPage">
+  <div class="roomTop"><span onclick="switchPage('rooms',null)" class="back">‹</span><div style="flex:1;min-width:0"><b id="liveRoomTitle">UZAR Empire 👑</b><br><span class="small" id="liveRoomSub">Live Room</span></div><button class="roomTopBtn" onclick="NOTI.open()">🔔</button><button class="roomTopBtn" onclick="leaveLiveRoom()">⏻</button></div>
+  <div class="roomBanner"><div style="min-width:0"><b>✨ Welcome to the Empire</b><br><span class="small">Invite friends and talk together</span></div><div style="text-align:right"><span class="live">LIVE</span><br><span class="small"><b id="speakerCount">0/9</b> Mics • <b id="memberCountLive">1/30</b> Members</span></div></div>
+  <div class="seatGrid" id="seatGrid"></div>
+  <div class="roomAudience" id="roomAudience"></div>
+  <div class="roomChat" id="roomChat"><div class="roomChatMsg system">👋 Room ready — invite members to start chatting.</div></div>
+  <div class="roomInput"><div class="field"><input id="roomMsg" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendRoomMsg()"></div><button class="send" onclick="sendRoomMsg()">➤</button></div>
+  <div class="roomControls"><button id="roomMicBtn" onclick="toggleMic()">🔇<span>Mic OFF</span></button><button class="mainCall" onclick="startCall('video')">📹<span>Video</span></button><button onclick="toggleMic()">🔇<span>Mute</span></button><button onclick="leaveLiveRoom()" class="hang">📵<span>Leave</span></button></div>
+</div>
+
+<div id="profilePage" class="page scroll">
+  <div class="topbar"><div><div class="title">My Profile</div><span class="small">Premium identity</span></div><button class="iconbtn" onclick="toggleTheme()">⚙</button></div>
+  <div class="profileHero" style="position:relative">
+    <button type="button" id="profileMicBtn" class="iconbtn" onclick="toggleMic()" aria-pressed="false" title="Mic OFF" style="position:absolute;top:14px;right:14px;z-index:5">🔇</button>
+    <label for="gal"><img id="myAv" class="profilePic" alt="profile"></label>
+    <input type="file" id="gal" accept="image/*" hidden>
+    <div style="margin-top:12px"><b style="font-size:21px;background:linear-gradient(135deg,#00ff88,#00d9ff,#7b5cff);-webkit-background-clip:text;color:transparent">YOU • CHAMPION</b><br><span class="online">● Online • Ready to Invite</span></div>
+    <div class="idbox"><span class="small">Your Game ID • Tap to Copy</span><br><b id="myId" onclick="copyId()" style="color:#bfe1ff;letter-spacing:1px;cursor:pointer"></b><br><span class="small">👆 Click ID to copy</span></div>
+    <div class="levelBox"><div style="display:flex;justify-content:space-between"><b style="font-size:12px">👑 Level 99 Champion</b><span class="small">8560 / 9999 XP</span></div><div class="levelLine"><div class="levelFill"></div></div></div>
+    <div class="profileStats"><div><b class="green" id="pMembers2">0</b><br><span class="small">Members</span></div><div><b class="blue">48</b><br><span class="small">Messages</span></div><div><b class="pink">🔥 7</b><br><span class="small">Streak</span></div></div>
+    <button class="btn" style="width:100%;margin-top:12px" onclick="createGroup()">👑 CREATE PRIVATE EMPIRE</button>
+    <div style="display:flex;gap:7px;margin-top:8px"><button class="btn2" style="flex:1" onclick="switchPage('friends',null)">💬 Chats</button><button class="btn2" style="flex:1" onclick="switchPage('rooms',null)">🔒 Rooms</button></div>
+  </div>
+  <div class="glass"><b style="color:#c9b3ff">🎨 Profile Tips</b><br><span class="small">ছবিতে টাচ করলে গ্যালারি খুলবে • লেভেল ও আইডি অটো সেভ হয়</span></div>
+  <div class="glass" style="display:flex;justify-content:space-between;align-items:center;gap:8px"><div><b>🔔 Notifications</b><br><span class="small" id="notiCount">0 alerts</span></div><button class="btn2" onclick="NOTI.open()">Open</button></div>
+</div>
+<div class="bottom">
+  <div class="nav active" role="button" tabindex="0" onclick="switchPage('home',this)"><div>⌂</div>Home</div>
+  <div class="nav" role="button" tabindex="0" onclick="switchPage('friends',this)"><div>♟</div>Friends</div>
+  <div class="nav" role="button" tabindex="0" onclick="switchPage('rooms',this)"><div>▣</div>Rooms</div>
+  <div class="nav" role="button" tabindex="0" onclick="switchPage('profile',this)"><div>◉</div>Profile</div>
+</div>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script>
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const load=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}};
+const store=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){toast('⚠️ স্টোরেজ পূর্ণ');return false}};
+
+/* ---------- firebase ---------- */
+let dbRef=null, authUser=null, iAmOwner=false;
+function fbReady(){ return !!dbRef&&!!authUser; }
+function roomRef(p){ return dbRef.ref('rooms/'+groupId+'/'+p); }
+function roomRefOf(gid,p){ return dbRef.ref('rooms/'+gid+(p?('/'+p):'')); }
+
+function initFirebase(){
+  const cfg=window.FIREBASE_CONFIG||{};
+  if(!cfg.apiKey) return;
+  try{ firebase.initializeApp(cfg); }catch(e){ console.warn('fb init',e); return; }
+  dbRef=firebase.database();
+  firebase.auth().signInAnonymously()
+    .then(cr=>{
+      authUser=cr.user;
+      const el=$('connState'); if(el) el.textContent='● Online • Cloud sync';
+      fbEnsureAccess().then(()=>{ fbJoin(); fbWatch(); sendHelloAll(); });
+    })
+    .catch(e=>{ console.warn('anon auth',e); toast('⚠️ Anonymous Auth চালু করুন (Firebase Console)'); });
+}
+
+function fbEnsureAccess(){
+  if(!fbReady()) return Promise.resolve(false);
+  const uid=authUser.uid;
+  const meta=roomRef('meta');
+  return meta.once('value').then(s=>{
+    const m=s.val()||{};
+    if(!s.exists()){
+      iAmOwner=true;
+      return meta.set({owner:uid,open:false}).then(()=>({owner:uid,open:false}));
+    }
+    iAmOwner=(m.owner===uid);
+    setOwnerUI(iAmOwner,m.open===true);
+    return m;
+  }).then(m=>{
+    if(iAmOwner) return roomRef('allowed/'+uid).set(true).then(()=>m);
+    return m;
+  }).catch(err=>{ console.warn('ensure',err); return null; });
+}
+
+function setOwnerUI(owner,open){
+  const r=$('roleHome'), b=$('openJoinBtn');
+  if(r) r.textContent=owner?'OWNER 👑':'MEMBER ⭐';
+  if(b){ b.textContent=open?'ON':'OFF'; b.style.color=open?'#00ff88':'#8d9aae'; }
+}
+
+function toggleOpenJoin(){
+  if(!fbReady()){ toast('⚠️ Firebase সংযুক্ত নেই'); return; }
+  roomRef('meta').once('value').then(s=>{
+    const m=s.val()||{};
+    if(m.owner&&m.owner!==authUser.uid){ toast('🔒 শুধু গ্রুপ মালিক বদলাতে পারবেন'); return; }
+    const next=!(m.open===true);
+    return roomRef('meta').update({owner:m.owner||authUser.uid,open:next}).then(()=>{
+      setOwnerUI(true,next);
+      toast(next?'🔓 Open join চালু — আইডি জানলেই জয়েন':'🔒 Open join বন্ধ');
+    });
+  }).catch(e=>{ console.warn(e); toast('⚠️ পরিবর্তন করা যায়নি'); });
+}
+
+function fbJoin(){
+  if(!fbReady()) return;
+  const uid=authUser.uid;
+  const ref=roomRef('members/'+uid);
+  ref.set({id:myId,name:'YOU 👑 CHAMPION',at:firebase.database.ServerValue.TIMESTAMP}).catch(()=>{});
+  try{ ref.onDisconnect().remove(); }catch(e){}
+}
+
+function fbSend(kind,mid,text,extra){
+  if(!fbReady()) return false;
+  const node=kind==='room'?'roomMsgs':'msgs';
+  try{
+    roomRef(node).push(Object.assign({
+      mid:mid, from:myId, uid:authUser.uid, name:'YOU 👑 CHAMPION',
+      text:text, at:firebase.database.ServerValue.TIMESTAMP
+    },extra||{})).catch(e=>{ console.warn('fb send',e); });
+    return true;
+  }catch(e){ console.warn('fb send',e); return false; }
+}
+
+/* গ্রুপ বদলালে পুরনো listener অবশ্যই বন্ধ হবে, নাহলে আগের গ্রুপের
+   মেসেজ নতুন গ্রুপে ঢুকে যায় */
+let watchGroup=null, fbOffs=[];
+function fbUnwatch(){
+  fbOffs.forEach(fn=>{ try{fn();}catch(e){} });
+  fbOffs=[];
+}
+function fbOn(ref,ev,cb){ ref.on(ev,cb); fbOffs.push(()=>ref.off(ev,cb)); }
+
+function fbWatch(){
+  if(!fbReady()) return;
+  if(watchGroup===groupId) return;
+  fbUnwatch();
+  watchGroup=groupId;
+
+  fbOn(roomRef('msgs').limitToLast(100),'child_added',s=>{
+    const v=s.val()||{};
+    if(v.uid&&v.uid===authUser.uid) return;
+    if(!cur) return;
+    if(v.to&&v.to!==cur.name) return;
+    pushMsg(v.mid||s.key,v.text||'','other');
+  });
+
+  fbOn(roomRef('roomMsgs').limitToLast(60),'child_added',s=>{
+    const v=s.val()||{};
+    if(v.uid&&v.uid===authUser.uid) return;
+    roomMsgAppend(v.name||v.from||'Friend',v.text||'');
+  });
+
+  fbOn(roomRef('members'),'value',s=>{
+    const v=s.val()||{}; let changed=false;
+    Object.values(v).forEach(mm=>{
+      if(!mm||!mm.id) return;
+      if(!members.some(x=>x.key===mm.id)){ members.push({key:mm.id,name:mm.name||'Friend',img:''}); changed=true; }
+    });
+    if(changed) save();
+  });
+
+  fbOn(roomRef('allowed/'+(authUser?authUser.uid:'')),'value',s=>{
+    if(!authUser||!watchGroup) return;
+    if(s.val()===true) return;
+    toast('🔒 এই গ্রুপের অনুমতি সরানো হয়েছে');
+    fbUnwatch(); watchGroup=null;
+    members=[]; save();
+    switchPage('rooms',null);
+  });
+}
+
+async function joinByCode(){
+  const inp=$('joinCode'); const raw=(inp.value||'').trim();
+  if(!raw){ toast('আগে GRP আইডি লিখুন'); return; }
+  if(!fbReady()){ toast('⚠️ Firebase সংযুক্ত নেই — জয়েন করা যাবে না'); return; }
+  try{
+    /* আইডি case-sensitive: আগে হুবহু, না মিললে বড় হাতের অক্ষরে চেষ্টা */
+    let code=null, m=null;
+    for(const cand of [raw, raw.toUpperCase()]){
+      const s=await roomRefOf(cand,'meta').once('value');
+      if(s.exists()){ code=cand; m=s.val()||{}; break; }
+    }
+    if(!code){ toast('⚠️ এই আইডির গ্রুপ পাওয়া যায়নি'); return; }
+
+    const permSnap=await roomRefOf(code,'allowed/'+authUser.uid).once('value');
+    const allowed=permSnap.val()===true;
+    if(!allowed&&m.open!==true&&m.owner!==authUser.uid){
+      toast('🔒 অনুমতি নেই — মালিককে Invite বা Open join চালু করতে বলুন'); return;
+    }
+
+    groupId=code;
+    members=load('uzar_members_'+groupId,[]).map(x=>typeof x==='string'?{key:x,name:x,img:''}:x);
+    if(!allowed) await roomRef('allowed/'+authUser.uid).set(true);
+    localStorage.setItem('uzar_gid',groupId);
+    watchGroup=null;
+    save(); fbEnsureAccess().then(()=>{ fbJoin(); fbWatch(); });
+    inp.value='';
+    toast('✅ Joined '+groupId);
+    openLiveRoom();
+  }catch(e){ console.warn('join',e); toast('⚠️ জয়েন করা যায়নি (permission)'); }
+}
+
+/* ---------- dedupe ---------- */
+const seenMsg=new Set();
+function genMid(){ return 'm'+Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
+function pushMsg(mid,text,who){
+  if(!mid) mid=genMid();
+  if(seenMsg.has(mid)) return;
+  seenMsg.add(mid);
+  add(esc(text),who);
+  if(seenMsg.size>400){ const it=seenMsg.values(); for(let i=0;i<120;i++){ const v=it.next(); if(v.done) break; seenMsg.delete(v.value); } }
+}
+function roomMsgAppend(who,text){
+  const box=$('roomChat'); if(!box) return;
+  box.insertAdjacentHTML('beforeend','<div class="roomChatMsg"><b>'+esc(who)+':</b> '+esc(text)+'</div>');
+  box.scrollTop=box.scrollHeight;
+}
+
+function toast(msg){
+  const el=$('toast'); if(!el) return;
+  el.textContent=msg; el.classList.add('show');
+  clearTimeout(window.__toast);
+  window.__toast=setTimeout(()=>el.classList.remove('show'),2400);
+}
+
+/* ---------- navigation ---------- */
+const NAVMAP={home:0,friends:1,rooms:2,liveRoom:2,profile:3};
+function switchPage(n,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const page=$(n+'Page'); if(!page) return;
+  page.classList.add('active');
+  document.querySelectorAll('.nav').forEach(x=>x.classList.remove('active'));
+  if(el&&el.classList.contains('nav')) el.classList.add('active');
+  else document.querySelectorAll('.nav')[NAVMAP[n]]?.classList.add('active');
+  if(n!=='friends') closeChat();
+}
+
+/* ---------- identity ---------- */
+let myId=localStorage.getItem('uzar_id')||('UZAR#'+(1000+Math.floor(Math.random()*9000)));
+localStorage.setItem('uzar_id',myId);
+$('myId').textContent=myId;
+
+let peerKey=localStorage.getItem('uzar_peer_key')||('uzar_'+Math.random().toString(36).slice(2,10)+'_'+Date.now().toString(36));
+localStorage.setItem('uzar_peer_key',peerKey);
+
+const myAv=$('myAv'), homeAv=$('homeAv');
+myAv.src=homeAv.src=localStorage.getItem('uzar_pic')||'https://i.pravatar.cc/150?img=8';
+
+$('gal').onchange=e=>{
+  const f=e.target.files&&e.target.files[0]; if(!f) return;
+  const url=URL.createObjectURL(f), img=new Image();
+  img.onload=()=>{
+    const scale=Math.min(1,256/Math.max(img.width,img.height));
+    const c=document.createElement('canvas');
+    c.width=Math.round(img.width*scale); c.height=Math.round(img.height*scale);
+    c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+    const data=c.toDataURL('image/jpeg',.72);
+    try{ localStorage.setItem('uzar_pic',data); }catch(err){ toast('⚠️ ছবি সেভ হয়নি — স্পেস শেষ'); }
+    URL.revokeObjectURL(url);
+    myAv.src=homeAv.src=data;
+    NOTI.push('Profile Updated','Premium avatar set');
+    toast('✅ Profile photo updated');
+  };
+  img.onerror=()=>{ URL.revokeObjectURL(url); toast('⚠️ ছবি পড়া যায়নি'); };
+  img.src=url;
+};
+
+/* ---------- data ---------- */
+const friends=[
+  {name:'👑Akhi Islam',last:'sunona',time:'1m ago',img:'https://i.pravatar.cc/100?img=5',badge:5,online:false},
+  {name:'☆*MONI*☆',last:'bg asen nki?',time:'2m ago',img:'https://i.pravatar.cc/100?img=26',badge:1,online:true},
+  {name:'মহারানী ❤️',last:'hi. kiso kotha bolte cai.',time:'13m ago',img:'https://i.pravatar.cc/100?img=9',badge:0,online:true},
+  {name:'Risha Jannat',last:'কি হলো',time:'14m ago',img:'https://i.pravatar.cc/100?img=32',badge:0,online:false},
+  {name:'মনের রানী',last:'Apni ki free asen',time:'15m ago',img:'https://i.pravatar.cc/100?img=23',badge:0,online:false},
+  {name:'Easmin Akter',last:'love you',time:'15m ago',img:'https://i.pravatar.cc/100?img=16',badge:3,online:true},
+  {name:'Jannatul maisa',last:'reply deo',time:'15m ago',img:'https://i.pravatar.cc/100?img=12',badge:5,online:true},
+  {name:'ami offline 🤟',last:'hi kmon aso tumi. tumi ki married',time:'31m ago',img:'https://i.pravatar.cc/100?img=15',badge:1,online:false}
+];
+
+let cur=null;
+let groupId=localStorage.getItem('uzar_gid')||('GRP-'+Math.random().toString(36).slice(2,7).toUpperCase());
+let members=load('uzar_members_'+groupId,[]).map(m=>typeof m==='string'?{key:m,name:m,img:''}:m);
+const MAX_GROUP_MEMBERS=30, MAX_ROOM_SPEAKERS=9;
+const peerIdByName={}, peerUidByName={};
+const roomConns=new Map();
+const outCalls={}, inCalls={};
+const speakerReq={};
+let stream=null, conn=null, roomSeatOrder=[];
+speakerReq[peerKey]={on:false,at:0};
+
+/* ---------- mic ---------- */
+function micError(e){
+  const n=e&&e.name?e.name:'';
+  if(n==='NotAllowedError'||n==='PermissionDeniedError') return '🎤 Microphone permission "Allow" করো';
+  if(n==='NotFoundError'||n==='DevicesNotFoundError') return '🎤 Microphone পাওয়া যায়নি';
+  if(n==='NotReadableError'||n==='TrackStartError') return '🎤 Microphone অন্য app ব্যবহার করছে';
+  if(n==='SecurityError') return '🔒 HTTPS সাইট লাগবে (file:// চলবে না)';
+  if(n==='AbortError') return '🎤 Mic চালু করা বাতিল হয়েছে';
+  return '🎤 Microphone চালু করা যায়নি';
+}
+async function getMicStream(needVideo=false){
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)
+    throw Object.assign(new Error('getUserMedia unavailable'),{name:'SecurityError'});
+  if(stream){
+    const hasAudio=stream.getAudioTracks().length>0;
+    const hasVideo=stream.getVideoTracks().length>0;
+    if(hasAudio&&(!needVideo||hasVideo)) return stream;
+    if(!needVideo&&hasVideo) stream.getVideoTracks().forEach(t=>t.stop());
+    if(hasAudio) return stream;
+    stream.getTracks().forEach(t=>t.stop());
+    stream=null;
+  }
+  stream=await navigator.mediaDevices.getUserMedia({
+    audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},
+    video:needVideo?{width:{ideal:640},height:{ideal:480},facingMode:'user'}:false
+  });
+  return stream;
+}
+function micIsOn(){ return !!(stream&&stream.getAudioTracks().some(t=>t.enabled)); }
+function killStream(){ if(stream){stream.getTracks().forEach(t=>t.stop()); stream=null;} }
+function speakerWinners(){
+  return Object.entries(speakerReq).filter(([,v])=>v&&v.on)
+    .sort((a,b)=>(a[1].at||0)-(b[1].at||0)).slice(0,MAX_ROOM_SPEAKERS).map(([k])=>k);
+}
+function isSpeakerAllowed(){ return speakerWinners().includes(peerKey); }
+function updateLocalMicUI(){
+  const on=micIsOn()&&isSpeakerAllowed();
+  const b=$('roomMicBtn');
+  if(b){
+    b.firstChild.textContent=on?'🎙':'🔇';
+    b.querySelector('span').textContent=on?'Mic ON':'Mic OFF';
+    b.setAttribute('aria-pressed',String(on));
+    b.title=on?'You are speaking':(speakerWinners().length>=MAX_ROOM_SPEAKERS?'9 speaker slots are full':'Tap to speak');
+  }
+  const p=$('profileMicBtn');
+  if(p){ p.textContent=on?'🎙':'🔇'; p.title=on?'Mic ON':'Mic OFF'; p.setAttribute('aria-pressed',String(on)); }
+}
+
+/* ---------- peer ---------- */
+const peer=new Peer(peerKey,{config:{iceServers:window.UZAR_ICE}});
+peer.on('disconnected',()=>{
+  setTimeout(()=>{ if(!peer.destroyed){ try{ peer.reconnect(); }catch(e){ console.warn(e); } } },1500);
+});
+peer.on('error',e=>{
+  console.warn('PeerJS:',e);
+  const t=e&&e.type?e.type:'unknown';
+  if(t==='unavailable-id') toast('⚠️ এই আইডি অন্য ট্যাবে খোলা আছে');
+  else if(t==='peer-unavailable') toast('⚠️ বন্ধু এখন অনলাইনে নেই');
+  else if(t==='network'||t==='server-error'||t==='socket-error') toast('⚠️ সার্ভারে সংযোগ হচ্ছে না');
+  else toast('⚠️ Voice error: '+t);
+});
+peer.on('connection',c=>bind(c));
+function uniqueConns(){ return [...new Set([...roomConns.values()])].filter(c=>c&&c.open); }
+function connectedRoomPeers(){ return uniqueConns(); }
+
+function sendHello(c){
+  try{
+    c.send({type:'HELLO',peerId:peerKey,from:myId,fromName:'YOU 👑 CHAMPION',uid:(authUser?authUser.uid:'')});
+  }catch(e){}
+}
+function sendHelloAll(){ uniqueConns().forEach(sendHello); }
+
+function bind(c){
+  const key=()=>c.peer||c.label;
+  if(c.metadata&&c.metadata.dm) conn=c;
+  c.on('open',()=>{
+    if(c.peer) roomConns.set(c.peer,c);
+    if(c.metadata&&c.metadata.dm) conn=c;
+    sendHello(c);
+  });
+  c.on('close',()=>{
+    const k=key();
+    if(k&&roomConns.get(k)===c) roomConns.delete(k);
+    if(conn===c) conn=null;
+    delete outCalls[k]; delete inCalls[k];
+    renderLiveRoom();
+  });
+  c.on('error',()=>{});
+  c.on('data',d=>handleData(c,d));
+}
+
+function handleData(c,d){
+  if(!d||typeof d!=='object') return;
+  if(d.type==='HELLO'){
+    if(c.peer) roomConns.set(c.peer,c);
+    if(d.from&&d.peerId) peerIdByName[d.from]=d.peerId;
+    if(d.fromName&&d.peerId) peerIdByName[d.fromName]=d.peerId;
+    if(d.uid&&d.from) peerUidByName[d.from]=d.uid;
+    if(d.uid&&d.fromName) peerUidByName[d.fromName]=d.uid;
+    try{ c.send({type:'ROOM_SPEAKER_STATE',requests:speakerReq,seatOrder:roomSeatOrder}); }catch(e){}
+    return;
+  }
+  if(d.type==='ROOM_SPEAKER_STATE'){
+    Object.entries(d.requests||{}).forEach(([k,v])=>{
+      const mine=speakerReq[k];
+      if(!mine || ((v&&v.at)||0) >= (mine.at||0)) speakerReq[k]=v||{on:false,at:0};
+    });
+    if(Array.isArray(d.seatOrder)&&d.seatOrder.length) roomSeatOrder=[...d.seatOrder];
+    if(speakerReq[peerKey]===undefined) speakerReq[peerKey]={on:false,at:0};
+    if(!isSpeakerAllowed()&&micIsOn()){ stopLocalRoomMic(false); toast('🔇 ৯টি মাইক পূর্ণ — তুমি এখন শুনছো'); }
+    renderLiveRoom(); updateLocalMicUI();
+    return;
+  }
+  if(d.type==='ROOM_MIC_REQUEST'){
+    speakerReq[d.peerId]=d.on?{on:true,at:Date.now()}:{on:false,at:0};
+    broadcastSpeakerState();
+    return;
+  }
+  if(d.type==='INVITE'){
+    const name=String(d.fromName||'Friend');
+    if(confirm(name+' তোমাকে '+(d.group||'')+' এ Invite করেছে!')){
+      if(members.length>=MAX_GROUP_MEMBERS){ toast('⚠️ সর্বোচ্চ ৩০ জন সদস্য রাখা যাবে'); return; }
+      joinInvitedGroup(d.group,name,d.from);
+    }
+    return;
+  }
+  if(d.type==='ROOM_MSG'){
+    if(d.mid&&seenMsg.has('r:'+d.mid)) return;
+    if(d.mid) seenMsg.add('r:'+d.mid);
+    roomMsgAppend(d.fromName||d.from||'Friend',d.text||'');
+    return;
+  }
+  pushMsg(d.mid,d.text?String(d.text):JSON.stringify(d),'other');
+}
+
+async function joinInvitedGroup(code,name,key){
+  if(!fbReady()||!code){ toast('⚠️ Invite গ্রহণ করা যায়নি'); return; }
+  try{
+    await roomRefOf(code,'allowed/'+authUser.uid).set(true);
+    groupId=code;
+    members=load('uzar_members_'+groupId,[]).map(x=>typeof x==='string'?{key:x,name:x,img:''}:x);
+    if(!members.some(m=>m.key===key)) members.push({key:key||name,name:name,img:''});
+    save();
+    localStorage.setItem('uzar_gid',groupId);
+    watchGroup=null;
+    fbEnsureAccess().then(()=>{ fbJoin(); fbWatch(); });
+    toast('✅ Joined '+groupId);
+    openLiveRoom();
+  }catch(e){ console.warn('invite join',e); toast('⚠️ Invite join ব্যর্থ (permission)'); }
+}
+
+/* ---------- speakers ---------- */
+function sendRoomPacket(packet){ connectedRoomPeers().forEach(c=>{ try{c.send(packet);}catch(e){} }); }
+function broadcastSpeakerState(){
+  roomSeatOrder=deriveSeatOrder();
+  sendRoomPacket({type:'ROOM_SPEAKER_STATE',requests:speakerReq,seatOrder:roomSeatOrder});
+  renderLiveRoom();
+}
+function stopLocalRoomMic(release=true){
+  if(stream) stream.getAudioTracks().forEach(t=>t.enabled=false);
+  Object.values(outCalls).forEach(c=>{ try{c.close();}catch(e){} });
+  Object.keys(outCalls).forEach(k=>delete outCalls[k]);
+  if(release){ speakerReq[peerKey]={on:false,at:0}; broadcastSpeakerState(); }
+  updateLocalMicUI();
+}
+function startRoomBroadcast(){
+  if(!stream) return;
+  connectedRoomPeers().forEach(c=>{
+    try{
+      if(outCalls[c.peer]) return;
+      const call=peer.call(c.peer,stream,{metadata:{mode:'audio',room:true,group:groupId,from:myId}});
+      if(!call) return;
+      outCalls[c.peer]=call;
+      call.on('close',()=>delete outCalls[c.peer]);
+      call.on('error',()=>delete outCalls[c.peer]);
+    }catch(e){ console.warn('broadcast:',e); }
+  });
+}
+
+/* ইনকামিং কল: সম্মতি ছাড়া মাইক/ক্যামেরা চালু হবে না */
+peer.on('call',async call=>{
+  try{
+    const meta=call.metadata||{};
+    const mode=meta.mode==='video'?'video':'audio';
+    const isRoom=!!meta.room;
+
+    if(isRoom){
+      call.answer();
+      inCalls[call.peer]=call;
+      call.on('stream',s=>showRemoteStream(s,call.peer,'audio'));
+      call.on('close',()=>{ delete inCalls[call.peer]; removeAudioEl(call.peer); });
+      return;
+    }
+
+    const who=meta.from||'Friend';
+    if(!confirm('📞 '+who+' থেকে '+(mode==='video'?'ভিডিও':'অডিও')+' কল আসছে — গ্রহণ করবেন?')){
+      try{ call.close(); }catch(e){}
+      toast('📵 Call declined');
+      return;
+    }
+
+    const local=await getMicStream(mode==='video');
+    call.answer(local);
+    inCalls[call.peer]=call;
+    call.on('stream',s=>showRemoteStream(s,call.peer,mode));
+    call.on('close',()=>{ delete inCalls[call.peer]; removeAudioEl(call.peer); });
+    toast(mode==='video'?'📹 Video connected':'🎙 Voice connected');
+  }catch(e){ console.warn('incoming:',e); toast(micError(e)); }
+});
+function removeAudioEl(id){ const a=$('roomAudio_'+id); if(a) a.remove(); }
+function ensureCallUI(){
+  if($('voicePanel')) return;
+  document.body.insertAdjacentHTML('beforeend','<div id="voicePanel" style="position:fixed;left:50%;bottom:calc(var(--nav-h) + 16px);transform:translateX(-50%);width:min(390px,calc(100% - 24px));z-index:10001;padding:12px;border-radius:18px;background:rgba(5,12,20,.97);border:1px solid rgba(0,255,136,.35);display:flex;align-items:center;gap:10px"><div style="flex:1;min-width:0"><b>🎙 Live Voice</b><div id="voiceStatus" class="small">Connecting...</div></div><button class="chatIcon" onclick="toggleMic()">🎙</button><button class="chatIcon" onclick="endRoomCall()">📵</button></div>');
+}
+function showRemoteStream(s,id,mode){
+  ensureCallUI();
+  const st=$('voiceStatus'); if(st) st.textContent=mode==='video'?'Video connected':'Voice connected';
+  if(mode==='video'){
+    if(!$('friendsPage').classList.contains('active')) switchPage('friends',null);
+    $('listView').style.display='none';
+    $('chatView').style.display='flex';
+    const box=$('videoArea');
+    if(box){ box.hidden=false; $('frV').srcObject=s; if(stream) $('myV').srcObject=stream; }
+  }else{
+    let audio=$('roomAudio_'+id);
+    if(!audio){
+      audio=document.createElement('audio');
+      audio.id='roomAudio_'+id; audio.autoplay=true; audio.playsInline=true; audio.style.display='none';
+      document.body.appendChild(audio);
+    }
+    audio.srcObject=s; audio.play().catch(()=>{});
+  }
+}
+function endRoomCall(){
+  Object.values(outCalls).forEach(c=>{ try{c.close();}catch(e){} });
+  Object.values(inCalls).forEach(c=>{ try{c.close();}catch(e){} });
+  Object.keys(outCalls).forEach(k=>delete outCalls[k]);
+  Object.keys(inCalls).forEach(k=>delete inCalls[k]);
+  killStream();
+  speakerReq[peerKey]={on:false,at:0};
+  broadcastSpeakerState();
+  const vp=$('voicePanel'); if(vp) vp.remove();
+  const v=$('videoArea'); if(v){ v.hidden=true; $('frV').srcObject=null; $('myV').srcObject=null; }
+  document.querySelectorAll('audio[id^="roomAudio_"]').forEach(a=>a.remove());
+  closeChat(); updateLocalMicUI(); toast('📵 Call ended');
+}
+function openLiveRoom(){ switchPage('liveRoom',null); renderLiveRoom(); }
+function leaveLiveRoom(){ endRoomCall(); switchPage('rooms',null); toast('👋 You left the live room'); }
+
+async function toggleMic(){
+  if(micIsOn()){ stopLocalRoomMic(true); updateLocalMicUI(); toast('🔇 Mic OFF — এখন তুমি শুনছো'); return; }
+  try{
+    await getMicStream(false);
+    const a=stream&&stream.getAudioTracks()[0];
+    if(!a) throw Object.assign(new Error('No audio track'),{name:'NotFoundError'});
+    speakerReq[peerKey]={on:true,at:Date.now()};
+    if(!isSpeakerAllowed()){
+      speakerReq[peerKey]={on:false,at:0}; a.enabled=false;
+      broadcastSpeakerState(); updateLocalMicUI();
+      toast('⚠️ ৯টি মাইক পূর্ণ — তুমি এখন শুধু শুনবে'); return;
+    }
+    a.enabled=true; broadcastSpeakerState(); startRoomBroadcast(); updateLocalMicUI();
+    toast('🎙 Mic ON — কথা বলা যাবে');
+  }catch(e){
+    speakerReq[peerKey]={on:false,at:0};
+    if(stream) stream.getAudioTracks().forEach(t=>t.enabled=false);
+    broadcastSpeakerState(); updateLocalMicUI();
+    console.warn('mic:',e); toast(micError(e));
+  }
+}
+
+/* ---------- seats ---------- */
+function groupMembers(){
+  const self={key:peerKey,name:'YOU 👑 CHAMPION',img:myAv.src,me:true};
+  const rest=members.slice(0,MAX_GROUP_MEMBERS-1).map((m,i)=>({
+    key:m.key||m.name, name:m.name,
+    img:m.img||((friends.find(f=>f.name===m.name)||{}).img)||('https://i.pravatar.cc/100?img='+(10+(i%20))),
+    me:false
+  }));
+  return [self,...rest];
+}
+function deriveSeatOrder(){
+  const all=groupMembers();
+  const byKey=Object.fromEntries(all.map(u=>[u.key,u]));
+  const seated=speakerWinners().map(k=>byKey[k]).filter(Boolean);
+  const rest=all.filter(u=>!seated.some(s=>s.key===u.key));
+  return seated.concat(rest).slice(0,MAX_ROOM_SPEAKERS).map(u=>u.key);
+}
+function renderLiveRoom(){
+  if(!$('seatGrid')) return;
+  const all=groupMembers();
+  const winners=new Set(speakerWinners());
+  $('liveRoomTitle').textContent=groupId+' 👑';
+  $('liveRoomSub').textContent='Live Room • '+all.length+' members • 30 Seats';
+  let order=roomSeatOrder.filter(k=>all.some(u=>u.key===k));
+  if(!order.length) order=deriveSeatOrder();
+  const seated=order.slice(0,MAX_ROOM_SPEAKERS).map(k=>all.find(u=>u.key===k)||null);
+  while(seated.length<MAX_ROOM_SPEAKERS) seated.push(null);
+  $('seatGrid').innerHTML=seated.map(u=>{
+    if(!u) return '<div class="seat empty" data-empty="1" role="button" tabindex="0"><div style="font-size:28px">＋</div><span class="seatName">Empty</span></div>';
+    const on=winners.has(u.key);
+    const muteBtn=u.me
+      ? '<button type="button" class="seatMute" data-mic="1" aria-pressed="'+on+'" title="'+(on?'Mic ON':'Mic OFF')+'">'+(on?'🎙':'🔇')+'</button>'
+      : '<span class="seatMute">'+(on?'🎙':'🔇')+'</span>';
+    return '<div class="seat '+(on?'speakerOn':'speakerOff')+(u.me?' me':'')+'"><span class="seatVip">'+(u.me?'👑':'⭐')+'</span>'+muteBtn+'<img src="'+esc(u.img)+'" alt=""><b class="seatName">'+esc(u.name)+'</b><div style="font-size:9px;margin-top:2px;color:'+(on?'#00ff88':'#9aa3b2')+'">'+(on?'ON':'OFF')+'</div></div>';
+  }).join('');
+  const seatedSet=new Set(seated.filter(Boolean).map(u=>u.key));
+  const audience=all.filter(u=>!seatedSet.has(u.key)).slice(0,MAX_GROUP_MEMBERS);
+  $('roomAudience').innerHTML=audience.map(u=>
+    '<img src="'+esc(u.img)+'" alt="'+esc(u.name)+'" title="'+esc(u.name)+'" data-member-key="'+esc(u.key)+'">'
+  ).join('')||'<span class="small muted">কোনো listener নেই</span>';
+  $('speakerCount').textContent=winners.size+'/'+MAX_ROOM_SPEAKERS;
+  $('memberCountLive').textContent=all.length+'/30';
+  updateLocalMicUI();
+}
+$('seatGrid').addEventListener('click',e=>{
+  if(e.target.closest('[data-mic]')){ e.stopPropagation(); toggleMic(); return; }
+  if(e.target.closest('[data-empty]')) promoteNextListener();
+});
+$('roomAudience').addEventListener('click',e=>{
+  const el=e.target.closest('[data-member-key]');
+  if(el) promoteToSpeaker(el.dataset.memberKey);
+});
+function promoteNextListener(){
+  const all=groupMembers();
+  const winners=new Set(speakerWinners());
+  const seatKeys=new Set(roomSeatOrder.slice(0,MAX_ROOM_SPEAKERS));
+  const target=all.find(u=>!winners.has(u.key)&&!seatKeys.has(u.key));
+  if(!target){ toast('👥 নিচে কোনো Listener নেই'); return; }
+  promoteToSpeaker(target.key);
+}
+function promoteToSpeaker(key){
+  const target=groupMembers().find(u=>u.key===key);
+  if(!target) return;
+  if(speakerWinners().length>=MAX_ROOM_SPEAKERS){ toast('⚠️ ৯টি Speaker slot পূর্ণ'); return; }
+  if(target.me){ toggleMic(); return; }
+  sendRoomPacket({type:'ROOM_MIC_REQUEST',peerId:key,on:true});
+  speakerReq[key]={on:true,at:Date.now()};
+  broadcastSpeakerState();
+  toast('🎙 '+target.name+' কে স্পিকার করা হয়েছে');
+}
+
+/* ---------- chat ---------- */
+let friendFilter='all', friendQuery='';
+function setFriendFilter(f,el){
+  friendFilter=f;
+  document.querySelectorAll('.filterTab').forEach(x=>x.classList.remove('active'));
+  if(el) el.classList.add('active');
+  render();
+}
+function filterFriends(q){ friendQuery=q.toLowerCase().trim(); render(); }
+function render(){
+  if(!$('chatList')) return;
+  let h='';
+  friends.forEach((f,i)=>{
+    const joined=members.some(m=>m.name===f.name);
+    const matches=!friendQuery||f.name.toLowerCase().includes(friendQuery)||f.last.toLowerCase().includes(friendQuery);
+    const filterOk=friendFilter==='all'||(friendFilter==='online'&&f.online)||(friendFilter==='joined'&&joined);
+    if(!matches||!filterOk) return;
+    h+='<div class="chat-item" role="button" tabindex="0" onclick="openChat('+i+')"><div class="img-wrap"><img src="'+esc(f.img)+'" alt="">'+(f.online?'<div class="dot"></div>':'')+'</div><div style="flex:1;min-width:0"><b class="chatName">'+esc(f.name)+(joined?' ✓':'')+'</b><div class="chatLast">'+(joined?'Joined Group • ':'')+esc(f.last)+'</div></div><div class="chatTime">'+esc(f.time)+'</div>'+(f.badge>0?'<div class="badge">'+f.badge+'</div>':'')+'</div>';
+  });
+  $('chatList').innerHTML=h||'<div style="padding:35px 15px;text-align:center;color:#7f8ba0;font-size:11px">No friends found ✨</div>';
+}
+function openChat(i){
+  cur=friends[i];
+  $('cName').textContent=cur.name;
+  $('chatAv').src=cur.img;
+  $('listView').style.display='none';
+  $('chatView').style.display='flex';
+  $('chatBox').innerHTML='<div class="msg-row other"><img class="ava" src="'+esc(cur.img)+'" alt=""><div class="bubble-maya">hi. kiso kotha bolte cai. 😊</div></div><div class="msg-row me"><div class="bubble-maya">Hi '+esc(cur.name)+' 👋 Private Group এ আসবে?</div><img class="ava" src="'+esc(myAv.src)+'" alt=""></div>';
+  const pid=peerIdByName[cur.name];
+  if(pid&&peer.open){
+    try{ conn=peer.connect(pid,{metadata:{dm:true}}); bind(conn); }catch(e){ console.warn(e); }
+  }
+}
+function closeChat(){
+  const l=$('listView'), v=$('chatView');
+  if(l&&v){ l.style.display='flex'; v.style.display='none'; }
+  const va=$('videoArea'); if(va) va.hidden=true;
+}
+function add(t,type){
+  const isMe=type==='me';
+  const html='<div class="msg-row '+(isMe?'me':'other')+'">'
+    +(isMe?'':'<img class="ava" src="'+esc(cur?cur.img:'https://i.pravatar.cc/100?img=26')+'" alt="">')
+    +'<div class="bubble-maya">'+t+'</div>'
+    +(isMe?'<img class="ava" src="'+esc(myAv.src)+'" alt="">':'')+'</div>';
+  const box=$('chatBox'); if(!box) return;
+  box.insertAdjacentHTML('beforeend',html);
+  box.scrollTop=box.scrollHeight;
+}
+function send(){
+  const inp=$('msgIn'), m=inp.value.trim();
+  if(!m) return;
+  const mid=genMid();
+  pushMsg(mid,m,'me');
+  inp.value='';
+  let sent=false;
+  if(conn&&conn.open){ try{ conn.send({text:m,mid:mid,to:(cur?cur.name:'')}); sent=true; }catch(e){} }
+  if(fbSend('dm',mid,m,{to:(cur?cur.name:'')})) sent=true;
+  if(!sent) toast('⚠️ কানেক্টেড নয়');
+}
+function inviteNow(){
+  if(!cur) return;
+  if(members.some(m=>m.name===cur.name)){ toast('আগে থেকেই আছে ✅'); return; }
+  if(members.length>=MAX_GROUP_MEMBERS){ toast('⚠️ সর্বোচ্চ ৩০ জন সদস্য রাখা যাবে'); return; }
+  members.push({key:peerIdByName[cur.name]||cur.name,name:cur.name,img:cur.img});
+  save();
+  const invitedUid=peerUidByName[cur.name];
+  if(fbReady()&&invitedUid){
+    roomRef('allowed/'+invitedUid).set(true).catch(()=>console.warn('allow write failed'));
+  }
+  if(conn&&conn.open){ try{ conn.send({type:'INVITE',from:myId,fromName:'YOU 👑 CHAMPION',group:groupId}); }catch(e){} }
+  add('<div style="background:linear-gradient(135deg,#00ff88,#00d9ff);color:#00150c;padding:10px;border-radius:13px;text-align:center;font-weight:800">🔒 Invite Sent<br>'+esc(groupId)+'</div>','me');
+  toast('📨 Invite sent to '+cur.name);
+  openLiveRoom();
+}
+
+/* ---------- rooms ---------- */
+function sendRoomMsg(){
+  const el=$('roomMsg'), t=el.value.trim();
+  if(!t) return;
+  const mid=genMid();
+  roomMsgAppend('YOU',t);
+  sendRoomPacket({type:'ROOM_MSG',from:myId,fromName:'YOU 👑 CHAMPION',text:t,mid:mid});
+  fbSend('room',mid,t);
+  el.value='';
+}
+function copyGroup(){ copyText(groupId); }
+function copyId(){ copyText(myId); }
+function copyText(t){
+  if(navigator.clipboard&&window.isSecureContext){
+    navigator.clipboard.writeText(t).then(()=>toast('📋 Copied: '+t)).catch(()=>toast('⚠️ Copy করা যায়নি'));
+  }else{ toast('⚠️ Copy করতে HTTPS লাগবে'); }
+}
+async function startCall(mode){
+  const needVideo=mode==='video';
+  try{ await getMicStream(needVideo); }catch(e){ toast(micError(e)); return; }
+  const targets=connectedRoomPeers().filter(c=>c.peer);
+  if(conn&&conn.open&&conn.peer&&!targets.some(c=>c.peer===conn.peer)) targets.push(conn);
+  if(!targets.length){ toast('👥 আগে বন্ধুকে Invite/Join করাও'); return; }
+  targets.forEach(c=>{
+    try{
+      const call=peer.call(c.peer,stream,{metadata:{mode:needVideo?'video':'audio',group:groupId,from:myId}});
+      if(!call) return;
+      outCalls[c.peer]=call;
+      call.on('stream',s=>showRemoteStream(s,c.peer,needVideo?'video':'audio'));
+      call.on('close',()=>delete outCalls[c.peer]);
+    }catch(e){ console.warn(e); }
+  });
+  ensureCallUI();
+  const st=$('voiceStatus'); if(st) st.textContent=needVideo?'Video call started':'Voice call started';
+  toast(needVideo?'📹 Video call started':'🎙 Voice call started');
+}
+function createGroup(){
+  groupId='GRP-'+Math.random().toString(36).slice(2,7).toUpperCase();
+  iAmOwner=true;
+  watchGroup=null;
+  save();
+  if(fbReady()){ fbEnsureAccess().then(()=>{ fbJoin(); fbWatch(); }); }
+  NOTI.push('Empire Created','Group: '+groupId);
+  toast('👑 New Empire: '+groupId);
+}
+
+/* ---------- save ---------- */
+function save(){
+  if(members.length>MAX_GROUP_MEMBERS) members=members.slice(0,MAX_GROUP_MEMBERS);
+  store('uzar_members_'+groupId,members);
+  localStorage.setItem('uzar_gid',groupId);
+  const set=(id,val)=>{const el=$(id); if(el) el.textContent=val;};
+  set('statMembers',members.length); set('pMembers',members.length); set('pMembers2',members.length);
+  set('gidHome',groupId); set('roomIdShow',groupId); set('myCode',groupId);
+  set('roomQuick',members.length+' Joined');
+  set('roomOnline',members.filter(m=>{const f=friends.find(x=>x.name===m.name);return f&&f.online;}).length);
+  set('notiCount',NOTI.list.length+' alerts');
+  $('myGroups').innerHTML=members.length
+    ? '<div style="display:flex;justify-content:space-between"><b style="color:#00ff88">👑 '+esc(groupId)+'</b><span class="live">'+members.length+'/30 Members</span></div><div style="margin-top:8px;color:#bfe1ff;font-size:11px;overflow-wrap:anywhere">'+esc(members.map(m=>m.name).join(', '))+'</div><button onclick="switchPage(\'rooms\',null)" style="margin-top:9px;width:100%;background:#00ff88;border:0;padding:8px;border-radius:10px;font-weight:800">Open Empire →</button>'
+    : '<div style="text-align:center;color:#7f8ba0;font-size:11px">No empire yet — Invite friends to start 👑</div>';
+  $('roomMembers').innerHTML=members.map((m,i)=>{
+    const img=m.img||((friends.find(f=>f.name===m.name)||{}).img)||('https://i.pravatar.cc/100?img='+(10+(i%20)));
+    return '<div class="memberRow"><img src="'+esc(img)+'" alt=""><div style="min-width:0"><b style="font-size:11px">'+esc(m.name)+'</b><br><span class="small" style="color:#00ff88">● Joined</span></div><span class="roomBadge">LIVE</span></div>';
+  }).join('')||'<div class="small muted" style="padding:10px 0">কেউ নেই</div>';
+  render();
+  renderLiveRoom();
+}
+
+const NOTI={
+  list:load('uzar_n',[]),
+  push(t,b){
+    this.list.unshift({title:String(t),body:String(b),time:new Date().toLocaleTimeString()});
+    this.list=this.list.slice(0,20);
+    store('uzar_n',this.list);
+    const el=$('badge');
+    if(el){ el.textContent=this.list.length; el.style.display=this.list.length?'block':'none'; }
+    const c=$('notiCount'); if(c) c.textContent=this.list.length+' alerts';
+  },
+  open(){
+    if($('notiSheet')) return;
+    let h='<div id="notiSheet" style="position:fixed;inset:0;background:rgba(1,5,10,.97);z-index:9999998;padding:18px;overflow:auto;color:#fff"><div style="display:flex;justify-content:space-between;align-items:center"><h3 style="color:#00ff88">🔔 Notifications</h3><button id="notiClose" class="btn2">X</button></div>';
+    if(!this.list.length) h+='<div class="small muted" style="padding:20px 0">এখনো কোনো নোটিফিকেশন নেই</div>';
+    this.list.forEach(n=>{ h+='<div class="notiItem"><b>'+esc(n.title)+'</b><br><span class="small">'+esc(n.body)+' • '+esc(n.time)+'</span></div>'; });
+    h+='</div>';
+    document.body.insertAdjacentHTML('beforeend',h);
+    $('notiClose').onclick=()=>{
+      const s=$('notiSheet'); if(s) s.remove();
+      const el=$('badge'); if(el) el.style.display='none';
+    };
+  }
+};
+
+/* ---------- theme ---------- */
+let neonTheme=localStorage.getItem('uzar_theme')||'green';
+function applyTheme(){
+  const root=document.documentElement;
+  const t=neonTheme==='purple'?['#a66cff','#ff4bd8']:neonTheme==='blue'?['#00d9ff','#4d7cff']:['#00ff88','#7b5cff'];
+  root.style.setProperty('--accent',t[0]);
+  root.style.setProperty('--accent2',t[1]);
+}
+function toggleTheme(){
+  neonTheme=neonTheme==='green'?'purple':neonTheme==='purple'?'blue':'green';
+  localStorage.setItem('uzar_theme',neonTheme);
+  applyTheme();
+  toast('🎨 Theme: '+neonTheme.toUpperCase());
+}
+
+/* ---------- boot ---------- */
+applyTheme();
+save();
+render();
+initFirebase();
+if(!sessionStorage.getItem('uzar_booted')){
+  sessionStorage.setItem('uzar_booted','1');
+  NOTI.push('Welcome','UZAR Premium চালু হয়েছে • ID: '+myId);
+}
+</script>
+</body>
+</html>
