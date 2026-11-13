@@ -1,10 +1,9 @@
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#050a12">
 <title>UZAR Premium • Neon Social</title>
 <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
@@ -43,13 +42,13 @@ img,video{max-width:100%;display:block}
 @keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 .glass{margin:8px 10px;padding:11px;border-radius:16px;background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.1);box-shadow:0 10px 24px rgba(0,0,0,.18)}
-.small{font-size:11px;color:#8d9aae;overflow-wrap:anywhere}
+.small{font-size:12px;color:#8d9aae;overflow-wrap:anywhere}
 .toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + 14px);transform:translate(-50%,20px);width:min(360px,calc(100% - 28px));padding:11px 14px;border-radius:14px;background:rgba(10,20,30,.97);border:1px solid rgba(0,255,136,.35);box-shadow:0 10px 30px rgba(0,0,0,.35);color:#fff;font-size:12px;font-weight:700;z-index:9999999;opacity:0;pointer-events:none;transition:.25s}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 .themeBtn,.iconbtn{width:38px;height:38px;border:1px solid rgba(255,255,255,.12);border-radius:11px;background:rgba(255,255,255,.05);color:#fff;font-size:15px;cursor:pointer;position:relative}
 .levelBox{margin-top:8px;padding:9px;border-radius:12px;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.07);text-align:left}
 .levelLine{height:6px;border-radius:7px;background:#111d29;overflow:hidden;margin-top:6px}
-.levelFill{height:100%;width:86%;border-radius:7px;background:linear-gradient(90deg,#00ff88,#00d9ff,#7b5cff)}
+.levelFill{height:100%;width:0%;transition:width .4s;border-radius:7px;background:linear-gradient(90deg,#00ff88,#00d9ff,#7b5cff)}
 .filterTabs{display:flex;gap:6px;padding:0 10px 6px}
 .filterTab{flex:1;border:1px solid rgba(255,255,255,.08);background:#0b1724;color:#8390a3;border-radius:9px;padding:7px 4px;font-size:10px;font-weight:800;cursor:pointer}
 .filterTab.active{background:linear-gradient(135deg,rgba(0,255,136,.18),rgba(0,217,255,.1));color:var(--accent);border-color:rgba(0,255,136,.3)}
@@ -60,14 +59,14 @@ img,video{max-width:100%;display:block}
 .brand{display:flex;align-items:center;gap:8px;min-width:0}
 .logo{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-size:18px;background:linear-gradient(135deg,#00ff88,#7b5cff);flex:0 0 auto}
 .brand b{font-size:14px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px}
-.online{color:var(--accent);font-size:9px;display:block}
+.online{color:var(--accent);font-size:10px;display:block}
 .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:6px 10px}
 .stat{padding:9px 4px;text-align:center;border:1px solid rgba(255,255,255,.1);border-radius:13px;background:rgba(8,15,26,.8);min-width:0}
 .stat b{font-size:16px}
 .green{color:var(--accent)}.blue{color:#54c7ff}.pink{color:#ff83c7}
 .empire{margin:0 10px;padding:12px;border-radius:16px;background:linear-gradient(110deg,rgba(0,255,136,.14),rgba(123,92,255,.16),rgba(0,0,0,.2));border:1px solid rgba(0,255,136,.48)}
 .empireTop{display:flex;justify-content:space-between;align-items:center;gap:6px}
-.live{padding:3px 7px;border-radius:16px;background:var(--accent);color:#001b0d;font-size:8px;font-weight:800}
+.live{padding:3px 7px;border-radius:16px;background:var(--accent);color:#001b0d;font-size:10px;font-weight:800}
 .empireBox{margin-top:8px;padding:9px;border-radius:11px;background:rgba(0,0,0,.32);border:1px solid rgba(255,255,255,.07);min-width:0;overflow:hidden}
 .quick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:0 10px}
 .quickCard{padding:9px 8px;border-radius:13px;border:1px solid rgba(255,255,255,.09);display:flex;align-items:center;gap:7px;background:linear-gradient(135deg,rgba(123,92,255,.14),rgba(0,229,255,.06));cursor:pointer;min-width:0}
@@ -78,7 +77,7 @@ img,video{max-width:100%;display:block}
 .activity .avatar{width:36px;height:36px}
 .avatar{width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid var(--accent);flex:0 0 auto}
 .bottom{position:fixed;z-index:999;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:410px;height:calc(var(--nav-h) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);display:flex;justify-content:space-around;align-items:center;background:rgba(4,8,14,.97);border-top:1px solid rgba(255,255,255,.09)}
-.nav{width:25%;text-align:center;color:#6f7c91;font-size:9px;cursor:pointer}
+.nav{width:25%;text-align:center;color:#6f7c91;font-size:10px;cursor:pointer}
 .nav div{font-size:18px;margin-bottom:1px}
 .nav.active{color:var(--accent)}
 .topbar{padding:10px 10px 5px;display:flex;align-items:center;justify-content:space-between}
@@ -90,10 +89,10 @@ img,video{max-width:100%;display:block}
 .img-wrap{position:relative;flex:none}
 .img-wrap img{width:42px;height:42px;border-radius:50%;object-fit:cover;border:1px solid rgba(255,255,255,.16)}
 .dot{position:absolute;right:0;bottom:1px;width:10px;height:10px;background:var(--accent);border:2px solid #06101a;border-radius:50%}
-.badge{position:absolute;right:2px;top:7px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;display:grid;place-items:center;background:#ff4e70;color:#fff;font-size:9px;font-weight:800}
+.badge{position:absolute;right:2px;top:7px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;display:grid;place-items:center;background:#ff4e70;color:#fff;font-size:10px;font-weight:800}
 .chatName{font-size:12px}
-.chatLast{font-size:9px;color:#8390a3;margin-top:3px}
-.chatTime{font-size:8px;color:#68758a;position:absolute;right:4px;top:7px}
+.chatLast{font-size:10px;color:#8390a3;margin-top:3px}
+.chatTime{font-size:10px;color:#68758a;position:absolute;right:4px;top:7px}
 #friendsPage{background:linear-gradient(180deg,#07101b,#050b13);height:calc(100dvh - var(--nav-h));overflow:hidden}
 #listView{display:flex;flex-direction:column;height:100%;min-height:0;overflow:hidden}
 #chatList{flex:1;min-height:0;overflow-y:auto}
@@ -107,12 +106,13 @@ img,video{max-width:100%;display:block}
 .msg-row.me{justify-content:flex-end}
 .msg-row img.ava{width:26px;height:26px;border-radius:50%;object-fit:cover;flex:0 0 26px}
 .bubble-maya{max-width:74%;padding:9px 11px;border-radius:14px;font-size:11px;line-height:1.45;overflow-wrap:anywhere}
-.me.bubble-maya{background:linear-gradient(135deg,#7b3cff,#5e39ff);color:#fff;border-radius:14px 14px 4px 14px}
-.other.bubble-maya{background:#102033;color:#dfe8f5;border:1px solid rgba(255,255,255,.07);border-radius:14px 14px 14px 4px}
+.msg-row.me .bubble-maya{background:linear-gradient(135deg,#7b3cff,#5e39ff);color:#fff;border-radius:14px 14px 4px 14px}
+.msg-row.other .bubble-maya{background:#102033;color:#dfe8f5;border:1px solid rgba(255,255,255,.07);border-radius:14px 14px 14px 4px}
 .input-bar{padding:8px;background:#06101a;border-top:1px solid rgba(255,255,255,.08)}
 .field{height:38px;background:#0d1b29;border:1px solid rgba(255,255,255,.08);border-radius:19px;display:flex;align-items:center;padding:0 10px;flex:1;min-width:0}
 .field input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:#fff;font-size:11px}
 .send{width:38px;height:38px;border:0;border-radius:50%;background:linear-gradient(135deg,#00ff88,#00bfff);font-size:14px;color:#00150c;cursor:pointer;flex:0 0 38px}
+#videoArea[hidden]{display:none}
 #videoArea{padding:5px;background:#000;display:flex;gap:5px}
 #videoArea video{width:50%;height:130px;object-fit:cover;border-radius:10px}
 .roomCard{margin:8px;padding:12px;border-radius:16px;background:linear-gradient(145deg,rgba(0,255,136,.1),rgba(123,92,255,.08));border:1px solid rgba(0,255,136,.25);box-shadow:0 8px 24px rgba(0,0,0,.2)}
@@ -120,28 +120,28 @@ img,video{max-width:100%;display:block}
 .roomCard .btn2{padding:6px 10px;font-size:10px}
 .roomCard .empireBox{margin-top:8px;padding:8px;border-radius:10px}
 .roomCard .empireBox b{font-size:14px}
-.roomCard .empireBox .small{font-size:9px}
+.roomCard .empireBox .small{font-size:10px}
 .memberRow{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05)}
 .memberRow:last-child{border:0}
 .memberRow img,.memberRow>div:first-child{width:32px;height:32px;flex:0 0 32px}
 .memberRow img{border-radius:50%;object-fit:cover}
 .memberRow>div:first-child{border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;background:linear-gradient(135deg,#00ff88,#7b5cff)}
 .memberRow b{font-size:11px}
-.memberRow .small{font-size:9px}
-.roomBadge{margin-left:auto;font-size:8px;font-weight:800;padding:3px 6px;border-radius:8px;background:var(--accent);color:#00150c}
+.memberRow .small{font-size:10px}
+.roomBadge{margin-left:auto;font-size:10px;font-weight:800;padding:3px 6px;border-radius:8px;background:var(--accent);color:#00150c}
 #liveWrap{margin-top:8px}
 #liveWrap>div:first-child{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;gap:6px}
 #liveWrap b{font-size:11px}
-#liveWrap .btn2{padding:3px 7px;font-size:9px}
+#liveWrap .btn2{padding:3px 7px;font-size:10px}
 #livePresence .memberRow{padding:6px 0}
 #livePresence .memberRow>div:first-child{width:28px;height:28px;flex-basis:28px;font-size:11px}
 #livePresence .memberRow b{font-size:10px}
-#livePresence .memberRow .btn2{padding:3px 6px;font-size:9px}
+#livePresence .memberRow .btn2{padding:3px 6px;font-size:10px}
 .roomCard .field{height:36px;padding:0 10px;border-radius:18px}
 .roomCard .field input{font-size:11px}
 .roomCard .btn2{padding:8px 10px;font-size:10px}
 .roomCard .btn{padding:9px;font-size:12px}
-.roomCard .small{font-size:9px}
+.roomCard .small{font-size:10px}
 .profileHero{margin:8px;padding:14px 10px;border-radius:18px;background:linear-gradient(180deg,rgba(0,255,136,.12),rgba(123,92,255,.13),rgba(5,10,17,.8));border:1px solid rgba(0,255,136,.35)}
 .profilePic{width:88px;height:88px;border-radius:50%;object-fit:cover;border:3px solid var(--accent);margin:0 auto;cursor:pointer}
 .idbox{margin-top:9px;padding:9px;border-radius:11px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.07)}
@@ -154,16 +154,16 @@ img,video{max-width:100%;display:block}
 .roomTopBtn{width:30px;height:30px;border:1px solid rgba(255,255,255,.12);border-radius:9px;background:#171020;color:#fff;cursor:pointer;font-size:12px}
 .roomBanner{margin:8px;padding:10px;border-radius:12px;background:linear-gradient(100deg,rgba(255,53,155,.14),rgba(123,92,255,.18));border:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;gap:6px}
 .roomBanner b{font-size:12px}
-.roomBanner .small{font-size:9px}
-.roomBanner .live{padding:3px 6px;font-size:8px}
+.roomBanner .small{font-size:10px}
+.roomBanner .live{padding:3px 6px;font-size:10px}
 .seatGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;padding:6px 8px 10px;min-height:250px}
 .seat{height:100px;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
 .seat img{width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid #a66cff}
 .seat.me img{border-color:var(--accent)}
 .seat.empty{border-style:dashed;color:#6f7b8f;cursor:pointer}
-.seatName{font-size:8px;margin-top:4px;max-width:92%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.seatMute{position:absolute;right:4px;top:4px;background:rgba(0,0,0,.55);width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:9px;border:0;color:#fff}
-.seatVip{position:absolute;left:4px;top:4px;font-size:8px}
+.seatName{font-size:10px;margin-top:4px;max-width:92%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.seatMute{position:absolute;right:4px;top:4px;background:rgba(0,0,0,.55);width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:10px;border:0;color:#fff}
+.seatVip{position:absolute;left:4px;top:4px;font-size:10px}
 .speakerOn{border-color:rgba(0,255,136,.55)!important;box-shadow:0 0 16px rgba(0,255,136,.18)!important}
 .speakerOn .seatMute{background:#00ff88;color:#00150c}
 .roomAudience{display:flex;flex-wrap:wrap;gap:6px;overflow:hidden;padding:6px 8px 10px;min-height:36px}
@@ -178,7 +178,7 @@ img,video{max-width:100%;display:block}
 .roomInput .send{width:36px;height:36px;flex-basis:36px;font-size:14px}
 .roomControls{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(410px,100%);height:calc(var(--nav-h) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);background:rgba(8,8,15,.97);border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-around;align-items:center;z-index:1001}
 .roomControls button{width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:#151521;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:15px;cursor:pointer}
-.roomControls span{font-size:7px;margin-top:2px}
+.roomControls span{font-size:10px;margin-top:2px}
 .roomControls .mainCall{background:linear-gradient(135deg,#7b3cff,#ff2db2)}
 .roomControls .hang{background:linear-gradient(135deg,#ff365c,#ff1744)}
 @media(max-width:390px){
@@ -194,17 +194,35 @@ img,video{max-width:100%;display:block}
   .seatGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .seat{height:100px}
 }
+.emptyChat{display:flex;flex-direction:column;align-items:center;gap:8px;margin:40px auto 0;padding:18px;text-align:center;color:#8d9aae;font-size:12px}.emptyChat img{width:72px;height:72px;border-radius:50%;object-fit:cover}.emptyChat b{color:#fff;font-size:15px}
+#liveRoomPage.active{position:fixed;top:0;bottom:0;left:0;right:0;margin:0 auto;width:min(410px,100%);height:100dvh;min-height:0;z-index:1000;display:flex;flex-direction:column;overflow:hidden;padding-bottom:0!important;animation:none}
+#liveRoomPage .roomTop{flex:none}
+#liveRoomPage .roomBanner,#liveRoomPage .roomAudience{flex:none}
+#liveRoomPage .seatGrid{flex:none;min-height:0}
+#liveRoomPage .roomChat{flex:1 1 auto;min-height:60px;height:auto!important;margin-bottom:6px}
+#liveRoomPage .roomInput,#liveRoomPage .roomControls{position:static;transform:none;left:auto;bottom:auto;width:100%;flex:none}
+#liveRoomPage .roomControls{height:calc(var(--nav-h) + env(safe-area-inset-bottom))}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;touch-action:manipulation}
+input,textarea,select{font-size:16px!important}
+button{touch-action:manipulation}
+@media(max-width:600px){
+  body{display:block}
+  .phone,.bottom{max-width:none!important;width:100%!important}
+  #liveRoomPage.active,#liveRoomPage .roomInput,#liveRoomPage .roomControls{width:100%!important;max-width:none!important}
+  #roomsPage,#liveRoomPage{min-width:100%}
+  #roomsPage.active{min-height:calc(100dvh - var(--nav-h));width:100%}
+}
 </style>
 </head>
 <body>
 <div class="phone">
 <div id="homePage" class="page active scroll">
-  <div class="header"><div class="brand"><div class="logo">⚡</div><div style="min-width:0"><b>UZAR PREMIUM</b><span class="online" id="connState">● Champion • Level 99</span></div></div><div style="display:flex;gap:6px"><button class="themeBtn" onclick="toggleTheme()">◐</button><button class="iconbtn" onclick="NOTI.open()">🔔<span id="badge" style="position:absolute;top:-5px;right:-4px;background:#ff4d6d;color:#fff;font-size:9px;padding:2px 5px;border-radius:9px;display:none">0</span></button></div></div>
-  <div class="stats"><div class="stat"><b class="green" id="statMembers">0</b><br><span class="small">Members</span></div><div class="stat"><b class="blue">48</b><br><span class="small">Messages</span></div><div class="stat"><b class="pink">12</b><br><span class="small">Online</span></div></div>
+  <div class="header"><div class="brand"><div class="logo">⚡</div><div style="min-width:0"><b>UZAR PREMIUM</b><span class="online" id="connState">● Offline</span></div></div><div style="display:flex;gap:6px"><button class="themeBtn" onclick="toggleTheme()">◐</button><button class="iconbtn" onclick="NOTI.open()">🔔<span id="badge" style="position:absolute;top:-5px;right:-4px;background:#ff4d6d;color:#fff;font-size:10px;padding:2px 5px;border-radius:9px;display:none">0</span></button></div></div>
+  <div class="stats"><div class="stat"><b class="green" id="statMembers">0</b><br><span class="small">Members</span></div><div class="stat"><b class="blue" id="statMsgs">0</b><br><span class="small">Messages</span></div><div class="stat"><b class="pink" id="statOnline">0</b><br><span class="small">Online</span></div></div>
   <div class="empire"><div class="empireTop"><b class="green">👑 PRIVATE EMPIRE</b><span class="live">LIVE</span></div><div id="myGroups" class="empireBox"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:7px"><div class="empireBox" style="margin:0;padding:8px"><span class="small">Group ID</span><br><b id="gidHome" style="font-size:11px;color:#bfe1ff">GRP#---</b></div><div class="empireBox" style="margin:0;padding:8px"><span class="small">Role</span><br><b class="green" style="font-size:11px" id="roleHome">OWNER 👑</b></div></div></div>
   <div style="padding:0 10px 6px"><b style="font-size:12px">Quick Actions</b></div>
   <div class="quick"><div class="quickCard" onclick="switchPage('friends',null)"><div class="qicon">💬</div><div><b style="font-size:11px">Private Chat</b><br><span class="small">Friends & Maya</span></div></div><div class="quickCard" onclick="switchPage('rooms',null)"><div class="qicon" style="background:linear-gradient(135deg,#00ff88,#00bfff)">🔒</div><div><b style="font-size:11px">Join Room</b><br><span class="small" id="roomQuick">0 Joined</span></div></div><div class="quickCard" onclick="startCall('audio')"><div class="qicon" style="background:linear-gradient(135deg,#00d9ff,#2364ff)">🎧</div><div><b style="font-size:11px">Voice Chat</b><br><span class="small">Call a friend</span></div></div><div class="quickCard" onclick="startCall('video')"><div class="qicon" style="background:linear-gradient(135deg,#ff4bcb,#7b3cff)">📹</div><div><b style="font-size:11px">Video Call</b><br><span class="small">Live together</span></div></div></div>
-  <div class="glass"><div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:12px">Recent Activity</b><span class="small green">See All ›</span></div><div class="activity"><img class="avatar" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2250%22 fill=%22%23132026%22/%3E%3Ccircle cx=%2250%22 cy=%2240%22 r=%2216%22 fill=%22%2300ff88%22/%3E%3Cpath d=%22M20 92c6-19 18-28 30-28s24 9 30 28z%22 fill=%22%2300ff88%22/%3E%3C/svg%3E" alt=""><div style="flex:1;min-width:0"><b style="font-size:11px">👑 Akhi Islam</b><br><span class="small">Joined your room</span></div><span class="small">2m ago</span></div><div class="activity"><img class="avatar" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2250%22 fill=%22%23132026%22/%3E%3Cpath d=%22M20 92c6-19 18-28 30-28s24 9 30 28z%22 fill=%22%2300ff88%22/%3E%3C/svg%3E" alt=""><div style="flex:1;min-width:0"><b style="font-size:11px">☆*MONI*☆</b><br><span class="small">Sent you a message</span></div><span class="small">8m ago</span></div></div>
+  <div class="glass"><div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:12px">Recent Activity</b><span class="small green">See All ›</span></div><div class="activity"><div class="small" style="color:#7f8ba0;padding:7px 0">এখনো কোনো অ্যাক্টিভিটি নেই।</div></div></div>
   <div class="glass" onclick="switchPage('profile',null)" style="display:flex;align-items:center;gap:9px;cursor:pointer"><img id="homeAv" class="avatar" style="width:40px;height:40px" alt=""><div style="flex:1;min-width:0"><b style="font-size:12px">Upgrade Profile</b><br><span class="small">Gallery • ID • Neon Border</span></div><span style="font-size:18px">›</span></div>
 </div>
 
@@ -213,11 +231,11 @@ img,video{max-width:100%;display:block}
     <div class="topbar"><div><div class="title">Friends</div><span class="small">Chat • Call • Invite</span></div><button class="iconbtn" onclick="createGroup()">＋</button></div>
     <div class="search">⌕<input id="friendSearch" placeholder="Search friends..." oninput="filterFriends(this.value)"></div>
     <div class="filterTabs"><button class="filterTab active" onclick="setFriendFilter('all',this)">All</button><button class="filterTab" onclick="setFriendFilter('online',this)">Online</button><button class="filterTab" onclick="setFriendFilter('joined',this)">Joined</button></div>
-    <div class="inviteBanner" onclick="createGroup()"><b>👑 Create Your Empire</b><br><span style="font-size:9px;opacity:.9">Invite your friends & grow together ›</span></div>
+    <div class="inviteBanner" onclick="createGroup()"><b>👑 Create Your Empire</b><br><span style="font-size:10px;opacity:.9">Invite your friends & grow together ›</span></div>
     <div id="chatList" class="scroll"></div>
   </div>
   <div id="chatView">
-    <div class="chatHeader"><span onclick="closeChat()" style="font-size:22px;cursor:pointer">‹</span><img id="chatAv" class="avatar" style="width:34px;height:34px" alt=""><div><b id="cName" style="font-size:12px"></b><br><span class="online">● Online</span></div><div class="actions"><button class="chatIcon" onclick="inviteNow()">＋</button><button class="chatIcon" onclick="startCall('audio')">📞</button><button class="chatIcon" onclick="startCall('video')">📹</button></div></div>
+    <div class="chatHeader"><span onclick="closeChat()" style="font-size:22px;cursor:pointer">‹</span><img id="chatAv" class="avatar" style="width:34px;height:34px" alt=""><div><b id="cName" style="font-size:12px"></b><br><span class="online">● Online</span></div><div class="actions"><button class="chatIcon" onclick="inviteNow()">＋</button><button class="chatIcon" onclick="chatCall('audio')">📞</button><button class="chatIcon" onclick="chatCall('video')">📹</button></div></div>
     <div id="videoArea" hidden><video id="myV" autoplay muted playsinline></video><video id="frV" autoplay playsinline></video></div>
     <div class="chat-body" id="chatBox"></div>
     <div class="input-bar"><div style="display:flex;gap:6px;align-items:center"><div class="field"><input id="msgIn" placeholder="Type a message..." onkeydown="if(event.key==='Enter')send()"></div><button class="send" onclick="send()">➤</button></div></div>
@@ -229,7 +247,7 @@ img,video{max-width:100%;display:block}
   <div class="roomCard">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:6px"><div style="min-width:0"><b style="color:#00ff88">👑 UZAR Empire</b><br><span class="small">ID: <b id="roomIdShow">---</b></span></div><button class="btn2" onclick="copyGroup()">Copy</button></div>
     <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:10px"><div class="empireBox" style="margin:0;padding:8px;text-align:center"><b id="pMembers">0</b><br><span class="small">Members</span></div><div class="empireBox" style="margin:0;padding:8px;text-align:center"><b id="roomOnline">0</b><br><span class="small">Online</span></div><div class="empireBox" style="margin:0;padding:8px;text-align:center"><b>LIVE</b><br><span class="small">Status</span></div></div>
-    <div id="roomMembers" style="margin-top:7px"></div><div id="liveWrap" style="margin-top:8px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px"><b style="font-size:11px;color:#7fe7ff">🟢 অনলাইন সদস্য</b><button class="btn2" style="padding:3px 7px;font-size:9px" onclick="uzRefreshPresence()">🔄</button></div><div id="livePresence"></div></div>
+    <div id="roomMembers" style="margin-top:7px"></div><div id="liveWrap" style="margin-top:8px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px"><b style="font-size:11px;color:#7fe7ff">🟢 অনলাইন সদস্য</b><button class="btn2" style="padding:3px 7px;font-size:10px" onclick="uzRefreshPresence()">🔄</button></div><div id="livePresence"></div></div>
     <div style="display:flex;gap:6px;margin-top:9px"><div class="field"><input id="joinCode" placeholder="GRP আইডি দিয়ে জয়েন…"></div><button class="btn2" onclick="joinByCode()">Join</button></div>
     <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;gap:6px"><span class="small">Open join (আইডি জানলেই জয়েন)</span><button class="btn2" id="openJoinBtn" onclick="toggleOpenJoin()">OFF</button></div>
     <button class="btn" style="width:100%;margin-top:9px" onclick="openLiveRoom()">🚪 OPEN LIVE ROOM</button>
@@ -245,7 +263,7 @@ img,video{max-width:100%;display:block}
   <div class="roomAudience" id="roomAudience"></div>
   <div class="roomChat" id="roomChat"><div class="roomChatMsg system">👋 Room ready — invite members to start chatting.</div></div>
   <div class="roomInput"><div class="field"><input id="roomMsg" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendRoomMsg()"></div><button class="send" onclick="sendRoomMsg()">➤</button></div>
-  <div class="roomControls"><button id="roomMicBtn" onclick="toggleMic()">🔇<span>Mic OFF</span></button><button class="mainCall" onclick="startCall('video')">📹<span>Video</span></button><button onclick="toggleMic()">🔇<span>Mute</span></button><button onclick="leaveLiveRoom()" class="hang">📵<span>Leave</span></button></div>
+  <div class="roomControls"><button id="roomMicBtn" onclick="toggleMic()">🔇<span>Mic OFF</span></button><button class="mainCall" onclick="startCall('video')">📹<span>Video</span></button><button onclick="leaveLiveRoom()" class="hang">📵<span>Leave</span></button></div>
 </div>
 
 <div id="profilePage" class="page scroll">
@@ -256,8 +274,8 @@ img,video{max-width:100%;display:block}
     <input type="file" id="gal" accept="image/*" hidden>
     <div style="margin-top:10px"><b style="font-size:19px;background:linear-gradient(135deg,#00ff88,#00d9ff,#7b5cff);-webkit-background-clip:text;color:transparent" id="myNameLabel">YOU • CHAMPION</b><br><span class="online">● Online • Ready to Invite</span></div>
     <div class="idbox"><span class="small">Your Game ID • Tap to Copy</span><br><b id="myId" onclick="copyId()" style="color:#bfe1ff;letter-spacing:1px;cursor:pointer"></b><br><span class="small">👆 Click ID to copy</span></div>
-    <div class="levelBox"><div style="display:flex;justify-content:space-between"><b style="font-size:11px">👑 Level 99 Champion</b><span class="small">8560 / 9999 XP</span></div><div class="levelLine"><div class="levelFill"></div></div></div>
-    <div class="profileStats"><div><b class="green" id="pMembers2">0</b><br><span class="small">Members</span></div><div><b class="blue">48</b><br><span class="small">Messages</span></div><div><b class="pink">🔥 7</b><br><span class="small">Streak</span></div></div>
+    <div class="levelBox"><div style="display:flex;justify-content:space-between"><b style="font-size:11px" id="lvTitle">👑 Level 1 Newbie</b><span class="small" id="lvXp">0 / 100 XP</span></div><div class="levelLine"><div class="levelFill" id="lvFill"></div></div></div>
+    <div class="profileStats"><div><b class="green" id="pMembers2">0</b><br><span class="small">Members</span></div><div><b class="blue" id="pMsgs">0</b><br><span class="small">Messages</span></div><div><b class="pink" id="pStreak">🔥 1</b><br><span class="small">Streak</span></div></div>
     <button class="btn" style="width:100%;margin-top:10px" onclick="createGroup()">👑 CREATE PRIVATE EMPIRE</button>
     <div style="display:flex;gap:6px;margin-top:7px"><button class="btn2" style="flex:1" onclick="switchPage('friends',null)">💬 Chats</button><button class="btn2" style="flex:1" onclick="switchPage('rooms',null)">🔒 Rooms</button></div>
   </div>
@@ -265,10 +283,10 @@ img,video{max-width:100%;display:block}
     <b style="color:#00ff88">👤 আমার অ্যাকাউন্ট</b>
     <div class="field" style="margin-top:6px"><input id="profName" placeholder="তোমার নাম" maxlength="24"></div>
     <div class="field" style="margin-top:5px"><input id="profPhone" placeholder="মোবাইল নম্বর" inputmode="tel" maxlength="16"></div>
-    <div style="display:flex;gap:6px;margin-top:6px"><button class="btn" style="flex:1" onclick="uzSaveProfile()">💾 সেভ</button><button class="btn2" style="flex:1" onclick="uzGoogleLogin()">🔐 Gmail</button><button class="btn2" style="flex:1" onclick="uzLogout()">🚪</button></div>
+    <div style="display:flex;gap:6px;margin-top:6px"><button class="btn" style="flex:1" onclick="uzSaveProfile()">💾 সেভ</button><button class="btn2" id="gmailBtn" style="flex:1" onclick="uzGoogleLogin()">🔐 Gmail</button><button class="btn2" style="flex:1" onclick="uzLogout()">🚪</button></div>
   </div>
   <div class="glass" id="uidCard">
-    <div style="display:flex;justify-content:space-between;align-items:center"><b style="color:#7fe7ff">🆔 তোমার ইউজার আইডি</b><button class="btn2" style="padding:3px 8px;font-size:9px" onclick="uzCopyUid()">📋 কপি</button></div>
+    <div style="display:flex;justify-content:space-between;align-items:center"><b style="color:#7fe7ff">🆔 তোমার ইউজার আইডি</b><button class="btn2" style="padding:3px 8px;font-size:10px" onclick="uzCopyUid()">📋 কপি</button></div>
     <div id="uzUid" style="font-size:24px;font-weight:800;letter-spacing:3px;color:#00ff88;margin:5px 0 2px">------</div>
     <div class="small" style="color:#8d9aae">এই আইডি দিলে কেউ সরাসরি তোমাকে কল দিতে পারবে।</div>
     <div style="display:flex;gap:6px;margin-top:7px"><div class="field" style="flex:1"><input id="uzCallId" placeholder="ইউজার আইডি" inputmode="numeric" maxlength="8"></div><button class="btn2" onclick="uzCallById()">📞 কল</button></div>
@@ -298,11 +316,12 @@ function roomRefOf(gid,p){ return dbRef.ref('rooms/'+gid+(p?('/'+p):'')); }
 
 function initFirebase(){
   const cfg=window.FIREBASE_CONFIG||{};
-  if(!cfg.apiKey) return;
+  if(!cfg.apiKey||typeof firebase==='undefined'){ toast('⚠️ Firebase লোড হয়নি — ইন্টারনেট চেক করুন'); return; }
   try{ firebase.initializeApp(cfg); }catch(e){ console.warn('fb init',e); return; }
   dbRef=firebase.database();
-  var _cu=null; try{ _cu=firebase.auth().currentUser; }catch(e){}
-  (_cu?Promise.resolve({user:_cu}):firebase.auth().signInAnonymously())
+  const auth=firebase.auth();
+  new Promise(res=>{ const un=auth.onAuthStateChanged(u=>{ un(); res(u); }); })
+    .then(u=>u?{user:u}:auth.signInAnonymously())
     .then(cr=>{
       authUser=cr.user;
       const el=$('connState'); if(el) el.textContent='● Online • Cloud sync';
@@ -318,7 +337,7 @@ function fbEnsureAccess(){
   return meta.once('value').then(s=>{
     const m=s.val()||{};
     if(!s.exists()){
-      iAmOwner=true;
+      iAmOwner=true; setOwnerUI(true,false);
       return meta.set({owner:uid,open:false}).then(()=>({owner:uid,open:false}));
     }
     iAmOwner=(m.owner===uid);
@@ -353,7 +372,7 @@ function fbJoin(){
   if(!fbReady()) return;
   const uid=authUser.uid;
   const ref=roomRef('members/'+uid);
-  ref.set({id:myId,name:(window.uzMyName?window.uzMyName():'Member'),online:true,at:firebase.database.ServerValue.TIMESTAMP}).catch(()=>{});
+  ref.set({id:myId,peer:peerKey,left:false,name:(window.uzMyName?window.uzMyName():'Member'),online:true,at:firebase.database.ServerValue.TIMESTAMP}).catch(()=>{});
   try{ ref.onDisconnect().update({online:false,left:true}); }catch(e){}
 }
 
@@ -385,14 +404,15 @@ function fbWatch(){
   fbOn(roomRef('msgs').limitToLast(100),'child_added',s=>{
     const v=s.val()||{};
     if(v.uid&&v.uid===authUser.uid) return;
-    if(!cur) return;
-    if(v.to&&v.to!==cur.name) return;
+    if(v.to&&v.to!==(window.uzMyName?window.uzMyName():'Member')) return;
+    if(!cur||cur.name!==v.name) return;
     pushMsg(v.mid||s.key,v.text||'','other');
   });
 
   fbOn(roomRef('roomMsgs').limitToLast(60),'child_added',s=>{
     const v=s.val()||{};
     if(v.uid&&v.uid===authUser.uid) return;
+    if(v.mid){ if(seenMsg.has('r:'+v.mid)) return; seenMsg.add('r:'+v.mid); }
     roomMsgAppend(v.name||v.from||'Friend',v.text||'');
   });
 
@@ -400,7 +420,11 @@ function fbWatch(){
     const v=s.val()||{}; let changed=false;
     Object.values(v).forEach(mm=>{
       if(!mm||!mm.id) return;
-      if(!members.some(x=>x.key===mm.id)){ members.push({key:mm.id,name:mm.name||'Friend',img:''}); changed=true; }
+      if(mm.left) return;
+      if(mm.peer===peerKey||mm.id===myId||(authUser&&mm.id===authUser.uid)) return;
+      const k=mm.peer||mm.id;
+      if(members.length>=MAX_GROUP_MEMBERS-1) return;
+      if(!members.some(x=>x.key===k)){ members.push({key:k,name:mm.name||'Friend',img:''}); changed=true; }
     });
     if(changed) save();
   });
@@ -430,6 +454,7 @@ async function joinByCode(){
     const permSnap=await roomRefOf(code,'allowed/'+authUser.uid).once('value');
     const allowed=permSnap.val()===true;
 
+    if(!allowed&&m.open!==true&&m.owner!==authUser.uid){ toast('🔒 এই গ্রুপে Open join বন্ধ — মালিকের Invite লাগবে'); return; }
     groupId=code;
     members=load('uzar_members_'+groupId,[]).map(x=>typeof x==='string'?{key:x,name:x,img:''}:x);
     if(!allowed) await roomRef('allowed/'+authUser.uid).set(true);
@@ -451,7 +476,28 @@ function pushMsg(mid,text,who){
   add(esc(text),who);
   if(seenMsg.size>400){ const it=seenMsg.values(); for(let i=0;i<120;i++){ const v=it.next(); if(v.done) break; seenMsg.delete(v.value); } }
 }
+var UZ_STATS=(function(){
+  var d={msgs:0,streak:1,last:''};
+  try{ d=Object.assign(d,JSON.parse(localStorage.getItem('uzar_stats')||'{}')); }catch(e){}
+  var today=new Date().toISOString().slice(0,10);
+  if(d.last!==today){
+    var y=new Date(Date.now()-864e5).toISOString().slice(0,10);
+    d.streak=(d.last===y)?(d.streak||0)+1:1; d.last=today;
+  }
+  function save(){ try{ localStorage.setItem('uzar_stats',JSON.stringify(d)); }catch(e){} }
+  function paint(){
+    var xp=d.msgs*10+d.streak*20, lv=Math.floor(xp/100)+1, into=xp%100;
+    var title=lv>=50?'Champion':lv>=20?'Pro':lv>=5?'Active':'Newbie';
+    function t(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; }
+    t('statMsgs',d.msgs); t('pMsgs',d.msgs); t('pStreak','🔥 '+d.streak);
+    t('lvTitle','👑 Level '+lv+' '+title); t('lvXp',into+' / 100 XP');
+    var f=document.getElementById('lvFill'); if(f) f.style.width=into+'%';
+  }
+  save();
+  return {hit:function(){ d.msgs++; save(); paint(); }, paint:paint};
+})();
 function roomMsgAppend(who,text){
+  if(who==='YOU') UZ_STATS.hit();
   const box=$('roomChat'); if(!box) return;
   box.insertAdjacentHTML('beforeend','<div class="roomChatMsg"><b>'+esc(who)+':</b> '+esc(text)+'</div>');
   box.scrollTop=box.scrollHeight;
@@ -534,6 +580,11 @@ async function getMicStream(needVideo=false){
     const hasAudio=stream.getAudioTracks().length>0;
     const hasVideo=stream.getVideoTracks().length>0;
     if(hasAudio&&(!needVideo||hasVideo)) return stream;
+    if(hasAudio&&needVideo&&!hasVideo){
+      const vs=await navigator.mediaDevices.getUserMedia({video:{width:{ideal:640},height:{ideal:480},facingMode:'user'}});
+      vs.getVideoTracks().forEach(t=>stream.addTrack(t));
+      return stream;
+    }
     if(!needVideo&&hasVideo) stream.getVideoTracks().forEach(t=>t.stop());
     if(hasAudio) return stream;
     stream.getTracks().forEach(t=>t.stop());
@@ -565,7 +616,7 @@ function updateLocalMicUI(){
   if(p){ p.textContent=on?'🎙':'🔇'; p.title=on?'Mic ON':'Mic OFF'; p.setAttribute('aria-pressed',String(on)); }
 }
 
-const peer=new Peer(peerKey,{config:{iceServers:window.UZAR_ICE}});
+const peer=(typeof Peer!=='undefined')?new Peer(peerKey,{config:{iceServers:window.UZAR_ICE}}):{open:false,destroyed:true,on(){},call(){return null},connect(){throw new Error('PeerJS load হয়নি')},destroy(){},reconnect(){}};
 peer.on('disconnected',()=>{
   setTimeout(()=>{ if(!peer.destroyed){ try{ peer.reconnect(); }catch(e){ console.warn(e); } } },1500);
 });
@@ -616,6 +667,7 @@ function handleData(c,d){
     if(d.uid&&d.from) peerUidByName[d.from]=d.uid;
     if(d.uid&&d.fromName) peerUidByName[d.fromName]=d.uid;
     try{ c.send({type:'ROOM_SPEAKER_STATE',requests:speakerReq,seatOrder:roomSeatOrder}); }catch(e){}
+    if(micIsOn()&&isSpeakerAllowed()) startRoomBroadcast();
     return;
   }
   if(d.type==='ROOM_SPEAKER_STATE'){
@@ -625,7 +677,7 @@ function handleData(c,d){
     });
     if(Array.isArray(d.seatOrder)&&d.seatOrder.length) roomSeatOrder=[...d.seatOrder];
     if(speakerReq[peerKey]===undefined) speakerReq[peerKey]={on:false,at:0};
-    if(!isSpeakerAllowed()&&micIsOn()){ stopLocalRoomMic(false); toast('🔇 ৯টি মাইক পূর্ণ — তুমি এখন শুনছো'); }
+    if(!isSpeakerAllowed()&&micIsOn()&&speakerReq[peerKey]&&speakerReq[peerKey].on){ stopLocalRoomMic(false); toast('🔇 ৯টি মাইক পূর্ণ — তুমি এখন শুনছো'); }
     renderLiveRoom(); updateLocalMicUI();
     return;
   }
@@ -648,7 +700,8 @@ function handleData(c,d){
     roomMsgAppend(d.fromName||d.from||'Friend',d.text||'');
     return;
   }
-  pushMsg(d.mid,d.text?String(d.text):JSON.stringify(d),'other');
+  if(d.type||!d.text) return;
+  pushMsg(d.mid,String(d.text),'other');
 }
 
 async function joinInvitedGroup(code,name,key){
@@ -703,12 +756,12 @@ peer.on('call',async call=>{
     if(isRoom){
       call.answer();
       inCalls[call.peer]=call;
-      call.on('stream',s=>showRemoteStream(s,call.peer,'audio'));
+      call.on('stream',s=>showRemoteStream(s,call.peer,'roomaudio'));
       call.on('close',()=>{ delete inCalls[call.peer]; removeAudioEl(call.peer); });
       return;
     }
 
-    const who=meta.from||'Friend';
+    const who=meta.from||'Friend'; window.__callName=who;
     if(!(await uzRing(who,mode))){
       try{ call.close(); }catch(e){}
       toast('📵 Call declined');
@@ -717,7 +770,7 @@ peer.on('call',async call=>{
 
     const local=await getMicStream(mode==='video');
     call.answer(local);
-    inCalls[call.peer]=call;
+    inCalls[call.peer]=call; ensureCallUI();
     call.on('stream',s=>showRemoteStream(s,call.peer,mode));
     call.on('close',()=>{ delete inCalls[call.peer]; removeAudioEl(call.peer); });
     toast(mode==='video'?'📹 Video connected':'🎙 Voice connected');
@@ -725,18 +778,29 @@ peer.on('call',async call=>{
 });
 function removeAudioEl(id){ const a=$('roomAudio_'+id); if(a) a.remove(); }
 function ensureCallUI(){
-  if($('voicePanel')) return;
-  document.body.insertAdjacentHTML('beforeend','<div id="voicePanel" style="position:fixed;left:50%;bottom:calc(var(--nav-h) + 16px);transform:translateX(-50%);width:min(390px,calc(100% - 24px));z-index:10001;padding:12px;border-radius:18px;background:rgba(5,12,20,.97);border:1px solid rgba(0,255,136,.35);display:flex;align-items:center;gap:10px"><div style="flex:1;min-width:0"><b>🎙 Live Voice</b><div id="voiceStatus" class="small">Connecting...</div></div><button class="chatIcon" onclick="toggleMic()">🎙</button><button class="chatIcon" onclick="endRoomCall()">📵</button></div>');
+  if(!$('callScr')) document.body.insertAdjacentHTML('beforeend','<div id="callScr" style="position:fixed;inset:0;z-index:10002;background:linear-gradient(#0d1a2b,#050b13);display:none;flex-direction:column;align-items:center;justify-content:space-between;padding:56px 20px 40px;color:#fff"><video id="cFr" autoplay playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none"></video><video id="cMy" autoplay muted playsinline style="position:absolute;right:14px;top:14px;width:96px;height:130px;object-fit:cover;border-radius:12px;display:none;z-index:2;border:1px solid #fff4"></video><div style="z-index:1;text-align:center;text-shadow:0 1px 6px #000"><div style="width:96px;height:96px;border-radius:50%;margin:0 auto 14px;background:#132a3a;display:flex;align-items:center;justify-content:center;font-size:44px">👤</div><b id="cNm" style="font-size:22px"></b><div id="voiceStatus" style="margin-top:6px;font-size:14px;opacity:.85">Calling…</div></div><div style="z-index:1;display:flex;gap:22px"><button id="cMute" onclick="toggleCallMute()" style="width:62px;height:62px;border-radius:50%;border:0;background:#ffffff26;color:#fff;font-size:24px">🎙</button><button onclick="endRoomCall()" style="width:62px;height:62px;border-radius:50%;border:0;background:#ff3b4e;color:#fff;font-size:24px">📵</button></div></div>');
+  $('callScr').style.display='flex'; $('cNm').textContent=window.__callName||'Friend';
+  if(!window.__callTm){ window.__callShown=Date.now(); window.__callTm=setInterval(function(){
+    var st=$('voiceStatus'); if(window.__callT0&&st){ var t=Math.floor((Date.now()-window.__callT0)/1000); st.textContent=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0'); }
+    if(Date.now()-window.__callShown>4000&&!Object.keys(outCalls).length&&!Object.keys(inCalls).length) hideCallUI();
+  },1000); }
+}
+function hideCallUI(){
+  clearInterval(window.__callTm); window.__callTm=null; window.__callT0=null;
+  var c=$('callScr'); if(c) c.remove();
+}
+function toggleCallMute(){
+  if(!stream) return; var on=false;
+  stream.getAudioTracks().forEach(function(t){ t.enabled=!t.enabled; on=t.enabled; });
+  var b=$('cMute'); if(b) b.textContent=on?'🎙':'🔇';
 }
 function showRemoteStream(s,id,mode){
-  ensureCallUI();
-  const st=$('voiceStatus'); if(st) st.textContent=mode==='video'?'Video connected':'Voice connected';
+  if(mode==='roomaudio') mode='audio'; else ensureCallUI();
+  if(!window.__callT0) window.__callT0=Date.now();
   if(mode==='video'){
-    if(!$('friendsPage').classList.contains('active')) switchPage('friends',null);
-    $('listView').style.display='none';
-    $('chatView').style.display='flex';
-    const box=$('videoArea');
-    if(box){ box.hidden=false; $('frV').srcObject=s; if(stream) $('myV').srcObject=stream; }
+    const fr=$('cFr'), my=$('cMy');
+    if(fr){ fr.srcObject=s; fr.style.display='block'; }
+    if(my&&stream){ my.srcObject=stream; my.style.display='block'; }
   }else{
     let audio=$('roomAudio_'+id);
     if(!audio){
@@ -748,6 +812,7 @@ function showRemoteStream(s,id,mode){
   }
 }
 function endRoomCall(){
+  hideCallUI();
   Object.values(outCalls).forEach(c=>{ try{c.close();}catch(e){} });
   Object.values(inCalls).forEach(c=>{ try{c.close();}catch(e){} });
   Object.keys(outCalls).forEach(k=>delete outCalls[k]);
@@ -764,7 +829,7 @@ function openLiveRoom(){ switchPage('liveRoom',null); renderLiveRoom(); }
 function leaveLiveRoom(){ endRoomCall(); switchPage('rooms',null); toast('👋 You left the live room'); }
 
 async function toggleMic(){
-  if(micIsOn()){ stopLocalRoomMic(true); updateLocalMicUI(); toast('🔇 Mic OFF — এখন তুমি শুনছো'); return; }
+  if(micIsOn()&&speakerReq[peerKey]&&speakerReq[peerKey].on){ stopLocalRoomMic(true); updateLocalMicUI(); toast('🔇 Mic OFF — এখন তুমি শুনছো'); return; }
   try{
     await getMicStream(false);
     const a=stream&&stream.getAudioTracks()[0];
@@ -807,7 +872,7 @@ function renderLiveRoom(){
   const all=groupMembers();
   const winners=new Set(speakerWinners());
   $('liveRoomTitle').textContent=groupId+' 👑';
-  $('liveRoomSub').textContent='Live Room • '+all.length+' members • 30 Seats';
+  $('liveRoomSub').textContent='Live Room • '+all.length+' members • 9 Mic Seats';
   let order=roomSeatOrder.filter(k=>all.some(u=>u.key===k));
   if(!order.length) order=deriveSeatOrder();
   const seated=order.slice(0,MAX_ROOM_SPEAKERS).map(k=>all.find(u=>u.key===k)||null);
@@ -818,7 +883,7 @@ function renderLiveRoom(){
     const muteBtn=u.me
       ? '<button type="button" class="seatMute" data-mic="1" aria-pressed="'+on+'" title="'+(on?'Mic ON':'Mic OFF')+'">'+(on?'🎙':'🔇')+'</button>'
       : '<span class="seatMute">'+(on?'🎙':'🔇')+'</span>';
-    return '<div class="seat '+(on?'speakerOn':'speakerOff')+(u.me?' me':'')+'"><span class="seatVip">'+(u.me?'👑':'⭐')+'</span>'+muteBtn+'<img src="'+esc(u.img)+'" alt=""><b class="seatName">'+esc(u.name)+'</b><div style="font-size:9px;margin-top:2px;color:'+(on?'#00ff88':'#9aa3b2')+'">'+(on?'ON':'OFF')+'</div></div>';
+    return '<div class="seat '+(on?'speakerOn':'speakerOff')+(u.me?' me':'')+'"><span class="seatVip">'+(u.me?'👑':'⭐')+'</span>'+muteBtn+'<img src="'+esc(u.img)+'" alt=""><b class="seatName">'+esc(u.name)+'</b><div style="font-size:10px;margin-top:2px;color:'+(on?'#00ff88':'#9aa3b2')+'">'+(on?'ON':'OFF')+'</div></div>';
   }).join('');
   const seatedSet=new Set(seated.filter(Boolean).map(u=>u.key));
   const audience=all.filter(u=>!seatedSet.has(u.key)).slice(0,MAX_GROUP_MEMBERS);
@@ -882,7 +947,7 @@ function openChat(i){
   $('chatAv').src=cur.img;
   $('listView').style.display='none';
   $('chatView').style.display='flex';
-  $('chatBox').innerHTML='<div class="msg-row other"><img class="ava" src="'+esc(cur.img)+'" alt=""><div class="bubble-maya">hi. kiso kotha bolte cai. 😊</div></div><div class="msg-row me"><div class="bubble-maya">Hi '+esc(cur.name)+' 👋 Private Group এ আসবে?</div><img class="ava" src="'+esc(myAv.src)+'" alt=""></div>';
+  $('chatBox').innerHTML='<div class="emptyChat"><img src="'+esc(cur.img)+'" alt=""><b>'+esc(cur.name)+'</b><span>👋 Say hi! মেসেজ লিখুন বা 📞 📹 দিয়ে কল করুন</span></div>';
   const pid=peerIdByName[cur.name];
   if(pid&&peer.open){
     try{ conn=peer.connect(pid,{metadata:{dm:true}}); bind(conn); }catch(e){ console.warn(e); }
@@ -894,6 +959,8 @@ function closeChat(){
   const va=$('videoArea'); if(va) va.hidden=true;
 }
 function add(t,type){
+  { const ec=document.querySelector('#chatBox .emptyChat'); if(ec) ec.remove(); }
+  if(type==='me') UZ_STATS.hit();
   const isMe=type==='me';
   const html='<div class="msg-row '+(isMe?'me':'other')+'">'
     +(isMe?'':'<img class="ava" src="'+esc(cur?cur.img:'data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2250%22 fill=%22%23132026%22/%3E%3Ccircle cx=%2250%22 cy=%2240%22 r=%2216%22 fill=%22%2300ff88%22/%3E%3Cpath d=%22M20 92c6-19 18-28 30-28s24 9 30 28z%22 fill=%22%2300ff88%22/%3E%3C/svg%3E')+'" alt="">')
@@ -944,7 +1011,9 @@ function copyId(){ copyText(myId); }
 function copyText(t){
   if(navigator.clipboard&&window.isSecureContext){
     navigator.clipboard.writeText(t).then(()=>toast('📋 Copied: '+t)).catch(()=>toast('⚠️ Copy করা যায়নি'));
-  }else{ toast('⚠️ Copy করতে HTTPS লাগবে'); }
+  }else{
+    try{ const ta=document.createElement('textarea'); ta.value=t; ta.style.cssText='position:fixed;opacity:0'; document.body.appendChild(ta); ta.select(); const ok=document.execCommand('copy'); ta.remove(); toast(ok?'📋 Copied: '+t:'⚠️ Copy করা যায়নি'); }catch(e){ toast('⚠️ Copy করা যায়নি'); }
+  }
 }
 async function startCall(mode){
   const needVideo=mode==='video';
@@ -968,8 +1037,8 @@ async function startCall(mode){
 }
 function createGroup(){
   groupId='GRP-'+Math.random().toString(36).slice(2,7).toUpperCase();
-  iAmOwner=true;
-  watchGroup=null;
+  iAmOwner=true; setOwnerUI(true,false);
+  members=[]; fbUnwatch(); watchGroup=null; seenMsg.clear();
   save();
   if(fbReady()){ fbEnsureAccess().then(()=>{ fbJoin(); fbWatch(); }); }
   NOTI.push('Empire Created','Group: '+groupId);
@@ -1035,7 +1104,8 @@ function toggleTheme(){
   toast('🎨 Theme: '+neonTheme.toUpperCase());
 }
 
-applyTheme();
+applyTheme(); UZ_STATS.paint();
+{ const b=$('badge'); if(b&&NOTI.list.length){ b.textContent=NOTI.list.length; b.style.display='block'; } }
 save();
 render();
 initFirebase();
@@ -1076,11 +1146,11 @@ async function makeUid(){
 }
 
 function gate(need){
-  const card=$('profEditCard');
-  if(card) card.style.display=need?'block':'none';
+  const g=$('gmailBtn'); if(g) g.style.display=need?'':'none';
 }
 
 function afterAuth(){
+  try{ authUser=firebase.auth().currentUser||authUser; watchGroup=null; fbEnsureAccess().then(()=>{ fbJoin(); fbWatch(); }); }catch(e){}
   fill(); publish(); watch(true); watchMembers(); connectOnlinePeers();
 }
 
@@ -1116,6 +1186,39 @@ window.uzGoogleLogin=async function(){
     else if(c==='auth/unauthorized-domain') T('⚙️ Authorized domain যোগ করুন');
     else if(c==='auth/popup-closed-by-user') T('বাতিল হয়েছে'); else T('⚠️ Gmail ব্যর্থ'); console.warn(e); }
 };
+window.chatCall=async function(mode){
+  if(!cur){ return; }
+  var pid=peerIdByName[cur.name];
+  if(!pid&&cur.uid){ try{ var v=(await dbRef.ref('users/'+cur.uid).once('value')).val()||{}; if(v.online&&v.peerId) pid=v.peerId; }catch(e){} }
+  if(!pid){ T('⚠️ '+cur.name+' এখন অনলাইনে নেই'); return; }
+  window.uzCall(pid,mode);
+};
+window.openSignup=function(){
+  if(document.getElementById('suBox')) return;
+  var p=A();
+  document.body.insertAdjacentHTML('beforeend','<div id="suBox" style="position:fixed;inset:0;z-index:10003;background:#000b;display:flex;align-items:center;justify-content:center;padding:18px"><div class="glass" style="width:100%;max-width:360px;padding:18px"><b style="font-size:16px">👤 অ্যাকাউন্ট খুলুন / লগইন</b><div class="small" style="margin:4px 0 10px">নাম, নাম্বার ও পাসওয়ার্ড দিন। আগে খুলে থাকলে একই নাম্বার ও পাসওয়ার্ডে লগইন হবে।</div><div class="field" style="margin-bottom:8px"><input id="suName" placeholder="আপনার নাম" value="'+(p.name||'').replace(/"/g,'')+'"></div><div class="field" style="margin-bottom:8px"><input id="suPhone" type="tel" inputmode="numeric" placeholder="মোবাইল নাম্বার" value="'+(p.phone||'')+'"></div><div class="field" style="margin-bottom:12px"><input id="suPass" type="password" placeholder="পাসওয়ার্ড (কমপক্ষে ৬ অক্ষর)"></div><div style="display:flex;gap:8px"><button class="btn2" style="flex:1" onclick="uzSignup()">✅ চালিয়ে যান</button><button class="btn2" onclick="uzGoogleLogin().then(function(){ if(complete()) closeSignup(); })">Google</button></div><div class="small" style="text-align:center;margin-top:10px;cursor:pointer" onclick="closeSignup()">এখন না</div></div></div>');
+};
+window.closeSignup=function(){ var b=document.getElementById('suBox'); if(b) b.remove(); };
+window.uzSignup=async function(){
+  var nm=(document.getElementById('suName').value||'').trim(), ph=D(document.getElementById('suPhone').value), pw=document.getElementById('suPass').value||'';
+  if(nm.length<2){ T('⚠️ নাম লিখুন'); return; }
+  if(ph.length<10){ T('⚠️ সঠিক মোবাইল নাম্বার দিন'); return; }
+  if(pw.length<6){ T('⚠️ পাসওয়ার্ড কমপক্ষে ৬ অক্ষর'); return; }
+  try{
+    var a=firebase.auth(), em=ph+'@uzar.app', cred;
+    try{ cred=await a.createUserWithEmailAndPassword(em,pw); }
+    catch(e){ if(e&&e.code==='auth/email-already-in-use') cred=await a.signInWithEmailAndPassword(em,pw); else throw e; }
+    var u=cred.user.uid, snap=await dbRef.ref('users/'+u).once('value'), v=snap.val()||{};
+    var no=v.userNo||await makeUid(), name=v.name||nm;
+    await dbRef.ref('users/'+u).update({uid:u,userNo:no,name:name,phone:ph});
+    await dbRef.ref('userNos/'+no).set({uid:u,at:Date.now()});
+    S({name:name,phone:ph,uid:u,userNo:no});
+    showUid(no); gate(false); afterAuth(); closeSignup(); T('✅ স্বাগতম '+name);
+  }catch(e){ var c=(e&&e.code)||'';
+    if(c==='auth/wrong-password'||c==='auth/invalid-credential'||c==='auth/invalid-login-credentials') T('⚠️ পাসওয়ার্ড ভুল');
+    else if(c==='auth/operation-not-allowed') T('⚙️ Firebase-এ Email/Password চালু করুন');
+    else T('⚠️ ব্যর্থ: '+c); console.warn(e); }
+};
 function fill(){
   var p=A(), n=document.getElementById('profName'), ph=document.getElementById('profPhone'), lab=document.getElementById('myNameLabel');
   if(n&&!n.value) n.value=p.name||'';
@@ -1135,7 +1238,7 @@ function publish(){
   try{ var r=dbRef.ref('rooms/'+gid+'/presence/'+u);
     r.set({uid:u,userNo:p.userNo||'',name:nameOf(),peerId:peerKey,online:true,at:Date.now()}).catch(function(){});
     try{ r.onDisconnect().update({online:false,at:Date.now()}); }catch(e){}
-    dbRef.ref('rooms/'+gid+'/members/'+u).update({id:u,name:nameOf(),online:true,at:Date.now()}).catch(function(){});
+    dbRef.ref('rooms/'+gid+'/members/'+u).update({id:u,peer:peerKey,left:false,name:nameOf(),online:true,at:Date.now()}).catch(function(){});
   }catch(e){ console.warn(e); }
 }
 function esc2(v){ try{ return (typeof esc==='function')?esc(String(v)):String(v).replace(/[<>&"]/g,''); }catch(e){ return ''; } }
@@ -1148,6 +1251,7 @@ function rowHtml(nm,pid,un){
 let lastRows=[], lastMembers=[];
 function renderPresence(rows){
   lastRows=rows;
+  rows.forEach(function(v){ if(v.name&&v.peerId) peerIdByName[v.name]=v.peerId; });
   var el=document.getElementById('livePresence');
   if(el){
     el.innerHTML = rows.length ? rows.map(function(v){ return rowHtml(esc2(v.name||'Friend'), esc2(v.peerId||''), v.userNo?esc2(v.userNo):''); }).join('')
@@ -1159,6 +1263,7 @@ function renderPresence(rows){
   var on=rows.length;
   ['statMembers','pMembers','pMembers2'].forEach(function(id){ var e=document.getElementById(id); if(e&&lastMembers.length) e.textContent=lastMembers.length; });
   var ro=document.getElementById('roomOnline'); if(ro) ro.textContent=on+' Online';
+  var so=document.getElementById('statOnline'); if(so) so.textContent=on;
   var mc=document.getElementById('memberCountLive'); if(mc) mc.textContent=(lastMembers.length||on)+' Members';
   renderMembers();
 }
@@ -1171,6 +1276,14 @@ function renderMembers(){
       '<div style="min-width:0;flex:1"><b style="font-size:10px">'+nm+'</b><br>'+on+'</div>'+
       (m.uid?'<button class="btn2" style="padding:4px 7px;font-size:10px" onclick="uzCallUid(\''+esc2(m.uid)+'\')">🎙</button>':'')+'</div>';
   }).join('');
+}
+function syncFriends(){
+  var me=U(), old={}; friends.forEach(function(f){ old[f.uid]=f; });
+  friends.length=0;
+  lastMembers.forEach(function(m){ if(m.uid===me||(authUser&&m.uid===authUser.uid)) return;
+    var o=old[m.uid]||{};
+    friends.push({uid:m.uid,name:m.name,img:o.img||('data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2250%22 fill=%22%23132026%22/%3E%3Ccircle cx=%2250%22 cy=%2240%22 r=%2216%22 fill=%22%2300ff88%22/%3E%3Cpath d=%22M20 92c6-19 18-28 30-28s24 9 30 28z%22 fill=%22%2300ff88%22/%3E%3C/svg%3E'),last:m.online?'Online':'Offline',time:'',online:m.online,badge:0}); });
+  render();
 }
 function watch(force){
   var u=U(), gid=G(); if(!u||typeof dbRef==='undefined'||!dbRef||!gid) return;
@@ -1189,7 +1302,7 @@ function watchMembers(){
   mBase=dbRef.ref('rooms/'+gid+'/members');
   mCb=mBase.on('value',function(snap){
     var arr=[]; snap.forEach(function(c){ var v=c.val()||{}; if(v.left) return; arr.push({uid:c.key,name:v.name||'Member',online:!!v.online}); });
-    lastMembers=arr; renderMembers();
+    lastMembers=arr; renderMembers(); syncFriends();
     ['statMembers','pMembers','pMembers2'].forEach(function(id){ var e=document.getElementById(id); if(e) e.textContent=arr.length; });
     var mc=document.getElementById('memberCountLive'); if(mc) mc.textContent=arr.length+' Members';
     var ro=document.getElementById('roomOnline'); if(ro) ro.textContent=lastRows.length+' Online';
@@ -1213,13 +1326,14 @@ async function connectOnlinePeers(){
 }
 window.uzCall=async function(pid,mode){
   mode=(mode==='video')?'video':'audio';
-  if(!complete()){ gate(true); T('আগে অ্যাকাউন্ট খুলুন'); return; }
+  if(!complete()){ openSignup(); T('আগে অ্যাকাউন্ট খুলুন'); return; }
   if(!pid||pid==='undefined'){ T('⚠️ Peer ID পাওয়া যায়নি'); return; }
   if(typeof peerKey!=='undefined'&&pid===peerKey){ T('⚠️ নিজেকে কল দেওয়া যাবে না'); return; }
   try{ await getMicStream(mode==='video'); }catch(e){ T(micError(e)); return; }
   var call=null;
   try{ call=peer.call(pid,stream,{metadata:{mode:mode,group:G(),from:nameOf()}}); }catch(e){ console.warn(e); }
   if(!call){ T('⚠️ কল শুরু হয়নি'); return; }
+  window.__callName=(cur&&cur.name)||window.__pendName||'Friend'; window.__pendName=''; ensureCallUI();
   if(typeof outCalls!=='undefined') outCalls[pid]=call;
   call.on('stream',function(r){ try{ showRemoteStream(r,call.peer,mode); }catch(e){} });
   call.on('close',function(){ if(typeof outCalls!=='undefined') delete outCalls[pid]; });
@@ -1230,7 +1344,7 @@ window.uzCallUid=async function(uid){
   if(!uid){ T('⚠️ সদস্য পাওয়া যায়নি'); return; }
   try{ var s=await dbRef.ref('users/'+uid).once('value'); var v=s.val()||{};
     if(!v.online||!v.peerId){ T('⚠️ '+(v.name||'সদস্য')+' এখন অনলাইনে নেই'); return; }
-    window.uzCall(v.peerId,'audio');
+    window.__pendName=v.name||''; window.uzCall(v.peerId,'audio');
   }catch(e){ T('⚠️ কল করা যায়নি'); }
 };
 window.uzCallById=async function(){
@@ -1290,23 +1404,44 @@ function boot(){
   fill(); cleanFake(); gate(!complete());
   setTimeout(function(){ gate(!complete()); fill(); publish(); watch(false); watchMembers(); connectOnlinePeers(); },1500);
 }
+var tickN=0, lastMGid=null;
 function tick(){
   if(!window.__uzBooted) return;
-  fill(); publish(); watch(false);
+  if(!complete()&&!window.__suShown){ window.__suShown=1; openSignup(); }
+  if(lastMGid!==G()){ lastMGid=G(); watchMembers(); publish(); }
+  if(tickN++%6===0){ fill(); publish(); }
+  watch(false);
   if(lastRows.length) renderPresence(lastRows);
 }
-setInterval(tick,3000);
+setInterval(tick,5000);
 document.addEventListener('DOMContentLoaded',boot);
 if(document.readyState!=='loading') boot();
 try{ peer.on('open',function(){ setTimeout(tick,300); }); }catch(e){}
 
 /* FIX 1: expose functions to HTML onclick handlers */
-Object.assign(window,{switchPage,toggleTheme,createGroup,copyGroup,copyId,openChat,closeChat,inviteNow,startCall,send,sendRoomMsg,toggleMic,endRoomCall,openLiveRoom,leaveLiveRoom,joinByCode,toggleOpenJoin,setFriendFilter,filterFriends,NOTI});
+Object.assign(window,{switchPage,toggleTheme,createGroup,copyGroup,copyId,openChat,closeChat,inviteNow,startCall,send,sendRoomMsg,toggleMic,endRoomCall,toggleCallMute,openLiveRoom,leaveLiveRoom,joinByCode,toggleOpenJoin,setFriendFilter,filterFriends,NOTI});
 })();
 </script>
 </body>
 </html>
 
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+  
 
 
 
